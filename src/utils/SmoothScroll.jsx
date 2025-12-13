@@ -6,45 +6,42 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 let lenisInstance = null;
-let rafId = null;
 
 export const SmoothScroll = () => {
   useEffect(() => {
     if (lenisInstance) return;
 
-    // Lenis enhances native scrolling - DO NOT hide overflow
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+    // Lenis config
     lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true, // Desktop smooth scrolling
-      smoothTouch: true, // Mobile smooth scrolling
-      lerp: 0.1,
+      smoothWheel: true, // Desktop smooth
+      smoothTouch: true, // Mobile smooth
+      lerp: isTouch ? 0.06 : 0.1,       // Mobile lighter smoothing
+      duration: isTouch ? 0.6 : 0.1,    // Mobile slightly slower for natural feel
       wheelMultiplier: 1,
       touchMultiplier: 1,
       infinite: false,
     });
 
+    // Update ScrollTrigger on scroll
     lenisInstance.on("scroll", ScrollTrigger.update);
 
-    const raf = (time) => {
-      lenisInstance.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
+    // GSAP ticker
+    const ticker = (time) => lenisInstance.raf(time * 1000);
+    gsap.ticker.add(ticker);
 
-    rafId = requestAnimationFrame(raf);
-    
     // Refresh ScrollTrigger after Lenis initializes
-    ScrollTrigger.refresh();
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
 
     const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
+      gsap.ticker.remove(ticker);
       if (lenisInstance) {
         lenisInstance.destroy();
         lenisInstance = null;
@@ -61,7 +58,6 @@ export const scrollTo = (target, options = {}) => {
   if (lenisInstance) {
     lenisInstance.scrollTo(target, options);
   } else {
-    // Fallback to native smooth scroll
     if (typeof target === "number") {
       window.scrollTo({ top: target, behavior: "smooth" });
     } else {
@@ -70,4 +66,3 @@ export const scrollTo = (target, options = {}) => {
     }
   }
 };
-
