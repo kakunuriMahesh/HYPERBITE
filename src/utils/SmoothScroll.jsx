@@ -18,38 +18,35 @@ export const SmoothScroll = () => {
 
     const mobile = isMobile();
 
-    if (mobile) {
-      // Mobile: Use native smooth scrolling (most reliable)
-      document.body.style.overflow = "auto";
-      document.body.style.overflowY = "auto";
-      document.documentElement.style.overflow = "auto";
-      document.documentElement.style.overflowY = "auto";
-      document.body.style.scrollBehavior = "smooth";
-      document.documentElement.style.scrollBehavior = "smooth";
-
-      const handleScroll = () => ScrollTrigger.update();
-      const handleResize = () => ScrollTrigger.refresh();
-
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-
-    // Desktop: Use Lenis smooth scroll
+    // Use Lenis for both mobile and desktop with optimized settings
     lenisInstance = new Lenis({
-      duration: 1.2,
+      duration: mobile ? 1.5 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
-      smoothTouch: false,
+      smoothTouch: mobile ? true : false, // Enable smooth touch animation on mobile
       infinite: false,
-      lerp: 0.1,
+      lerp: mobile ? 0.08 : 0.1, // Smoother animation on mobile
+      wheelMultiplier: 1,
+      touchMultiplier: mobile ? 1.5 : 2,
+      touchInertiaMultiplier: mobile ? 30 : 50,
     });
 
-    lenisInstance.on("scroll", ScrollTrigger.update);
+    // Throttle ScrollTrigger updates on mobile for better performance
+    let scrollUpdateRaf = null;
+    const handleScroll = () => {
+      if (mobile) {
+        if (scrollUpdateRaf === null) {
+          scrollUpdateRaf = requestAnimationFrame(() => {
+            ScrollTrigger.update();
+            scrollUpdateRaf = null;
+          });
+        }
+      } else {
+        ScrollTrigger.update();
+      }
+    };
+
+    lenisInstance.on("scroll", handleScroll);
 
     const raf = (time) => {
       lenisInstance.raf(time);
@@ -57,14 +54,23 @@ export const SmoothScroll = () => {
     };
 
     rafId = requestAnimationFrame(raf);
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+    
+    // Hide overflow after Lenis is initialized
+    requestAnimationFrame(() => {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      ScrollTrigger.refresh();
+    });
 
     const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      if (scrollUpdateRaf !== null) {
+        cancelAnimationFrame(scrollUpdateRaf);
+        scrollUpdateRaf = null;
+      }
       if (rafId) {
         cancelAnimationFrame(rafId);
         rafId = null;
@@ -84,17 +90,17 @@ export const SmoothScroll = () => {
 export const getLenis = () => lenisInstance;
 
 export const scrollTo = (target, options = {}) => {
-  if (isMobile()) {
-    // Mobile: Use native smooth scroll
+  if (lenisInstance) {
+    // Use Lenis for smooth animation on both mobile and desktop
+    lenisInstance.scrollTo(target, options);
+  } else {
+    // Fallback to native smooth scroll
     if (typeof target === "number") {
       window.scrollTo({ top: target, behavior: "smooth" });
     } else {
       const el = typeof target === "string" ? document.querySelector(target) : target;
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  } else if (lenisInstance) {
-    // Desktop: Use Lenis
-    lenisInstance.scrollTo(target, options);
   }
 };
 
