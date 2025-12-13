@@ -8,48 +8,20 @@ gsap.registerPlugin(ScrollTrigger);
 let lenisInstance = null;
 let rafId = null;
 
-const isMobile = () => {
-  // Better mobile detection for actual devices
-  const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-  const isSmallScreen = window.innerWidth <= 768;
-  return hasTouch && isSmallScreen;
-};
-
 export const SmoothScroll = () => {
   useEffect(() => {
     if (lenisInstance) return;
 
-    const mobile = isMobile();
-
-    if (mobile) {
-      // Mobile: Use native smooth scrolling (works reliably on actual devices)
-      document.body.style.overflow = "auto";
-      document.body.style.overflowY = "auto";
-      document.documentElement.style.overflow = "auto";
-      document.documentElement.style.overflowY = "auto";
-      document.body.style.scrollBehavior = "smooth";
-      document.documentElement.style.scrollBehavior = "smooth";
-
-      const handleScroll = () => ScrollTrigger.update();
-      const handleResize = () => ScrollTrigger.refresh();
-
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-
-    // Desktop: Use Lenis smooth scroll
+    // Lenis enhances native scrolling - DO NOT hide overflow
     lenisInstance = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-      smoothTouch: false,
-      infinite: false,
+      smoothWheel: true, // Desktop smooth scrolling
+      smoothTouch: true, // Mobile smooth scrolling
       lerp: 0.1,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+      infinite: false,
     });
 
     lenisInstance.on("scroll", ScrollTrigger.update);
@@ -60,8 +32,9 @@ export const SmoothScroll = () => {
     };
 
     rafId = requestAnimationFrame(raf);
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+    
+    // Refresh ScrollTrigger after Lenis initializes
+    ScrollTrigger.refresh();
 
     const handleResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", handleResize);
@@ -76,8 +49,6 @@ export const SmoothScroll = () => {
         lenisInstance.destroy();
         lenisInstance = null;
       }
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     };
   }, []);
 
@@ -87,17 +58,16 @@ export const SmoothScroll = () => {
 export const getLenis = () => lenisInstance;
 
 export const scrollTo = (target, options = {}) => {
-  if (isMobile()) {
-    // Mobile: Use native smooth scroll
+  if (lenisInstance) {
+    lenisInstance.scrollTo(target, options);
+  } else {
+    // Fallback to native smooth scroll
     if (typeof target === "number") {
       window.scrollTo({ top: target, behavior: "smooth" });
     } else {
       const el = typeof target === "string" ? document.querySelector(target) : target;
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  } else if (lenisInstance) {
-    // Desktop: Use Lenis
-    lenisInstance.scrollTo(target, options);
   }
 };
 

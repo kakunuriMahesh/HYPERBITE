@@ -128,13 +128,17 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
+  height: 100%;
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  overscroll-behavior: none; /* Prevent rubber-banding without killing scroll */
 }
 
 body {
   overflow-x: hidden;
+  height: 100%;
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
   scroll-behavior: smooth;
+  overscroll-behavior: none; /* Prevent rubber-banding without killing scroll */
 }
 
 #root {
