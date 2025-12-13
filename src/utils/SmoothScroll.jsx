@@ -67,6 +67,91 @@
 // };
 
 
+// import { useEffect } from "react";
+// import Lenis from "@studio-freight/lenis";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// gsap.registerPlugin(ScrollTrigger);
+
+// let lenisInstance = null;
+
+// export const SmoothScroll = () => {
+//   useEffect(() => {
+//     if (lenisInstance) return;
+
+//     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+//     // Lenis configuration
+//     lenisInstance = new Lenis({
+//       smoothWheel: true,
+//       smoothTouch: true,
+//       lerp: 0.08,
+//       duration: isTouch ? 0.6 : 0.1,
+//       wheelMultiplier: 0.1,      // Limit desktop scroll speed
+//       touchMultiplier: 0.1,      // Limit mobile scroll speed
+//       normalizeWheel: true,
+//       infinite: false,
+//       easing: (t) => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2,
+//     });
+
+//     // Sync ScrollTrigger
+//     lenisInstance.on("scroll", ScrollTrigger.update);
+
+//     // Cap scroll delta manually for section-based scroll
+//     const capDelta = (event) => {
+//       const maxScroll = window.innerHeight * 0.1; // max 15% per gesture
+//       if (event.deltaY > maxScroll) event.deltaY = maxScroll;
+//       if (event.deltaY < -maxScroll) event.deltaY = -maxScroll;
+//     };
+
+//     // Intercept wheel events
+//     window.addEventListener("wheel", capDelta, { passive: false });
+//     window.addEventListener("touchmove", capDelta, { passive: false });
+
+//     // RAF loop
+//     const raf = (time) => {
+//       lenisInstance.raf(time);
+//       requestAnimationFrame(raf);
+//     };
+//     requestAnimationFrame(raf);
+
+//     requestAnimationFrame(() => ScrollTrigger.refresh());
+
+//     const handleResize = () => ScrollTrigger.refresh();
+//     window.addEventListener("resize", handleResize);
+
+//     return () => {
+//       window.removeEventListener("resize", handleResize);
+//       window.removeEventListener("wheel", capDelta);
+//       window.removeEventListener("touchmove", capDelta);
+//       if (lenisInstance) {
+//         lenisInstance.destroy();
+//         lenisInstance = null;
+//       }
+//     };
+//   }, []);
+
+//   return null;
+// };
+
+// // Getter for Lenis
+// export const getLenis = () => lenisInstance;
+
+// // Unified scrollTo
+// export const scrollTo = (target, options = {}) => {
+//   if (lenisInstance) {
+//     lenisInstance.scrollTo(target, options);
+//   } else {
+//     if (typeof target === "number") {
+//       window.scrollTo({ top: target, behavior: "smooth" });
+//     } else {
+//       const el = typeof target === "string" ? document.querySelector(target) : target;
+//       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+//     }
+//   }
+// };
+
 import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
@@ -82,32 +167,20 @@ export const SmoothScroll = () => {
 
     const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-    // Lenis configuration
     lenisInstance = new Lenis({
       smoothWheel: true,
       smoothTouch: true,
-      lerp: 0.08,
-      duration: isTouch ? 0.6 : 0.1,
-      wheelMultiplier: 0.1,      // Limit desktop scroll speed
-      touchMultiplier: 0.1,      // Limit mobile scroll speed
+      lerp: 0.08,                 // controls inertia (lower = smoother)
+      duration: isTouch ? 0.8 : 1.2,
+      wheelMultiplier: 0.8,       // safe natural speed
+      touchMultiplier: 1,
       normalizeWheel: true,
       infinite: false,
-      easing: (t) => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2,
+      easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic
     });
 
-    // Sync ScrollTrigger
+    // Sync Lenis with ScrollTrigger
     lenisInstance.on("scroll", ScrollTrigger.update);
-
-    // Cap scroll delta manually for section-based scroll
-    const capDelta = (event) => {
-      const maxScroll = window.innerHeight * 0.1; // max 15% per gesture
-      if (event.deltaY > maxScroll) event.deltaY = maxScroll;
-      if (event.deltaY < -maxScroll) event.deltaY = -maxScroll;
-    };
-
-    // Intercept wheel events
-    window.addEventListener("wheel", capDelta, { passive: false });
-    window.addEventListener("touchmove", capDelta, { passive: false });
 
     // RAF loop
     const raf = (time) => {
@@ -116,6 +189,7 @@ export const SmoothScroll = () => {
     };
     requestAnimationFrame(raf);
 
+    // Refresh after mount
     requestAnimationFrame(() => ScrollTrigger.refresh());
 
     const handleResize = () => ScrollTrigger.refresh();
@@ -123,31 +197,33 @@ export const SmoothScroll = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("wheel", capDelta);
-      window.removeEventListener("touchmove", capDelta);
-      if (lenisInstance) {
-        lenisInstance.destroy();
-        lenisInstance = null;
-      }
+      lenisInstance?.destroy();
+      lenisInstance = null;
     };
   }, []);
 
   return null;
 };
 
-// Getter for Lenis
+// Getter
 export const getLenis = () => lenisInstance;
 
 // Unified scrollTo
 export const scrollTo = (target, options = {}) => {
   if (lenisInstance) {
-    lenisInstance.scrollTo(target, options);
+    lenisInstance.scrollTo(target, {
+      duration: 1.2,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+      ...options,
+    });
   } else {
-    if (typeof target === "number") {
-      window.scrollTo({ top: target, behavior: "smooth" });
-    } else {
-      const el = typeof target === "string" ? document.querySelector(target) : target;
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    const top =
+      typeof target === "number"
+        ? target
+        : document.querySelector(target)?.offsetTop;
+
+    if (top !== undefined) {
+      window.scrollTo({ top, behavior: "smooth" });
     }
   }
 };

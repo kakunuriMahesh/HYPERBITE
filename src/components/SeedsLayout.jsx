@@ -55,14 +55,14 @@ const SeedsLayout = ({ productConfig, breakpoint, nutRefs, vectorRef, onOpenDeta
 
     {/* Product Images - Positions set by GSAP based on breakpoint */}
     {/* Hero images - use eager loading since they're above the fold */}
-    <img ref={nutRefs.pumpkinseed1} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.pumpkinseed1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.wallnut1} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.wallnut1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.sunflowerseed1} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.sunflowerseed1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.dateorange1} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.dateorange1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.dateorange2} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.dateorange2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.sunflowershell} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.sunflowershell} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.sunflowerseed2} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.sunflowerseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
-    <img ref={nutRefs.pumpkinseed2} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.pumpkinseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.pumpkinseed1} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.pumpkinseed1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.wallnut1} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.wallnut1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.sunflowerseed1} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.sunflowerseed1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.dateorange1} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.dateorange1} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.dateorange2} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.dateorange2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.sunflowershell} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.sunflowershell} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.sunflowerseed2} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.sunflowerseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.pumpkinseed2} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.pumpkinseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
 
     {/* Second Section Heading - Below grouped nuts and dates - moved down */}
     <div 
@@ -130,12 +130,12 @@ const SeedsLayout = ({ productConfig, breakpoint, nutRefs, vectorRef, onOpenDeta
     )}
 
     {/* Date Image */}
-    <img ref={nutRefs.date} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.date} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.date} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.date} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
 
     {/* Vector Background */}
     <img
       ref={vectorRef}
-      className="absolute"
+      className="absolute scroll-animated"
       alt="Vector"
       src={productConfig.vector}
       loading="eager"
@@ -148,13 +148,12 @@ const SeedsLayout = ({ productConfig, breakpoint, nutRefs, vectorRef, onOpenDeta
         objectFit: 'cover',
         zIndex: 1,
         opacity: breakpoint === 'mobile' || breakpoint === 'tablet' ? 0.6 : 1,
-        willChange: 'transform',
         backfaceVisibility: 'hidden',
       }}
     />
 
     {/* Center */}
-    <img ref={nutRefs.wallnutCenter} className="absolute aspect-[0.67] object-cover" alt="Product" src={productConfig.images.wallnutCenter} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, willChange: 'transform', backfaceVisibility: 'hidden' }} />
+    <img ref={nutRefs.wallnutCenter} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.wallnutCenter} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
   </>
 );
 

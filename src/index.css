@@ -152,6 +152,11 @@ body {
   perspective: 1000px;
 }
 
+/* Scroll-animated elements - single will-change declaration */
+.scroll-animated {
+  will-change: transform;
+}
+
 /* Smooth scroll container */
 .lenis {
   height: auto;

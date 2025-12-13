@@ -122,21 +122,27 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
       const final = finalPositions[key];
       if (!initial || !final) return;
 
-      // Add GPU acceleration hints
+      // Add GPU acceleration hints (will-change moved to CSS)
       gsap.set(nutRef, {
         force3D: true,
         transformOrigin: "center center",
-        willChange: "transform",
         backfaceVisibility: "hidden",
       });
 
-      // Set initial position using transforms for GPU acceleration
+      // Calculate scale instead of width/height for better performance
+      // Set base width/height once (no animation), then animate only scale
+      const initialScale = 1;
+      const finalScale = final.width / initial.width; // Use width ratio for scale
+
+      // Set initial position and base size using transforms for GPU acceleration
+      // Base width/height set once (not animated) - only scale animates
       gsap.set(nutRef, {
         x: initial.x,
         y: initial.y,
         rotation: initial.rotation,
-        width: initial.width,
-        height: initial.height,
+        width: initial.width, // Set base size once
+        height: initial.height, // Set base size once
+        scale: initialScale,
         left: "auto",
         top: "auto",
       });
@@ -146,8 +152,16 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
 
       nutElements.push({
         element: nutRef,
-        initial,
-        final,
+        initial: {
+          ...initial,
+          scale: initialScale,
+        },
+        final: {
+          ...final,
+          scale: finalScale,
+          // Final rotation includes continuous rotation (rotationSpeed degrees total)
+          rotation: final.rotation + rotationSpeed,
+        },
         rotationSpeed,
         isDate,
         key,
@@ -161,14 +175,11 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
       gsap.set(vectorRef.current, {
         force3D: true,
         transformOrigin: "center center",
-        willChange: "transform",
         backfaceVisibility: "hidden",
       });
 
       if (viewportWidth >= 1024) {
         // Desktop: Scale and position vector
-        const baseWidth = 1698;
-        const baseHeight = 1946;
         const targetCenterX = -150;
         const targetCenterY = 450;
 
@@ -187,37 +198,37 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
           top: "auto",
         });
       } else if (viewportWidth < 768) {
-        // Mobile: Vector animation
+        // Mobile: Vector animation - convert width/height to scale
         const vectorStartWidth = 402;
         const vectorStartHeight = 874;
         const vectorEndWidth = 88 * 0.351;
         const vectorEndHeight = 193 * 0.351;
         const vectorEndX = 150 - vectorEndWidth / 2;
         const vectorEndY = 869 - vectorEndHeight - 20;
+        const vectorScale = vectorEndWidth / vectorStartWidth;
 
         vectorInitial = { 
           x: 0, 
           y: 0, 
-          width: vectorStartWidth, 
-          height: vectorStartHeight 
+          scale: 1,
         };
         vectorFinal = { 
           x: vectorEndX, 
           y: vectorEndY, 
-          width: vectorEndWidth, 
-          height: vectorEndHeight 
+          scale: vectorScale,
         };
 
         gsap.set(vectorRef.current, {
           x: 0,
           y: 0,
+          scale: 1,
           width: vectorStartWidth,
           height: vectorStartHeight,
           left: "auto",
           top: "auto",
         });
       } else {
-        // Tablet
+        // Tablet - convert width/height to scale
         const containerWidth = 768;
         const containerHeight = 1900;
         const clusterCenterX = 360;
@@ -227,19 +238,18 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
         vectorInitial = { 
           x: 0, 
           y: 0, 
-          width: containerWidth, 
-          height: containerHeight 
+          scale: 1,
         };
         vectorFinal = { 
           x: clusterCenterX - (containerWidth * endScale) / 2, 
           y: clusterTopY - 60 - (containerHeight * endScale) / 2, 
-          width: containerWidth * endScale, 
-          height: containerHeight * endScale 
+          scale: endScale,
         };
 
         gsap.set(vectorRef.current, {
           x: 0,
           y: 0,
+          scale: 1,
           width: containerWidth,
           height: containerHeight,
           left: "auto",
@@ -254,93 +264,61 @@ const HeroBanner = forwardRef(({ productType = 'nuts', onOpenDetails }, ref) => 
       return;
     }
 
-    // Create ScrollTrigger with optimized onUpdate (single callback for all animations)
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: container,
-      start: "top top",
-      end: `+=${Math.round(animationEndPoint)}`, // Animation completes at section2Start
-      scrub: 1.2, // Higher scrub for smoother, more gradual animation (higher = smoother lag)
-      invalidateOnRefresh: true,
-      anticipatePin: 1,
-      onUpdate: (self) => {
-        const rawProgress = self.progress;
-        
-        // Use smooth easing for premium feel - smooth step provides gentle easing at start/end
-        // This creates a more natural, premium animation feel with smooth acceleration/deceleration
-        const smoothStep = (t) => {
-          return t * t * (3 - 2 * t);
-        };
-        
-        // Apply smooth step easing for smoother animation progression
-        const progress = smoothStep(rawProgress);
-        
-        // Animate all nut elements - all seeds move at the same speed for consistency
-        nutElements.forEach(({ element, initial, final, rotationSpeed, isDate }) => {
-          // Use same progress for all seeds - dates no longer move faster
-          // This ensures all seeds stay visible and move at consistent speed
-          const animProgress = progress;
-
-          // Interpolate position - ensure values are valid numbers
-          const currentX = initial.x + (final.x - initial.x) * animProgress;
-          const currentY = initial.y + (final.y - initial.y) * animProgress;
-          
-          // Fix rotation calculation - interpolate base rotation, then add continuous rotation
-          const rotationDelta = final.rotation - initial.rotation;
-          const baseRotation = initial.rotation + (rotationDelta * animProgress);
-          
-          // Stop continuous rotation when animation completes (progress >= 1.0)
-          // This ensures rotation stops when second section is visible and nuts are settled
-          const continuousRotation = animProgress >= 1.0 
-            ? baseRotation 
-            : baseRotation + (rotationSpeed * animProgress);
-
-          // Interpolate size
-          const currentWidth = initial.width + (final.width - initial.width) * animProgress;
-          const currentHeight = initial.height + (final.height - initial.height) * animProgress;
-
-          // Use gsap.set for immediate updates (no animation, just set values)
-          // Ensure all values are valid numbers before setting
-          if (!isNaN(currentX) && !isNaN(currentY) && !isNaN(continuousRotation)) {
-            gsap.set(element, {
-              x: currentX,
-              y: currentY,
-              rotation: continuousRotation,
-              width: currentWidth,
-              height: currentHeight,
-            });
+    // Create GSAP timeline with ScrollTrigger scrub (GOLD STANDARD - no onUpdate)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: `+=${Math.round(animationEndPoint)}`,
+        scrub: 1.2, // Smooth inertia for touch scroll
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          // Only update z-index for vector (lightweight operation)
+          if (vectorRef.current) {
+            vectorRef.current.style.zIndex = self.progress > 0.3 ? "6" : "1";
           }
-        });
-
-        // Animate vector background with progress
-        if (vectorRef.current && vectorInitial && vectorFinal) {
-          if (viewportWidth >= 1024) {
-            gsap.set(vectorRef.current, {
-              x: vectorInitial.x + (vectorFinal.x - vectorInitial.x) * progress,
-              y: vectorInitial.y + (vectorFinal.y - vectorInitial.y) * progress,
-              scale: vectorInitial.scale + (vectorFinal.scale - vectorInitial.scale) * progress,
-            });
-          } else {
-            gsap.set(vectorRef.current, {
-              x: vectorInitial.x + (vectorFinal.x - vectorInitial.x) * progress,
-              y: vectorInitial.y + (vectorFinal.y - vectorInitial.y) * progress,
-              width: vectorInitial.width + (vectorFinal.width - vectorInitial.width) * progress,
-              height: vectorInitial.height + (vectorFinal.height - vectorInitial.height) * progress,
-            });
-          }
-          
-          // Update z-index based on raw progress
-          vectorRef.current.style.zIndex = rawProgress > 0.3 ? "6" : "1";
-        }
+        },
       },
     });
 
-    // Refresh ScrollTrigger after setup to ensure correct calculations
+    // Add all nut animations to timeline (all animate together at position 0)
+    nutElements.forEach(({ element, initial, final }) => {
+      tl.fromTo(
+        element,
+        {
+          x: initial.x,
+          y: initial.y,
+          rotation: initial.rotation,
+          scale: initial.scale,
+        },
+        {
+          x: final.x,
+          y: final.y,
+          rotation: final.rotation, // Includes continuous rotation
+          scale: final.scale,
+          ease: "none", // Scroll controls easing, don't double-ease
+        },
+        0 // All animations start together
+      );
+    });
+
+    // Add vector animation to timeline
+    if (vectorRef.current && vectorInitial && vectorFinal) {
+      tl.fromTo(
+        vectorRef.current,
+        vectorInitial,
+        {
+          ...vectorFinal,
+          ease: "none",
+        },
+        0
+      );
+    }
+
+    // Refresh ScrollTrigger after setup
     requestAnimationFrame(() => {
       ScrollTrigger.refresh();
-      // Force initial update to trigger animation
-      if (scrollTrigger) {
-        scrollTrigger.update();
-      }
     });
   }, [scale, breakpoint, productType, isDates, containerRef, vectorRef, nutRefs, productConfig]);
 
