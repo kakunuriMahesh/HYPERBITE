@@ -17,19 +17,15 @@ export const SmoothScroll = () => {
       smoothWheel: true,
       smoothTouch: true,
       lerp: isTouch ? 0.08 : 0.1,
-      duration: isTouch ? 0.7 : 0.1,
+      duration: isTouch ? 0.6 : 0.1,
       wheelMultiplier: 1,
-      touchMultiplier: 1, // base multiplier
-      easing: (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2)/2,
+      touchMultiplier: 1.2, // responsive flick
+      easing: (t) => t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2,
+      normalizeWheel: true,       // normalize scroll delta
       infinite: false,
-      // Clamp scroll delta on mobile
-      normalizeWheel: true,
       gestureOrientation: "vertical",
-      // Intercept scroll for hard flicks
-      maxDelta: isTouch ? window.innerHeight * 0.1 : null // max 15% of viewport
     });
 
-    // Update ScrollTrigger
     lenisInstance.on("scroll", ScrollTrigger.update);
 
     const raf = (time) => {
@@ -55,10 +51,8 @@ export const SmoothScroll = () => {
   return null;
 };
 
-// Getter for Lenis
 export const getLenis = () => lenisInstance;
 
-// Unified scrollTo
 export const scrollTo = (target, options = {}) => {
   if (lenisInstance) {
     lenisInstance.scrollTo(target, options);
