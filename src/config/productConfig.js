@@ -195,16 +195,16 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           // Final positions in Section 2, positioned relative to section2Start (vh * 2 = 200vh)
           // Animation completes at 200vh, so nuts settle here when second section becomes visible
           // Positions are optimized to align with second section content (above footer, no gap)
-          pumpkinseed1: { x: 325, y: section2Start + 280, rotation: 15, width: 195, height: 229 },
-          wallnut1: { x: 180, y: section2Start + 278, rotation: -20, width: 229, height: 232 },
-          sunflowerseed1: { x: 186, y: section2Start + 294, rotation: 25, width: 106, height: 154 },
+          pumpkinseed1: { x: 325, y: section2Start + 480, rotation: 15, width: 195, height: 229 },
+          wallnut1: { x: 180, y: section2Start + 478, rotation: -20, width: 229, height: 232 },
+          sunflowerseed1: { x: 186, y: section2Start + 494, rotation: 25, width: 106, height: 154 },
           dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 237, height: 312 },
-          dateorange2: { x: 859, y: section2Start + 380, rotation: 30, width: 264, height: 309 },
-          sunflowershell: { x: 248, y: section2Start + 269, rotation: -25, width: 180, height: 260 },
-          sunflowerseed2: { x: 277, y: section2Start + 289, rotation: 20, width: 170, height: 182 },
-          pumpkinseed2: { x: 432, y: section2Start + 298, rotation: -30, width: 210, height: 188 },
-          date: { x: 1289, y: section2Start + 420, rotation: 10, width: 249, height: 279 },
-          wallnutCenter: { x: 368, y: section2Start + 290, rotation: -10, width: 208, height: 178 },
+          dateorange2: { x: 859, y: section2Start + 80, rotation: 30, width: 264, height: 309 },
+          sunflowershell: { x: 248, y: section2Start + 469, rotation: -25, width: 180, height: 260 },
+          sunflowerseed2: { x: 277, y: section2Start + 489, rotation: 20, width: 170, height: 182 },
+          pumpkinseed2: { x: 432, y: section2Start + 498, rotation: -30, width: 210, height: 188 },
+          date: { x: 1289, y: section2Start + 620, rotation: 10, width: 249, height: 279 },
+          wallnutCenter: { x: 368, y: section2Start + 490, rotation: -10, width: 208, height: 178 },
         },
       };
     }
