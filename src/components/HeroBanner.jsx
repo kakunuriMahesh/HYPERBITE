@@ -447,43 +447,43 @@ const HeroBanner = forwardRef(
             breakpoint={breakpoint}
           />
         ) : productType === "seeds" ? (
-          <div
-            className="relative bg-white"
-            style={{
-              width: containerDims.width,
-              minHeight: containerDims.minHeight,
-              height: containerDims.height,
-              margin: "0 auto",
-              maxWidth: breakpoint === "desktop" ? "none" : "100%",
-              paddingBottom:
-                breakpoint === "mobile"
-                  ? "120px"
-                  : breakpoint === "tablet"
-                  ? "150px"
-                  : `${150 * scale}px`,
-            }}
-          >
-            <div
-              ref={containerRef}
-              className="relative bg-white"
-              style={{
-                width: breakpoint === "desktop" ? "1698px" : "100%",
-                minHeight: containerDims.minHeight,
-                height: containerDims.minHeight,
-                transform:
-                  breakpoint === "desktop" ? `scale(${scale})` : "none",
-                transformOrigin: "top left",
-              }}
-            >
-            <SeedsLayout
+          // <div
+          //   className="bg-white"
+          //   // style={{
+          //   //   width: containerDims.width,
+          //   //   minHeight: containerDims.minHeight,
+          //   //   height: containerDims.height,
+          //   //   margin: "0 auto",
+          //   //   maxWidth: breakpoint === "desktop" ? "none" : "100%",
+          //   //   paddingBottom:
+          //   //     breakpoint === "mobile"
+          //   //       ? "120px"
+          //   //       : breakpoint === "tablet"
+          //   //       ? "150px"
+          //   //       : `${150 * scale}px`,
+          //   // }}
+          // >
+          //   <div
+          //     // ref={containerRef}
+          //     // className="relative bg-white"
+          //     // style={{
+          //     //   width: breakpoint === "desktop" ? "1698px" : "100%",
+          //     //   minHeight: containerDims.minHeight,
+          //     //   height: containerDims.minHeight,
+          //     //   transform:
+          //     //     breakpoint === "desktop" ? `scale(${scale})` : "none",
+          //     //   transformOrigin: "top left",
+          //     // }}
+          //   >
+          //   </div>
+          // </div>
+             <SeedsLayout
               productConfig={productConfig}
               breakpoint={breakpoint}
               nutRefs={nutRefs}
               vectorRef={vectorRef}
               onOpenDetails={onOpenDetails}
-            />
-            </div>
-          </div>
+            /> 
         ) : (
           <div
             className="relative bg-white"
