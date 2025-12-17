@@ -437,9 +437,6 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import vector8 from "../assets/vector-8.svg";
-import vector7 from "../assets/vector-7.svg";
-// import sunflowerseed from "../assets/sunflowerseed.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -509,7 +506,7 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
           {/* LEFT SVG */}
           <img
             ref={leftRef}
-            src={vector8}
+            src={productConfig.images.vector8}
             alt="left cream"
             style={{
               left: breakpoint === "mobile" ? "94%" : "48.2%",
@@ -527,7 +524,7 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
           {/* RIGHT SVG */}
           <img
             ref={rightRef}
-            src={vector7}
+            src={productConfig.images.vector7}
             alt="right cream"
             style={{
               right: breakpoint === "mobile" ? "94%" : "48.2%",
