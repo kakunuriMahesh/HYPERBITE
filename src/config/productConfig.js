@@ -73,6 +73,9 @@ export const productConfigs = {
       pumpkinseed2: '/assets/pumpkinseed.webp',
       date: '/assets/sunflowerseed.webp',
       wallnutCenter: '/assets/sunflowerseed.webp',
+      // vector8: '/assets/vector-8.svg',
+      // vector7: '/assets/vector-7.svg',
+      sunflowerseed: '/assets/sunflowerseed.webp',
     },
     vector: '/assets/Vector 2.png',
     // Animation configuration - Seeds form a vertical cascade pattern (center)

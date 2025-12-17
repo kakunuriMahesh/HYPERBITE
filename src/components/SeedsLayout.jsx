@@ -437,9 +437,9 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import sunflowerseed from "../../public/assets/sunflowerseed.webp";
-import vector7 from "../../public/assets/vector-7.svg"; // RIGHT
-import vector8 from "../../public/assets/vector-8.svg"; // LEFT
+import vector8 from "../assets/vector-8.svg";
+import vector7 from "../assets/vector-7.svg";
+// import sunflowerseed from "../assets/sunflowerseed.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -519,7 +519,7 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
 
           {/* SEED */}
           <img
-            src={sunflowerseed}
+            src={productConfig.images.sunflowerseed}
             alt="seed"
             className="absolute top-[4%] w-[15%] z-10"
           />
