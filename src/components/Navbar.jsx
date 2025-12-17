@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
@@ -10,6 +10,9 @@ const Navbar = () => {
   const [breakpoint, setBreakpoint] = useState('desktop');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('ENG');
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -27,6 +30,27 @@ const Navbar = () => {
     window.addEventListener('resize', updateBreakpoint);
     return () => window.removeEventListener('resize', updateBreakpoint);
   }, []);
+
+  // navbar visibility logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+  
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        // scrolling down
+        setIsNavbarVisible(false);
+      } else {
+        // scrolling up
+        setIsNavbarVisible(true);
+      }
+  
+      lastScrollY.current = currentScrollY;
+    };
+  
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -89,6 +113,9 @@ const Navbar = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          transform: isNavbarVisible ? 'translateY(0)' : 'translateY(-120%)',
+          transition: 'transform 0.4s ease',
+
         }}
       >
         {/* Logo */}
