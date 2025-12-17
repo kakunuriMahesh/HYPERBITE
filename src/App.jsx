@@ -11,6 +11,7 @@ import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import { SmoothScroll, scrollTo } from "./utils/SmoothScroll";
+import SeedsLayout from "./components/SeedsLayout";
 
 function HomePage() {
   const navigate = useNavigate();
