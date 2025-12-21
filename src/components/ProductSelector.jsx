@@ -471,7 +471,7 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
         </div>
       ))}
 
-      <style jsx>{`
+      {/* <style jsx>{`
         @keyframes fadeInLeft {
           from {
             opacity: 0;
@@ -493,7 +493,7 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
             transform: scale(1.06);
           }
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };
