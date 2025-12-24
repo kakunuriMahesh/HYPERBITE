@@ -62,7 +62,63 @@ const NutsLayout = ({ productConfig, breakpoint, nutRefs, vectorRef, onOpenDetai
     <img ref={nutRefs.sunflowershell} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.sunflowershell} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
     <img ref={nutRefs.sunflowerseed2} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.sunflowerseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
     <img ref={nutRefs.pumpkinseed2} className="absolute aspect-[0.67] object-cover scroll-animated" alt="Product" src={productConfig.images.pumpkinseed2} loading="eager" decoding="async" style={{ transformOrigin: 'center', zIndex: 5, backfaceVisibility: 'hidden' }} />
-
+{/* openCover - aligned to first (top/left) section */}
+<img
+      ref={nutRefs.openCover}
+      className="absolute aspect-[0.67] object-cover scroll-animated"
+      alt="Open Cover"
+      src={productConfig.images.openCover}
+      loading="eager"
+      decoding="async"
+      style={{
+        transformOrigin: 'center',
+        zIndex: 4, // Below scattered nuts, above background
+        backfaceVisibility: 'hidden',
+        ...(breakpoint === 'mobile' || breakpoint === 'tablet'
+          ? {
+              left: '50%',
+              top: '1%',
+              transform: 'translateX(-50%)',
+              width: '80%',
+              maxWidth: '200px',
+            }
+          : {
+              right: '8%',
+              top: '5%',
+              width: '40%',
+              maxWidth: '400px',
+            }),
+      }}
+    />
+    
+    {/* closeCover - aligned to second (bottom/right) section */}
+    <img
+      ref={nutRefs.closeCover}
+      className="absolute aspect-[0.67] object-cover scroll-animated"
+      alt="Closed Cover"
+      src={productConfig.images.closeCover}
+      loading="eager"
+      decoding="async"
+      style={{
+        transformOrigin: 'center',
+        zIndex: 4,
+        backfaceVisibility: 'hidden',
+        ...(breakpoint === 'mobile' || breakpoint === 'tablet'
+          ? {
+              left: '50%',
+              bottom: breakpoint === 'mobile' ? 'calc(6%)' : breakpoint === 'tablet' ? 'calc(6% - 180px)' : 'calc(6% - 600px)',
+              transform: 'translateX(-50%)',
+              width: '80%',
+              maxWidth: '200px',
+            }
+          : {
+              left: '8%',
+              bottom: breakpoint === 'mobile' ? 'calc(6% - 180px)' : breakpoint === 'tablet' ? 'calc(6% - 180px)' : 'calc(6% - 600px)',
+              width: '40%',
+              maxWidth: '400px',
+            }),
+      }}
+    />
     {/* Second Section Heading - Below grouped nuts and dates */}
     <div 
       className="absolute [font-family:'Permanent_Marker-Regular',Helvetica] font-normal text-black tracking-[0] leading-[normal]" 

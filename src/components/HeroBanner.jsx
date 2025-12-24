@@ -380,55 +380,54 @@ const HeroBanner = forwardRef(
     const containerDims = getContainerDimensions();
 
     return (
-      <div
-        ref={ref}
-        className="bg-white w-full relative"
-        style={{ overflowX: "hidden", overflowY: "auto", paddingTop: "70px" }}
-      >
-        {/* {isDates ? (
-          <DatesTimeline
-            productConfig={productConfig}
-            onOpenDetails={onOpenDetails}
-            breakpoint={breakpoint}
-          />
-        ) : (
-          <div
-            className="relative bg-white"
-            style={{
-              width: containerDims.width,
-              minHeight: containerDims.minHeight,
-              height: containerDims.height,
-              margin: "0 auto",
-              maxWidth: breakpoint === "desktop" ? "none" : "100%",
-              paddingBottom:
-                breakpoint === "mobile"
-                  ? "120px"
-                  : breakpoint === "tablet"
-                  ? "150px"
-                  : `${150 * scale}px`,
-            }}
-          >
+        <div
+          ref={ref}
+          className="bg-white w-full relative"
+          style={{ overflowX: "hidden", overflowY: "auto", paddingTop: "70px" }}
+        >
+          {isDates ? (
+            <DatesTimeline
+              productConfig={productConfig}
+              onOpenDetails={onOpenDetails}
+              breakpoint={breakpoint}
+            />
+          ) : productType === "seeds" ? (
+            <SeedsLayout
+              productConfig={productConfig}
+              breakpoint={breakpoint}
+              nutRefs={nutRefs}
+              vectorRef={vectorRef}
+              onOpenDetails={onOpenDetails}
+            />
+          ) : (
             <div
-              ref={containerRef}
               className="relative bg-white"
               style={{
-                width: breakpoint === "desktop" ? "1698px" : "100%",
-                minHeight: containerDims.minHeight, // Use consistent viewport-based height for all breakpoints
-                height: containerDims.minHeight, // Use consistent viewport-based height for all breakpoints
-                transform:
-                  breakpoint === "desktop" ? `scale(${scale})` : "none",
-                transformOrigin: "top left",
+                width: containerDims.width,
+                minHeight: containerDims.minHeight,
+                height: containerDims.height,
+                margin: "0 auto",
+                maxWidth: breakpoint === "desktop" ? "none" : "100%",
+                paddingBottom:
+                  breakpoint === "mobile"
+                    ? "120px"
+                    : breakpoint === "tablet"
+                    ? "150px"
+                    : `${150 * scale}px`,
               }}
             >
-              {productType === "seeds" ? (
-                <SeedsLayout
-                  productConfig={productConfig}
-                  breakpoint={breakpoint}
-                  nutRefs={nutRefs}
-                  vectorRef={vectorRef}
-                  onOpenDetails={onOpenDetails}
-                />
-              ) : (
+              <div
+                ref={containerRef}
+                className="relative bg-white"
+                style={{
+                  width: breakpoint === "desktop" ? "1698px" : "100%",
+                  minHeight: containerDims.minHeight,
+                  height: containerDims.minHeight,
+                  transform:
+                    breakpoint === "desktop" ? `scale(${scale})` : "none",
+                  transformOrigin: "top left",
+                }}
+              >
                 <NutsLayout
                   productConfig={productConfig}
                   breakpoint={breakpoint}
@@ -436,94 +435,10 @@ const HeroBanner = forwardRef(
                   vectorRef={vectorRef}
                   onOpenDetails={onOpenDetails}
                 />
-              )}
+              </div>
             </div>
-          </div>
-        )} */}
-        {isDates ? (
-          <DatesTimeline
-            productConfig={productConfig}
-            onOpenDetails={onOpenDetails}
-            breakpoint={breakpoint}
-          />
-        ) : productType === "seeds" ? (
-          // <div
-          //   className="bg-white"
-          //   // style={{
-          //   //   width: containerDims.width,
-          //   //   minHeight: containerDims.minHeight,
-          //   //   height: containerDims.height,
-          //   //   margin: "0 auto",
-          //   //   maxWidth: breakpoint === "desktop" ? "none" : "100%",
-          //   //   paddingBottom:
-          //   //     breakpoint === "mobile"
-          //   //       ? "120px"
-          //   //       : breakpoint === "tablet"
-          //   //       ? "150px"
-          //   //       : `${150 * scale}px`,
-          //   // }}
-          // >
-          //   <div
-          //     // ref={containerRef}
-          //     // className="relative bg-white"
-          //     // style={{
-          //     //   width: breakpoint === "desktop" ? "1698px" : "100%",
-          //     //   minHeight: containerDims.minHeight,
-          //     //   height: containerDims.minHeight,
-          //     //   transform:
-          //     //     breakpoint === "desktop" ? `scale(${scale})` : "none",
-          //     //   transformOrigin: "top left",
-          //     // }}
-          //   >
-          //   </div>
-          // </div>
-             <SeedsLayout
-              productConfig={productConfig}
-              breakpoint={breakpoint}
-              nutRefs={nutRefs}
-              vectorRef={vectorRef}
-              onOpenDetails={onOpenDetails}
-            /> 
-        ) : (
-          <div
-            className="relative bg-white"
-            style={{
-              width: containerDims.width,
-              minHeight: containerDims.minHeight,
-              height: containerDims.height,
-              margin: "0 auto",
-              maxWidth: breakpoint === "desktop" ? "none" : "100%",
-              paddingBottom:
-                breakpoint === "mobile"
-                  ? "120px"
-                  : breakpoint === "tablet"
-                  ? "150px"
-                  : `${150 * scale}px`,
-            }}
-          >
-            <div
-              ref={containerRef}
-              className="relative bg-white"
-              style={{
-                width: breakpoint === "desktop" ? "1698px" : "100%",
-                minHeight: containerDims.minHeight,
-                height: containerDims.minHeight,
-                transform:
-                  breakpoint === "desktop" ? `scale(${scale})` : "none",
-                transformOrigin: "top left",
-              }}
-            >
-              <NutsLayout
-                productConfig={productConfig}
-                breakpoint={breakpoint}
-                nutRefs={nutRefs}
-                vectorRef={vectorRef}
-                onOpenDetails={onOpenDetails}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
     );
   }
 );

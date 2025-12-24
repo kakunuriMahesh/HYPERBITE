@@ -19,6 +19,8 @@ export const productConfigs = {
       pumpkinseed2: '/assets/pumpkinseed.webp',
       date: '/assets/date.webp',
       wallnutCenter: '/assets/wallnut.webp',
+      openCover: '/assets/openCover.png',
+      closeCover: '/assets/closeCover.png',
     },
     vector: '/assets/Vector 2.png',
     // Animation configuration - original nuts animation (scattered to left cluster)
@@ -211,7 +213,8 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
         },
       };
     }
-  } else if (productType === 'dates') {
+  }
+   else if (productType === 'dates') {
     // Dates now use the dedicated path animation component; no nut positions needed.
     return { initial: {}, final: {} };
   } else if (productType === 'seeds') {
