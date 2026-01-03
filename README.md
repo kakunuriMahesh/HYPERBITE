@@ -53,3 +53,9 @@ npm run dev
           stroke-linecap="round"
         />
       </svg>
+
+
+      - update the seeds images in the chocolate
+      - add the fluid animation for the dates
+      - Try to zero the animation for the nuts in the final point so that it will feel like entered the pack
+      

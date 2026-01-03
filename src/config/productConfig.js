@@ -124,7 +124,7 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           wallnut1: { x: 130, y: 15, rotation: -25, width: 117, height: 175 },
           sunflowerseed1: { x: 121, y: 294, rotation: 35, width: 80, height: 72 },
           dateorange1: { x: 290, y: 100, rotation: -20, width: 98, height: 187 },
-          dateorange2: { x: 321, y: 966, rotation: 30, width: 81, height: 52 },
+          dateorange2: { x: 321, y: 966, rotation: 30, width: 81, height: 122 },
           sunflowershell: { x: 267, y: 231, rotation: -25, width: 135, height: 228 },
           sunflowerseed2: { x: 0, y: 541, rotation: 40, width: 124, height: 181 },
           pumpkinseed2: { x: 281, y: 805, rotation: -30, width: 116, height: 92 },
@@ -132,26 +132,40 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           wallnutCenter: { x: 88, y: 299, rotation: -10, width: 146, height: 165 },
           vector: { x: 0, y: 0, rotation: 0, width: 502, height: 874 },
         },
+        // final: {
+        //   // Final positions in Section 2 (200vh-300vh), positioned near bottom of section 2
+        //   pumpkinseed1: { x: 150, y: section2Start + 280, rotation: 15, width: 78, height: 90 },
+        //   wallnut1: { x: 100, y: section2Start + 278, rotation: -20, width: 76, height: 91 },
+        //   sunflowerseed1: { x: 105, y: section2Start + 294, rotation: 25, width: 59, height: 84 },
+        //   sunflowershell: { x: 120, y: section2Start + 269, rotation: -25, width: 73, height: 101 },
+        //   sunflowerseed2: { x: 135, y: section2Start + 289, rotation: 20, width: 70, height: 74 },
+        //   pumpkinseed2: { x: 200, y: section2Start + 298, rotation: -30, width: 69, height: 64 },
+        //   wallnutCenter: { x: 170, y: section2Start + 290, rotation: -10, width: 68, height: 72 },
+        //   dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 62, height: 73 },
+        //   dateorange2: { x: 350, y: section2Start + 380, rotation: 30, width: 70, height: 102 },
+        //   date: { x: 0, y: section2Start + 420, rotation: 10, width: 49, height: 105 },
+        //   vector: { 
+        //     x: 0 , 
+        //     y: 1269 , 
+        //     rotation: 0, 
+        //     width: 108 , 
+        //     height: 103 
+        //   },
+        // },
         final: {
-          // Final positions in Section 2 (200vh-300vh), positioned near bottom of section 2
-          pumpkinseed1: { x: 150, y: section2Start + 280, rotation: 15, width: 78, height: 90 },
-          wallnut1: { x: 100, y: section2Start + 278, rotation: -20, width: 76, height: 91 },
-          sunflowerseed1: { x: 105, y: section2Start + 294, rotation: 25, width: 59, height: 84 },
-          sunflowershell: { x: 120, y: section2Start + 269, rotation: -25, width: 73, height: 101 },
-          sunflowerseed2: { x: 135, y: section2Start + 289, rotation: 20, width: 70, height: 74 },
-          pumpkinseed2: { x: 200, y: section2Start + 298, rotation: -30, width: 69, height: 64 },
-          wallnutCenter: { x: 170, y: section2Start + 290, rotation: -10, width: 68, height: 72 },
+          pumpkinseed1: { x: 150, y: section2Start + 280, rotation: 15, width: 0, height: 0 },
+          wallnut1: { x: 100, y: section2Start + 278, rotation: -20, width: 0, height: 0 },
+          sunflowerseed1: { x: 105, y: section2Start + 294, rotation: 25, width: 0, height: 0 },
+          sunflowershell: { x: 120, y: section2Start + 269, rotation: -25, width: 0, height: 0 },
+          sunflowerseed2: { x: 135, y: section2Start + 289, rotation: 20, width: 0, height: 0 },
+          pumpkinseed2: { x: 200, y: section2Start + 298, rotation: -30, width: 0, height: 0 },
+          wallnutCenter: { x: 170, y: section2Start + 290, rotation: -10, width: 0, height: 0 },
           dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 62, height: 73 },
-          dateorange2: { x: 350, y: section2Start + 380, rotation: 30, width: 70, height: 102 },
+          dateorange2: { x: 310, y: section2Start + 380, rotation: 30, width: 150, height: 240 },
           date: { x: 0, y: section2Start + 420, rotation: 10, width: 49, height: 105 },
-          vector: { 
-            x: 0 , 
-            y: 1269 , 
-            rotation: 0, 
-            width: 108 , 
-            height: 103 
-          },
+          vector: { x: 0, y: 1269, rotation: 0, width: 0, height: 0 }
         },
+        
       };
     } else if (isTablet) {
       // Tablet: 3 sections of 100vh each
