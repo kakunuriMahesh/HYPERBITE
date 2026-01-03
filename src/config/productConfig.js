@@ -2,11 +2,12 @@
 export const productConfigs = {
   nuts: {
     id: 'nuts',
-    name: 'Nuts Mix',
-    heading1: 'Home Heading Hyper Bite',
-    paragraph1: 'involving substitution at or characterized by two opposite positions in the benzene ring that are separated by two carbon atoms paradichlorobenzene',
-    heading2: 'Home Heading Hyper Bite',
-    paragraph2: 'involving substitution at or characterized by two opposite positions in the benzene ring that are separated by two carbon atoms paradichlorobenzene',
+    name: 'Roasted Nuts Mix',
+    heading1: 'Snack Happy with Our Roasted Nuts Mix!',
+    paragraph1: 'Indulge in the ultimate snack experience with our Roasted Nuts Mix! A perfect blend of crunchy, flavorful almonds, cashews, peanuts, and hazelnuts, roasted to perfection for a satisfying, wholesome treat. It’s the ideal snack for any time of day – at home, in the office, or on-the-go!',
+    heading2: 'Why You’ll Love It',
+    paragraph2: 'Packed with protein, healthy fats, and tons of flavor, our Roasted Nuts Mix is the perfect balance of taste and nutrition. Each bite offers the perfect crunch and a natural, savory taste that will keep you coming back for more. It’s the snack that’s good for you and delicious too!',
+    quote: '“Indulge in the ultimate snack experience with our Roasted Nuts Mix!”',
     // Image assets for this product
     images: {
       pumpkinseed1: '/assets/pumpkinseed.webp',
@@ -129,6 +130,7 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           pumpkinseed2: { x: 281, y: 805, rotation: -30, width: 116, height: 92 },
           date: { x: 95, y: 800, rotation: 20, width: 117, height: 165 },
           wallnutCenter: { x: 88, y: 299, rotation: -10, width: 146, height: 165 },
+          vector: { x: 0, y: 0, rotation: 0, width: 502, height: 874 },
         },
         final: {
           // Final positions in Section 2 (200vh-300vh), positioned near bottom of section 2
@@ -142,6 +144,13 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 62, height: 73 },
           dateorange2: { x: 350, y: section2Start + 380, rotation: 30, width: 70, height: 102 },
           date: { x: 0, y: section2Start + 420, rotation: 10, width: 49, height: 105 },
+          vector: { 
+            x: 0 , 
+            y: 1269 , 
+            rotation: 0, 
+            width: 108 , 
+            height: 103 
+          },
         },
       };
     } else if (isTablet) {
@@ -150,6 +159,11 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
       const section1End = vh; // 100vh
       const section2Start = vh * 2; // 200vh
       const section2End = vh * 3; // 300vh
+      const containerWidth = 768;
+      const containerHeight = 1900;
+      const clusterCenterX = 360;
+      const clusterTopY = 1275;
+      const endScale = 0.35;
       
       return {
         initial: {
@@ -163,19 +177,27 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           pumpkinseed2: { x: 650, y: 720, rotation: -30, width: 95, height: 110 },
           date: { x: 650, y: 540, rotation: 20, width: 90, height: 170 },
           wallnutCenter: { x: 320, y: 390, rotation: -10, width: 200, height: 240 },
+          vector: { x: 0, y: 0, rotation: 0, width: containerWidth, height: containerHeight },
         },
         final: {
           // Final positions in Section 2 (200vh-300vh), positioned near bottom of section 2
-          pumpkinseed1: { x: 366, y: section2Start + 312, rotation: 15, width: 100, height: 120 },
-          wallnut1: { x: 301, y: section2Start + 240, rotation: -20, width: 120, height: 130 },
-          sunflowerseed1: { x: 303, y: section2Start + 500, rotation: 25, width: 135, height: 120 },
-          sunflowershell: { x: 331, y: section2Start + 775, rotation: -25, width: 95, height: 140 },
-          sunflowerseed2: { x: 444, y: section2Start + 438, rotation: 20, width: 150, height: 100 },
-          pumpkinseed2: { x: 415, y: section2Start + 367, rotation: -30, width: 120, height: 95 },
-          wallnutCenter: { x: 386, y: section2Start + 520, rotation: -10, width: 70, height: 100 },
+          pumpkinseed1: { x: 366, y: section2Start + 412, rotation: 15, width: 100, height: 120 },
+          wallnut1: { x: 301, y: section2Start + 400, rotation: -20, width: 120, height: 130 },
+          sunflowerseed1: { x: 253, y: section2Start + 400, rotation: 25, width: 135, height: 120 },
+          sunflowershell: { x: 331, y: section2Start + 355, rotation: -25, width: 95, height: 140 },
+          sunflowerseed2: { x: 444, y: section2Start + 408, rotation: 20, width: 110, height: 100 },
+          pumpkinseed2: { x: 475, y: section2Start + 407, rotation: 80, width: 120, height: 95 },
+          wallnutCenter: { x: 426, y: section2Start + 360, rotation: -10, width: 70, height: 100 },
           dateorange1: { x: 0, y: section2Start + 100, rotation: -15, width: 130, height: 180 },
           dateorange2: { x: 650, y: section2Start + 600, rotation: 30, width: 150, height: 140 },
           date: { x: -120, y: section2Start + 580, rotation: 10, width: 140, height: 120 },
+          vector: { 
+            x: 50,
+            y: clusterTopY - 500,
+            rotation: 0,
+            width: containerWidth * 0.20,
+            height: containerHeight * 0.2,
+          },
         },
       };
     } else {
@@ -185,31 +207,39 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
       
       return {
         initial: {
-          pumpkinseed1: { x: 0, y: 646, rotation: 25, width: 216, height: 232 },
-          wallnut1: { x: 407, y: 660, rotation: -15, width: 209, height: 205 },
-          sunflowerseed1: { x: 447, y: 121, rotation: 35, width: 181, height: 164 },
-          dateorange1: { x: 0, y: 13, rotation: -20, width: 180, height: 373 },
-          dateorange2: { x: 916, y: 660, rotation: 30, width: 216, height: 258 },
-          sunflowershell: { x: 1109, y: 48, rotation: -25, width: 316, height: 376 },
-          sunflowerseed2: { x: 0, y: 330, rotation: 40, width: 115, height: 181 },
+          pumpkinseed1: { x: 0, y: 646, rotation: 25, width: 116, height: 132 },
+          wallnut1: { x: 407, y: 660, rotation: -15, width: 109, height: 105 },
+          sunflowerseed1: { x: 447, y: 121, rotation: 35, width: 81, height: 81 },
+          dateorange1: { x: 0, y: 13, rotation: -20, width: 180, height: 273 },
+          dateorange2: { x: 916, y: 660, rotation: 30, width: 116, height: 158 },
+          sunflowershell: { x: 1109, y: 48, rotation: -25, width: 216, height: 276 },
+          sunflowerseed2: { x: 0, y: 330, rotation: 40, width: 115, height: 100 },
           pumpkinseed2: { x: 1539, y: 555, rotation: -30, width: 159, height: 175 },
-          date: { x: 1549, y: 8, rotation: 20, width: 149, height: 269 },
-          wallnutCenter: { x: 681, y: 132, rotation: -10, width: 335, height: 379 },
+          date: { x: 1549, y: 8, rotation: 20, width: 149, height: 169 },
+          wallnutCenter: { x: 681, y: 132, rotation: -10, width: 235, height: 279 },
+          vector: { x: 0, y: 0, rotation: 0, width: 1698, height: 2946 },
         },
         final: {
           // Final positions in Section 2, positioned relative to section2Start (vh * 2 = 200vh)
           // Animation completes at 200vh, so nuts settle here when second section becomes visible
           // Positions are optimized to align with second section content (above footer, no gap)
-          pumpkinseed1: { x: 325, y: section2Start + 480, rotation: 15, width: 195, height: 229 },
-          wallnut1: { x: 180, y: section2Start + 478, rotation: -20, width: 229, height: 232 },
-          sunflowerseed1: { x: 186, y: section2Start + 494, rotation: 25, width: 106, height: 154 },
-          dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 237, height: 312 },
-          dateorange2: { x: 859, y: section2Start + 80, rotation: 30, width: 264, height: 309 },
-          sunflowershell: { x: 248, y: section2Start + 469, rotation: -25, width: 180, height: 260 },
-          sunflowerseed2: { x: 277, y: section2Start + 489, rotation: 20, width: 170, height: 182 },
-          pumpkinseed2: { x: 432, y: section2Start + 498, rotation: -30, width: 210, height: 188 },
-          date: { x: 1289, y: section2Start + 620, rotation: 10, width: 249, height: 279 },
-          wallnutCenter: { x: 368, y: section2Start + 490, rotation: -10, width: 208, height: 178 },
+          pumpkinseed1: { x: 425, y: section2Start + 270, rotation: 15, width: 95, height: 129 },
+          wallnut1: { x: 180, y: section2Start + 278, rotation: -20, width: 129, height: 132 },
+          sunflowerseed1: { x: 286, y: section2Start + 294, rotation: 25, width: 96, height: 94 },
+          dateorange1: { x: 0, y: section2Start + 30, rotation: -15, width: 137, height: 212 },
+          dateorange2: { x: 859, y: section2Start + 80, rotation: 30, width: 164, height: 209 },
+          sunflowershell: { x: 248, y: section2Start + 199, rotation: -25, width: 80, height: 160 },
+          sunflowerseed2: { x: 277, y: section2Start + 289, rotation: 20, width: 70, height: 82 },
+          pumpkinseed2: { x: 432, y: section2Start + 238, rotation: 40, width: 110, height: 88 },
+          date: { x: 1289, y: section2Start + 620, rotation: 10, width: 149, height: 179 },
+          wallnutCenter: { x: 298, y: section2Start + 190, rotation: -10, width: 108, height: 78 },
+          vector: { 
+            x: -550, 
+            y: 950, 
+            rotation: 0, 
+            width: 598 * 0.35, 
+            // height: 246 * 0.35 
+          },
         },
       };
     }
