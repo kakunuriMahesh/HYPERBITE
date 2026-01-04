@@ -290,8 +290,11 @@ const DatesTimeline = ({
       >
         <div
           style={{
-            fontFamily: "'Permanent_Marker-Regular', Helvetica",
-            fontSize: breakpoint === "mobile" ? "24px" : "54px",
+            // fontFamily: "'Permanent_Marker-Regular', Helvetica",
+            // fontSize: breakpoint === "mobile" ? "24px" : "54px",
+            // lineHeight: "1.05",
+            fontSize: breakpoint === "mobile" ? "24px" : breakpoint === "tablet" ? "36px" : "74px",
+            fontFamily: "'Montserrat', 'Oswald', 'Permanent Marker', Arial, sans-serif",
             lineHeight: "1.05",
           }}
         >
@@ -302,7 +305,7 @@ const DatesTimeline = ({
             marginTop: "12px",
             maxWidth: breakpoint === "mobile" ? "100%" : "520px",
             fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-            fontSize: breakpoint === "mobile" ? "14px" : "22px",
+            fontSize: breakpoint === "mobile" ? "14px" : breakpoint === "tablet" ? "18px" : "24px",
             lineHeight: "1.1",
           }}
         >
@@ -346,8 +349,11 @@ const DatesTimeline = ({
       >
         <div
           style={{
-            fontFamily: "'Permanent_Marker-Regular', Helvetica",
-            fontSize: breakpoint === "mobile" ? "24px" : "54px",
+            // fontFamily: "'Permanent_Marker-Regular', Helvetica",
+            // fontSize: breakpoint === "mobile" ? "24px" : "54px",
+            // lineHeight: "1.05",
+            fontSize: breakpoint === "mobile" ? "24px" : breakpoint === "tablet" ? "36px" : "74px",
+            fontFamily: "'Montserrat', 'Oswald', 'Permanent Marker', Arial, sans-serif",
             lineHeight: "1.05",
           }}
         >
