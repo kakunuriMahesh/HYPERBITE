@@ -122,16 +122,16 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
       
       return {
         initial: {
-          pumpkinseed1: { x: 0, y: 78, rotation: 25, width: 97, height: 96 },
-          wallnut1: { x: 130, y: 15, rotation: -25, width: 117, height: 175 },
-          sunflowerseed1: { x: 121, y: 294, rotation: 35, width: 80, height: 72 },
-          dateorange1: { x: 290, y: 100, rotation: -20, width: 98, height: 187 },
-          dateorange2: { x: 321, y: 966, rotation: 30, width: 81, height: 122 },
-          sunflowershell: { x: 267, y: 231, rotation: -25, width: 135, height: 228 },
-          sunflowerseed2: { x: 0, y: 541, rotation: 40, width: 124, height: 181 },
-          pumpkinseed2: { x: 281, y: 805, rotation: -30, width: 116, height: 92 },
-          date: { x: 95, y: 800, rotation: 20, width: 117, height: 165 },
-          wallnutCenter: { x: 88, y: 299, rotation: -10, width: 146, height: 165 },
+          pumpkinseed1: { x: 0, y: 78, rotation: 25, width: 57, height: 56 },
+          wallnut1: { x: 130, y: 15, rotation: -25, width: 77, height: 135 },
+          sunflowerseed1: { x: 321, y: 494, rotation: 35, width: 50, height: 52 },
+          dateorange1: { x: 290, y: 100, rotation: -20, width: 58, height: 97 },
+          dateorange2: { x: 321, y: 966, rotation: 30, width: 51, height: 62 },
+          sunflowershell: { x: 267, y: 231, rotation: -25, width: 75, height: 128 },
+          sunflowerseed2: { x: 0, y: 541, rotation: 40, width: 64, height: 91 },
+          pumpkinseed2: { x:151, y: 455, rotation: -30, width: 66, height: 72 },
+          date: { x: 95, y: 800, rotation: 20, width: 67, height: 85 },
+          wallnutCenter: { x: 88, y: 599, rotation: -10, width: 86, height: 85 },
           vector: { x: 0, y: 0, rotation: 0, width: 502, height: 874 },
         },
         // final: {
@@ -163,7 +163,7 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           pumpkinseed2: { x: 200, y: section2Start + 298, rotation: -30, width: 0, height: 0 },
           wallnutCenter: { x: 170, y: section2Start + 290, rotation: -10, width: 0, height: 0 },
           dateorange1: { x: 0, y: section2Start + 160, rotation: -15, width: 62, height: 73 },
-          dateorange2: { x: 310, y: section2Start + 380, rotation: 30, width: 150, height: 240 },
+          dateorange2: { x: 310, y: section2Start + 380, rotation: 30, width: 50, height: 40 },
           date: { x: 0, y: section2Start + 420, rotation: 10, width: 49, height: 105 },
           vector: { x: 0, y: 1269, rotation: 0, width: 0, height: 0 }
         },

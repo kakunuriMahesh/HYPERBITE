@@ -107,7 +107,7 @@ const Navbar = () => {
           left: 0,
           width: "100%",
           zIndex: 1000,
-          padding: breakpoint === "mobile" ? "12px 16px" : "82px 120px",
+          padding: breakpoint === "mobile" ? "12px 16px" : "22px 120px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -125,10 +125,15 @@ const Navbar = () => {
             color: "#000",
           }}
         >
-          <img
+          {/* <img
             src="/assets/Logo.png"
             alt="Hyper bite"
             style={{ height: breakpoint === "mobile" ? "50px" : "60px" }}
+          /> */}
+          <img
+            src="/assets/Hyper_Bite_Logo.png"
+            alt="Hyper bite"
+            style={{ height: breakpoint === "mobile" ? "80px" : "100px" }}
           />
         </div>
 
@@ -226,7 +231,7 @@ const Navbar = () => {
                 transition: `opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s`,
               }}
             >
-              Hyper bite
+              {/* Hyper bite */}
             </div>
 
             <div
@@ -234,6 +239,7 @@ const Navbar = () => {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-around",
+                marginTop: breakpoint === "mobile" ? "30px" : "35px",
               }}
             >
               {/* Navigation Links */}

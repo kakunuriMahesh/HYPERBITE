@@ -45,6 +45,134 @@ const ProductDetails = () => {
 
   const images = product?.images || (product?.image ? [product.image] : []);
 
+  // Related products/variations based on product type
+  const getRelatedProducts = () => {
+    const baseVariations = {
+      nuts: [
+        {
+          id: 'nuts-salted',
+          name: 'Salted Nuts Mix',
+          description: 'Premium mixed nuts with a perfect touch of salt.',
+          price: '65 RS',
+          image: '/assets/wallnut.webp',
+          badge: 'Salted',
+        },
+        {
+          id: 'nuts-unsalted',
+          name: 'Unsalted Nuts Mix',
+          description: 'Pure natural nuts without any added salt.',
+          price: '60 RS',
+          image: '/assets/pumpkinseed.webp',
+          badge: 'Unsalted',
+        },
+        {
+          id: 'nuts-pack8',
+          name: 'Nuts Mix - Pack of 8',
+          description: 'Get 8 packs and save more! Perfect for families.',
+          price: '450 RS',
+          image: '/assets/sunflowerseed.webp',
+          badge: 'Pack of 8',
+        },
+        {
+          id: 'nuts-honey',
+          name: 'Honey Roasted Nuts',
+          description: 'Sweet and crunchy honey roasted nuts mix.',
+          price: '70 RS',
+          image: '/assets/dateorange.webp',
+          badge: 'Honey',
+        },
+      ],
+      dates: [
+        {
+          id: 'dates-ajwa',
+          name: 'Ajwa Dates',
+          description: 'Premium Ajwa dates, known for their soft texture.',
+          price: '80 RS',
+          image: '/assets/date.webp',
+          badge: 'Ajwa',
+        },
+        {
+          id: 'dates-khalas',
+          name: 'Khalas Dates',
+          description: 'Sweet and tender Khalas dates.',
+          price: '65 RS',
+          image: '/assets/dateorange.webp',
+          badge: 'Khalas',
+        },
+        {
+          id: 'dates-pack8',
+          name: 'Dates - Pack of 8',
+          description: 'Get 8 packs of premium dates and save!',
+          price: '480 RS',
+          image: '/assets/date.webp',
+          badge: 'Pack of 8',
+        },
+        {
+          id: 'dates-medjool',
+          name: 'Medjool Dates',
+          description: 'Large and luscious Medjool dates.',
+          price: '90 RS',
+          image: '/assets/date.webp',
+          badge: 'Medjool',
+        },
+      ],
+      seeds: [
+        {
+          id: 'seeds-sunflower',
+          name: 'Sunflower Seeds',
+          description: 'Premium roasted sunflower seeds.',
+          price: '45 RS',
+          image: '/assets/sunflowerseed.webp',
+          badge: 'Sunflower',
+        },
+        {
+          id: 'seeds-pumpkin',
+          name: 'Pumpkin Seeds',
+          description: 'Crunchy and nutritious pumpkin seeds.',
+          price: '50 RS',
+          image: '/assets/pumpkinseed.webp',
+          badge: 'Pumpkin',
+        },
+        {
+          id: 'seeds-pack8',
+          name: 'Seeds Mix - Pack of 8',
+          description: 'Mixed seeds collection in pack of 8.',
+          price: '360 RS',
+          image: '/assets/sunflowershell.webp',
+          badge: 'Pack of 8',
+        },
+        {
+          id: 'seeds-mixed',
+          name: 'Mixed Seeds',
+          description: 'Variety pack with all seed types.',
+          price: '60 RS',
+          image: '/assets/sunflowerseed.webp',
+          badge: 'Mixed',
+        },
+      ],
+    };
+
+    return baseVariations[productId] || [];
+  };
+
+  const handleProductSelect = (variation) => {
+    // Update the product with variation data
+    const updatedProduct = {
+      ...product,
+      name: variation.name,
+      description: variation.description,
+      price: variation.price,
+      image: variation.image,
+      images: [variation.image, ...(product.images || []).slice(1)],
+    };
+    setProduct(updatedProduct);
+    setSelectedImageIndex(0);
+    // Scroll to top of product section
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const relatedProducts = getRelatedProducts();
+
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', paddingTop: '70px' }}>
       <Navbar />
@@ -197,6 +325,151 @@ const ProductDetails = () => {
             </button>
           </div>
         </div>
+
+        {/* Related Products/Variations Section */}
+        {relatedProducts.length > 0 && (
+          <div style={{ marginBottom: '60px' }}>
+            <h2
+              style={{
+                fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                fontSize: breakpoint === 'mobile' ? '32px' : '40px',
+                marginBottom: '24px',
+                color: '#000',
+              }}
+            >
+              Available Variations
+            </h2>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns:
+                  breakpoint === 'mobile'
+                    ? '1fr'
+                    : breakpoint === 'tablet'
+                    ? 'repeat(2, 1fr)'
+                    : 'repeat(4, 1fr)',
+                gap: '20px',
+              }}
+            >
+              {relatedProducts.map((variation) => (
+                <div
+                  key={variation.id}
+                  onClick={() => handleProductSelect(variation)}
+                  style={{
+                    cursor: 'pointer',
+                    padding: '16px',
+                    backgroundColor: '#fff',
+                    borderRadius: '12px',
+                    border: '2px solid #eee',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#000';
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#eee';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {/* Badge */}
+                  {variation.badge && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '8px',
+                        right: '8px',
+                        backgroundColor: '#000',
+                        color: '#fff',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                        fontSize: breakpoint === 'mobile' ? '12px' : '14px',
+                        zIndex: 10,
+                      }}
+                    >
+                      {variation.badge}
+                    </div>
+                  )}
+
+                  {/* Product Image */}
+                  <div
+                    style={{
+                      width: '100%',
+                      height: breakpoint === 'mobile' ? '150px' : '180px',
+                      marginBottom: '12px',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      backgroundColor: '#f9f9f9',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <img
+                      src={variation.image}
+                      alt={variation.name}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        padding: '8px',
+                      }}
+                    />
+                  </div>
+
+                  {/* Product Name */}
+                  <h3
+                    style={{
+                      fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                      fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                      marginBottom: '8px',
+                      color: '#000',
+                      lineHeight: '1.2',
+                    }}
+                  >
+                    {variation.name}
+                  </h3>
+
+                  {/* Product Description */}
+                  <p
+                    style={{
+                      fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
+                      fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                      color: '#666',
+                      marginBottom: '12px',
+                      lineHeight: '1.4',
+                      flexGrow: 1,
+                    }}
+                  >
+                    {variation.description}
+                  </p>
+
+                  {/* Price */}
+                  <div
+                    style={{
+                      fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                      fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                      color: '#000',
+                      fontWeight: 'bold',
+                      marginTop: 'auto',
+                    }}
+                  >
+                    {variation.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Ingredients Section */}
         <div style={{ marginBottom: '60px' }}>
