@@ -410,9 +410,9 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
             backfaceVisibility: "hidden",
             ...(breakpoint === "mobile" || breakpoint === "tablet"
               ? {
-                  left: "50%",
-                  top: "1%",
-                  transform: "translateX(-50%)",
+                  left: "5%",
+                  top: "5%",
+                  transform: "translateX(-50%) rotate(40deg)",
                   width: "80%",
                   maxWidth: "200px",
                 }
@@ -421,6 +421,7 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
                   top: "5%",
                   width: "40%",
                   maxWidth: "400px",
+                  transform: "rotate(-45deg)",
                 }),
           }}
         />

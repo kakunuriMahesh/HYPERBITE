@@ -224,7 +224,7 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
     {
       id: 'nuts',
       name: 'Nuts Mix',
-      image: '/assets/wallnut.webp',
+      image: '/assets/rostedNuts.png',
     },
     {
       id: 'dates',

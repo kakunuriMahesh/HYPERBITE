@@ -1,407 +1,7 @@
-// ..😅okay but fix the dot fluid and small screen svg is not working
-
-// import React, { useRef, useState, useEffect } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { useGSAPContext } from "../hooks/useGSAPContext";
-
-// gsap.registerPlugin(ScrollTrigger);
-
-// const DOT_SIZE_DESKTOP = 36;
-// const DOT_SIZE_MOBILE = 24;
-
-// const TIMELINE_STEPS = [
-//   {
-//     progress: 0.28,
-//     label: "1. In a large, chilled bowl, combine very cold heavy cream",
-//     imageKey: "date1",
-//     color: "#000",
-//   },
-//   {
-//     progress: 0.46,
-//     label: "2. In a large, chilled bowl, combine very cold heavy cream",
-//     imageKey: "date2",
-//     color: "#FFD93D",
-//   },
-//   {
-//     progress: 0.68,
-//     label: "3. In a large, chilled bowl, combine very cold heavy cream",
-//     imageKey: "date3",
-//     color: "#6BCB77",
-//   },
-//   {
-//     progress: 0.88,
-//     label: "Final",
-//     imageKey: "date4",
-//     color: "#4D96FF",
-//     final: true,
-//   },
-// ];
-
-// const DatesTimeline = ({
-//   productConfig,
-//   onOpenDetails,
-//   breakpoint: propBreakpoint,
-// }) => {
-//   const wrapperRef = useRef(null);
-//   const svgRef = useRef(null);
-//   const pathRef = useRef(null);
-//   const dotRef = useRef(null);
-//   const itemRefs = useRef([]);
-//   const activeStepRef = useRef(-1);
-
-//   const [breakpoint, setBreakpoint] = useState(propBreakpoint || "desktop");
-//   const [dotSize, setDotSize] = useState(DOT_SIZE_DESKTOP);
-
-//   useEffect(() => {
-//     if (propBreakpoint) {
-//       setBreakpoint(propBreakpoint);
-//     }
-//   }, [propBreakpoint]);
-
-//   useEffect(() => {
-//     const updateBreakpoint = () => {
-//       const viewportWidth = window.innerWidth;
-//       if (viewportWidth < 768) {
-//         setBreakpoint("mobile");
-//         setDotSize(DOT_SIZE_MOBILE);
-//       } else if (viewportWidth < 1024) {
-//         setBreakpoint("tablet");
-//         setDotSize(DOT_SIZE_MOBILE);
-//       } else {
-//         setBreakpoint("desktop");
-//         setDotSize(DOT_SIZE_DESKTOP);
-//       }
-//     };
-//     updateBreakpoint();
-//     window.addEventListener("resize", updateBreakpoint);
-//     return () => window.removeEventListener("resize", updateBreakpoint);
-//   }, [propBreakpoint]);
-
-//   // Dynamically set wrapper height based on SVG rendered height
-//   useEffect(() => {
-//     const svg = svgRef.current;
-//     const wrapper = wrapperRef.current;
-//     if (svg && wrapper) {
-//       const updateHeight = () => {
-//         const scaledHeight = svg.clientHeight;
-//         wrapper.style.height = `${scaledHeight + window.innerHeight * 2}px`; // Extra padding to ensure full progress
-//       };
-//       updateHeight();
-//       window.addEventListener("resize", updateHeight);
-//       return () => window.removeEventListener("resize", updateHeight);
-//     }
-//   }, [breakpoint]);
-
-//   useGSAPContext(() => {
-//     const wrapper = wrapperRef.current;
-//     const svg = svgRef.current;
-//     const path = pathRef.current;
-//     const dot = dotRef.current;
-
-//     if (!wrapper || !svg || !path || !dot) return;
-
-//     const pathLength = path.getTotalLength();
-
-//     gsap.set(path, {
-//       strokeDasharray: pathLength,
-//       strokeDashoffset: pathLength,
-//     });
-
-//     ScrollTrigger.create({
-//       trigger: wrapper,
-//       start: breakpoint === "mobile" ? "top 80%" : "top 70%",
-//       end: "bottom bottom",
-//       scrub: 1,
-//       invalidateOnRefresh: true,
-
-//       onUpdate: (self) => {
-//         const p = self.progress;
-
-//         gsap.set(path, {
-//           strokeDashoffset: pathLength * (1 - p),
-//         });
-
-//         const pt = path.getPointAtLength(p * pathLength);
-//         const sp = svg.createSVGPoint();
-//         sp.x = pt.x;
-//         sp.y = pt.y;
-//         const screenPt = sp.matrixTransform(svg.getScreenCTM());
-
-//         const wrapperRect = wrapper.getBoundingClientRect();
-//         const x = screenPt.x - wrapperRect.left;
-//         const y = screenPt.y - wrapperRect.top;
-
-//         // Professional dot movement without jelly/rotate
-//         gsap.set(dot, {
-//           left: x - dotSize / 2,
-//           top: y - dotSize / 2,
-//         });
-
-//         TIMELINE_STEPS.forEach((step, i) => {
-//           if (p >= step.progress && activeStepRef.current !== i) {
-//             activeStepRef.current = i;
-//             gsap.to(dot, {
-//               backgroundColor: step.color,
-//               duration: 0.3,
-//               ease: "power2.out",
-//             });
-//           }
-//         });
-
-//         TIMELINE_STEPS.forEach((step, i) => {
-//           const el = itemRefs.current[i];
-//           if (!el) return;
-
-//           const active = p >= step.progress;
-
-//           const mp = path.getPointAtLength(step.progress * pathLength);
-//           const sp2 = svg.createSVGPoint();
-//           sp2.x = mp.x;
-//           sp2.y = mp.y;
-//           const screen2 = sp2.matrixTransform(svg.getScreenCTM());
-
-//           const isLeft = i % 2 === 1;
-//           const isSmall = breakpoint !== "desktop";
-//           const offsetX = isLeft ? (isSmall ? -80 : -140) : isSmall ? 16 : 40;
-//           const offsetY = isSmall ? -8 : -10;
-
-//           gsap.set(el, {
-//             left: screen2.x - wrapperRect.left + offsetX,
-//             top: screen2.y - wrapperRect.top + offsetY,
-//           });
-
-//           gsap.to(el, {
-//             autoAlpha: active ? 1 : 0,
-//             scale: active ? 1 : 0.85,
-//             duration: 0.35,
-//             ease: "power3.out",
-//           });
-//         });
-//       },
-//     });
-//   }, [breakpoint, dotSize]);
-
-//   return (
-//     <section
-//       ref={wrapperRef}
-//       style={{
-//         position: "relative",
-//         width: "100%",
-//         marginTop: breakpoint === "mobile" ? "100px" : "200px",
-//         ...(breakpoint !== "mobile"
-//           ? { maxWidth: "1152px", marginLeft: "auto", marginRight: "auto" }
-//           : {}),
-//       }}
-//     >
-//       <svg
-//         ref={svgRef}
-//         // width="1202"
-//         // height="3971"
-//         viewBox="0 0 1202 3971"
-//         fill="none"
-//         // xmlns="http://www.w3.org/2000/svg"
-//         style={{ width: "100%", height: "100%", position: "absolute" }}
-//       >
-//         <path
-//           ref={pathRef}
-//           d="M5.02539 2.20508C-2.14127 11.0384 12.3254 68.1051 127.525 225.705C242.725 383.305 356.525 465.372 399.025 486.705L521.525 635.705L676.025 774.205L745.525 966.205C722.192 1015.87 705.425 1096.01 825.025 1019.21C974.525 923.205 1006.03 838.205 1043.53 928.705C1081.03 1019.21 1091.53 1072.71 995.525 1072.71C899.525 1072.71 783.025 1051.21 852.025 1125.71C907.225 1185.31 970.692 1203.87 995.525 1205.71H1081.03C1096.86 1196.87 1128.53 1157.91 1128.53 1072.71C1128.53 966.205 1118.53 1013.71 1081.03 928.705C970.225 890.305 882.192 912.705 852.025 928.705L697.525 1152.21L676.025 1242.71L623.025 1354.71L559.025 1471.71C512.692 1478.87 440.325 1511.31 521.525 1583.71C900.725 1643.31 828.859 1807.21 745.525 1881.71L623.025 1913.71L399.025 1945.71L250.025 2063.21V2105.71H287.525L346.025 2063.21L399.025 1999.21H473.525L458.025 2041.71L399.025 2063.21L346.025 2105.71L356.025 2126.71H411.025L467.025 2105.71L495.025 2073.21L509.525 2053.71L473.525 2063.21L426.525 2085.21L387.525 2092.71L458.025 2053.71L509.525 2034.21L551.025 2041.71L595.025 2034.21H645.025L682.525 2041.71L645.025 2085.21L589.025 2088.71C586.192 2086.87 574.625 2081.21 551.025 2073.21C527.425 2065.21 547.859 2080.21 561.025 2088.71L589.025 2092.71L645.025 2147.21L634.025 2179.21H561.025L509.525 2135.21H467.025L411.025 2158.21L380.525 2214.21C417.859 2329.21 530.525 2552.41 682.525 2525.21C834.525 2498.01 1008.86 2570.54 1077.03 2610.21L1051.53 2776.21L706.525 2931.71C492.359 2989.54 142.825 3148.81 458.025 3323.21C852.025 3541.21 1129.03 3417.21 1183.03 3665.71C1226.23 3864.51 1164.69 3976.54 1128.53 4007.71"
-//           stroke="black"
-//           strokeWidth="7"
-//           strokeLinecap="round"
-//         />
-//       </svg>
-
-//       {/* JELLY DOT */}
-//       <div
-//         ref={dotRef}
-//         style={{
-//           width: dotSize,
-//           height: dotSize,
-//           borderRadius: "50%",
-//           backgroundColor: "#000",
-//           position: "absolute",
-//           zIndex: 5,
-//         }}
-//       />
-
-//       {/* TIMELINE ITEMS */}
-//       {TIMELINE_STEPS.map((step, i) => (
-//         <div
-//           key={i}
-//           ref={(el) => (itemRefs.current[i] = el)}
-//           style={{
-//             position: "absolute",
-//             opacity: 0,
-//             display: "flex",
-//             alignItems: "center",
-//             gap: "8px",
-//             zIndex: 4,
-//             pointerEvents: "none",
-//           }}
-//         >
-//           {breakpoint === "mobile" ? (
-//             <div className="flex flex-col items-start gap-2">
-//               <img
-//                 src={productConfig.images[step.imageKey]}
-//                 width={step.final ? 48 : 80}
-//                 alt=""
-//               />
-//               <span>{step.label}</span>
-//             </div>
-//           ) : (
-//             <div className="flex items-center gap-2">
-//               <img
-//                 src={productConfig.images[step.imageKey]}
-//                 width={step.final ? 48 : 80}
-//                 alt=""
-//               />
-//               <span>{step.label}</span>
-//             </div>
-//           )}
-//         </div>
-//       ))}
-
-//       {/* HEADINGS / PARAGRAPH / QUOTE */}
-//       <div
-//         style={{
-//           position: "absolute",
-//           top: "0",
-//           left: "8%",
-//           color: "#000",
-//           zIndex: 4,
-//         }}
-//       >
-//         <div
-//           style={{
-//             fontFamily: "'Permanent_Marker-Regular', Helvetica",
-//             fontSize: breakpoint === "mobile" ? "24px" : "54px",
-//             lineHeight: "1.05",
-//           }}
-//         >
-//           {productConfig.heading2}
-//         </div>
-//         <p
-//           style={{
-//             marginTop: "12px",
-//             maxWidth: breakpoint === "mobile" ? "100%" : "520px",
-//             fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-//             fontSize: breakpoint === "mobile" ? "14px" : "22px",
-//             lineHeight: "1.1",
-//           }}
-//         >
-//           {productConfig.paragraph2}
-//         </p>
-//       </div>
-
-//       <div
-//         style={{
-//           position: "absolute",
-//           top: "50%",
-//           left: "50%",
-//           transform: "translate(-50%, -50%)",
-//           color: "#000",
-//           zIndex: 4,
-//           textAlign: "center",
-//           maxWidth: breakpoint === "mobile" ? "100%" : "600px",
-//           padding: breakpoint !== "desktop" ? "80px 20px" : "150px 20px",
-//         }}
-//       >
-//         <div
-//           style={{
-//             fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-//             fontSize: breakpoint === "mobile" ? "18px" : "28px",
-//             lineHeight: "1.3",
-//             fontStyle: "italic",
-//           }}
-//         >
-//           "
-//           {productConfig.quote ||
-//             "Nature's sweetest gift, packed with energy and tradition"}
-//           "
-//         </div>
-//       </div>
-
-//       <div
-//         style={{
-//           position: "absolute",
-//           bottom: "6%",
-//           left: "8%",
-//           color: "#000",
-//           zIndex: 4,
-//         }}
-//       >
-//         <div
-//           style={{
-//             fontFamily: "'Permanent_Marker-Regular', Helvetica",
-//             fontSize: breakpoint === "mobile" ? "24px" : "54px",
-//             lineHeight: "1.05",
-//           }}
-//         >
-//           {productConfig.heading2}
-//         </div>
-//         <p
-//           style={{
-//             marginTop: "12px",
-//             maxWidth: breakpoint === "mobile" ? "100%" : "520px",
-//             fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-//             fontSize: breakpoint === "mobile" ? "14px" : "22px",
-//             lineHeight: "1.1",
-//           }}
-//         >
-//           {productConfig.paragraph2}
-//         </p>
-//         {onOpenDetails && (
-//           <button
-//             onClick={onOpenDetails}
-//             style={{
-//               marginTop: "20px",
-//               padding:
-//                 breakpoint === "mobile"
-//                   ? "5px 10px"
-//                   : breakpoint === "tablet"
-//                   ? "12px 24px"
-//                   : "14px 28px",
-//               fontFamily: "'Permanent_Marker-Regular', Helvetica",
-//               fontSize:
-//                 breakpoint === "mobile"
-//                   ? "12px"
-//                   : breakpoint === "tablet"
-//                   ? "20px"
-//                   : "22px",
-//               backgroundColor: "#000",
-//               color: "#fff",
-//               border: "none",
-//               borderRadius: "8px",
-//               cursor: "pointer",
-//               transition: "all 0.3s ease",
-//             }}
-//             onMouseEnter={(e) => {
-//               e.target.style.backgroundColor = "#333";
-//               e.target.style.transform = "scale(1.05)";
-//             }}
-//             onMouseLeave={(e) => {
-//               e.target.style.backgroundColor = "#000";
-//               e.target.style.transform = "scale(1)";
-//             }}
-//           >
-//             Check Details
-//           </button>
-//         )}
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default DatesTimeline;
-
-//
-
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAPContext } from "../hooks/useGSAPContext";
-
 gsap.registerPlugin(ScrollTrigger);
 
 const DOT_SIZE_DESKTOP = 36;
@@ -446,7 +46,6 @@ const DatesTimeline = ({
   const dotRef = useRef(null);
   const itemRefs = useRef([]);
   const activeStepRef = useRef(-1);
-
   const [breakpoint, setBreakpoint] = useState(propBreakpoint || "desktop");
   const [dotSize, setDotSize] = useState(DOT_SIZE_DESKTOP);
 
@@ -475,22 +74,20 @@ const DatesTimeline = ({
     return () => window.removeEventListener("resize", updateBreakpoint);
   }, [propBreakpoint]);
 
-  // 🎯 NEW: Properly calculate SVG height from aspect ratio + make wrapper tall enough for full completion
+  // Properly calculate SVG height from aspect ratio + make wrapper tall enough
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const svg = svgRef.current;
     if (!svg || !wrapper) return;
 
     const updateDimensions = () => {
-      const aspectRatio = breakpoint === "mobile" ? 4971 / 1202 : 2971 / 1202; // original SVG ratio
+      const aspectRatio = breakpoint === "mobile" ? 4971 / 1202 : 3930 / 990; // Updated for new viewBox
       const svgWidth = svg.clientWidth;
       const calculatedSvgHeight = svgWidth * aspectRatio;
 
-      // Set exact SVG height (so path scales correctly)
       svg.style.height = `${calculatedSvgHeight}px`;
 
-      // Make wrapper taller than SVG to allow full scroll progress + extra for loops/gaps
-      const extraScroll = window.innerHeight * 1; // enough to cover loops and keep dot visible
+      const extraScroll = window.innerHeight * 1;
       wrapper.style.height = `${calculatedSvgHeight + extraScroll}px`;
     };
 
@@ -514,21 +111,22 @@ const DatesTimeline = ({
       strokeDashoffset: pathLength,
     });
 
-    // 🎯 NEW: Start animation only after user scrolls into the section
+    // 🎯 Jelly/Fluid effect: use scrub with lag (0.5 seconds) for smooth, wobbly follow
     ScrollTrigger.create({
       trigger: wrapper,
-      start: "top 60%", // 🎯 Mobile/desktop: animation starts when section enters viewport
-      end: "bottom bottom+=50%", // 🎯 Extra end buffer to ensure full path completion even with loops
-      scrub: 1,
+      start: "top 60%",
+      end: "bottom bottom+=50%",
+      scrub: 0.5, // ← Key for jelly-like lag (instead of 1)
       invalidateOnRefresh: true,
-
       onUpdate: (self) => {
         const p = self.progress;
 
+        // Path reveal (smooth with scrub lag)
         gsap.set(path, {
           strokeDashoffset: pathLength * (1 - p),
         });
 
+        // Dot position calculation
         const pt = path.getPointAtLength(p * pathLength);
         const sp = svg.createSVGPoint();
         sp.x = pt.x;
@@ -536,25 +134,31 @@ const DatesTimeline = ({
         const screenPt = sp.matrixTransform(svg.getScreenCTM());
 
         const wrapperRect = wrapper.getBoundingClientRect();
-        const x = screenPt.x - wrapperRect.left;
-        const y = screenPt.y - wrapperRect.top;
+        const targetX = screenPt.x - wrapperRect.left - dotSize / 2;
+        const targetY = screenPt.y - wrapperRect.top - dotSize / 2;
 
-        gsap.set(dot, {
-          left: x - dotSize / 2,
-          top: y - dotSize / 2,
+        // 🎯 Fluid jelly motion: animate dot with elastic.out for squishy feel
+        gsap.to(dot, {
+          left: targetX,
+          top: targetY,
+          ease: "elastic.out(1, 0.3)", // Squishy, bouncy follow
+          duration: 1,
+          overwrite: "auto",
         });
 
+        // Color change (smooth transition)
         TIMELINE_STEPS.forEach((step, i) => {
           if (p >= step.progress && activeStepRef.current !== i) {
             activeStepRef.current = i;
             gsap.to(dot, {
               backgroundColor: step.color,
-              duration: 0.3,
+              duration: 0.4,
               ease: "power2.out",
             });
           }
         });
 
+        // Timeline items (text + images)
         TIMELINE_STEPS.forEach((step, i) => {
           const el = itemRefs.current[i];
           if (!el) return;
@@ -600,41 +204,15 @@ const DatesTimeline = ({
           : {}),
       }}
     >
-      {/* 🎯 SVG: Full width, height calculated from aspect ratio, positioned with top gap */}
-      {/* <svg
-        ref={svgRef}
-        viewBox="0 0 1202 3971"
-        preserveAspectRatio="xMidYMin meet" // 🎯 Keeps path starting near top but scales correctly
-        style={{
-          width: "100%",
-          height: "auto", // 🎯 Let JS set exact height via aspect ratio
-          position: "absolute",
-          top: breakpoint === "mobile" ? "150px" : "300px", // 🎯 Gap at top so path doesn't start immediately at very top
-          left: 0,
-          pointerEvents: "none",
-        }}
-        fill="none"
-      >
-        <path
-          ref={pathRef}
-          d="M5.02539 2.20508C-2.14127 11.0384 12.3254 68.1051 127.525 225.705C242.725 383.305 356.525 465.372 399.025 486.705L521.525 635.705L676.025 774.205L745.525 966.205C722.192 1015.87 705.425 1096.01 825.025 1019.21C974.525 923.205 1006.03 838.205 1043.53 928.705C1081.03 1019.21 1091.53 1072.71 995.525 1072.71C899.525 1072.71 783.025 1051.21 852.025 1125.71C907.225 1185.31 970.692 1203.87 995.525 1205.71H1081.03C1096.86 1196.87 1128.53 1157.91 1128.53 1072.71C1128.53 966.205 1118.53 1013.71 1081.03 928.705C970.225 890.305 882.192 912.705 852.025 928.705L697.525 1152.21L676.025 1242.71L623.025 1354.71L559.025 1471.71C512.692 1478.87 440.325 1511.31 521.525 1583.71C900.725 1643.31 828.859 1807.21 745.525 1881.71L623.025 1913.71L399.025 1945.71L250.025 2063.21V2105.71H287.525L346.025 2063.21L399.025 1999.21H473.525L458.025 2041.71L399.025 2063.21L346.025 2105.71L356.025 2126.71H411.025L467.025 2105.71L495.025 2073.21L509.525 2053.71L473.525 2063.21L426.525 2085.21L387.525 2092.71L458.025 2053.71L509.525 2034.21L551.025 2041.71L595.025 2034.21H645.025L682.525 2041.71L645.025 2085.21L589.025 2088.71C586.192 2086.87 574.625 2081.21 551.025 2073.21C527.425 2065.21 547.859 2080.21 561.025 2088.71L589.025 2092.71L645.025 2147.21L634.025 2179.21H561.025L509.525 2135.21H467.025L411.025 2158.21L380.525 2214.21C417.859 2329.21 530.525 2552.41 682.525 2525.21C834.525 2498.01 1008.86 2570.54 1077.03 2610.21L1051.53 2776.21L706.525 2931.71C492.359 2989.54 142.825 3148.81 458.025 3323.21C852.025 3541.21 1129.03 3417.21 1183.03 3665.71C1226.23 3864.51 1164.69 3976.54 1128.53 4007.71"
-          stroke="black"
-          strokeWidth="7"
-          strokeLinecap="round"
-        />
-      </svg> */}
-
       <svg
         ref={svgRef}
-        // width="990"
-        // height="3930"
         viewBox="0 0 990 3930"
         preserveAspectRatio="xMidYMin meet"
         style={{
           width: "100%",
-          height: "auto", // 🎯 Let JS set exact height via aspect ratio
+          height: "auto",
           position: "absolute",
-          top: breakpoint === "mobile" ? "150px" : "300px", // 🎯 Gap at top so path doesn't start immediately at very top
+          top: breakpoint === "mobile" ? "150px" : "300px",
           left: 0,
           pointerEvents: "none",
         }}
@@ -649,7 +227,7 @@ const DatesTimeline = ({
         />
       </svg>
 
-      {/* JELLY DOT */}
+      {/* 🎯 JELLY DOT - now with fluid follow effect */}
       <div
         ref={dotRef}
         style={{
@@ -659,6 +237,7 @@ const DatesTimeline = ({
           backgroundColor: "#000",
           position: "absolute",
           zIndex: 5,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.3)", // optional extra jelly feel
         }}
       />
 
@@ -752,10 +331,7 @@ const DatesTimeline = ({
             fontStyle: "italic",
           }}
         >
-          "
-          {productConfig.quote ||
-            "Nature's sweetest gift, packed with energy and tradition"}
-          "
+          "{productConfig.quote || "Nature's sweetest gift, packed with energy and tradition"}"
         </div>
       </div>
 
@@ -831,3 +407,6 @@ const DatesTimeline = ({
 };
 
 export default DatesTimeline;
+
+
+

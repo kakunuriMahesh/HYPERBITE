@@ -79,6 +79,8 @@ export const productConfigs = {
       vector8: '/assets/Vector-8.svg',
       vector7: '/assets/Vector-7.svg',
       sunflowerseed: '/assets/sunflowerseed.webp',
+      badham: '/assets/badham.png',
+      kaju: '/assets/kaju.png',
     },
     vector: '/assets/Vector 2.png',
     // Animation configuration - Seeds form a vertical cascade pattern (center)
@@ -233,20 +235,42 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
           wallnutCenter: { x: 681, y: 132, rotation: -10, width: 235, height: 279 },
           vector: { x: 0, y: 0, rotation: 0, width: 1698, height: 2946 },
         },
+        // final: {
+        //   // Final positions in Section 2, positioned relative to section2Start (vh * 2 = 200vh)
+        //   // Animation completes at 200vh, so nuts settle here when second section becomes visible
+        //   // Positions are optimized to align with second section content (above footer, no gap)
+        //   pumpkinseed1: { x: 425, y: section2Start + 270, rotation: 15, width: 95, height: 129 },
+        //   wallnut1: { x: 180, y: section2Start + 278, rotation: -20, width: 129, height: 132 },
+        //   sunflowerseed1: { x: 286, y: section2Start + 294, rotation: 25, width: 96, height: 94 },
+        //   dateorange1: { x: 0, y: section2Start + 30, rotation: -15, width: 137, height: 212 },
+        //   dateorange2: { x: 859, y: section2Start + 80, rotation: 30, width: 164, height: 209 },
+        //   sunflowershell: { x: 248, y: section2Start + 199, rotation: -25, width: 80, height: 160 },
+        //   sunflowerseed2: { x: 277, y: section2Start + 289, rotation: 20, width: 70, height: 82 },
+        //   pumpkinseed2: { x: 432, y: section2Start + 238, rotation: 40, width: 110, height: 88 },
+        //   date: { x: 1289, y: section2Start + 620, rotation: 10, width: 149, height: 179 },
+        //   wallnutCenter: { x: 298, y: section2Start + 190, rotation: -10, width: 108, height: 78 },
+        //   vector: { 
+        //     x: -550, 
+        //     y: 950, 
+        //     rotation: 0, 
+        //     width: 598 * 0.35, 
+        //     // height: 246 * 0.35 
+        //   },
+        // },
         final: {
           // Final positions in Section 2, positioned relative to section2Start (vh * 2 = 200vh)
           // Animation completes at 200vh, so nuts settle here when second section becomes visible
           // Positions are optimized to align with second section content (above footer, no gap)
-          pumpkinseed1: { x: 425, y: section2Start + 270, rotation: 15, width: 95, height: 129 },
-          wallnut1: { x: 180, y: section2Start + 278, rotation: -20, width: 129, height: 132 },
-          sunflowerseed1: { x: 286, y: section2Start + 294, rotation: 25, width: 96, height: 94 },
+          pumpkinseed1: { x: 425, y: section2Start + 270, rotation: 15, width: 0, height: 0 },
+          wallnut1: { x: 180, y: section2Start + 278, rotation: -20, width: 0, height: 0 },
+          sunflowerseed1: { x: 286, y: section2Start + 294, rotation: 25, width: 0, height: 0 },
           dateorange1: { x: 0, y: section2Start + 30, rotation: -15, width: 137, height: 212 },
-          dateorange2: { x: 859, y: section2Start + 80, rotation: 30, width: 164, height: 209 },
-          sunflowershell: { x: 248, y: section2Start + 199, rotation: -25, width: 80, height: 160 },
-          sunflowerseed2: { x: 277, y: section2Start + 289, rotation: 20, width: 70, height: 82 },
-          pumpkinseed2: { x: 432, y: section2Start + 238, rotation: 40, width: 110, height: 88 },
+          dateorange2: { x: 859, y: section2Start - 200, rotation: 30, width: 164, height: 209 },
+          sunflowershell: { x: 248, y: section2Start + 199, rotation: -25, width: 0, height: 0 },
+          sunflowerseed2: { x: 277, y: section2Start + 289, rotation: 20, width: 0, height: 0 },
+          pumpkinseed2: { x: 432, y: section2Start + 238, rotation: 40, width: 0, height: 0 },
           date: { x: 1289, y: section2Start + 620, rotation: 10, width: 149, height: 179 },
-          wallnutCenter: { x: 298, y: section2Start + 190, rotation: -10, width: 108, height: 78 },
+          wallnutCenter: { x: 298, y: section2Start + 190, rotation: -10, width: 0, height: 0 },
           vector: { 
             x: -550, 
             y: 950, 

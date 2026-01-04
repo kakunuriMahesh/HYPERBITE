@@ -40,19 +40,13 @@ function HomePage() {
         onOpenDetails={handleOpenDetails}
       />
       {selectedProduct === 'nuts' && 
-        <>
-          <img
-            src="/assets/Comic_nuts.png"
-            alt="Comic nuts desktop"
-            className="hidden md:block w-full h-auto"
-          />
-
-          <img
-            src="/assets/Comic_nuts_mobile.png"
-            alt="Comic nuts mobile"
-            className="block md:hidden w-full h-auto"
-          />
-        </>
+        <div className="max-w-6xl mx-auto">
+          <picture>
+            <source srcSet="/assets/Comic_nuts.png" media="(min-width: 768px)" />
+            <source srcSet="/assets/Comic_nuts_mobile.png" media="(max-width: 767px)" />
+            <img src="/assets/Comic_nuts.png" alt="Comic nuts" />
+          </picture>
+        </div>
       }
     </>
   );
