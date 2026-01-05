@@ -21,18 +21,18 @@ const TIMELINE_STEPS = [
     color: "#FFD93D",
   },
   {
-    progress: 0.68,
+    progress: 0.84,
     label: "3. In a large, chilled bowl, combine very cold heavy cream",
     imageKey: "date3",
     color: "#6BCB77",
   },
-  {
-    progress: 0.88,
-    label: "Final",
-    imageKey: "date4",
-    color: "#4D96FF",
-    final: true,
-  },
+  // {
+  //   progress: 0.98,
+  //   label: "Final",
+  //   imageKey: "date4",
+  //   color: "#4D96FF",
+  //   final: true,
+  // },
 ];
 
 const DatesTimeline = ({
@@ -43,9 +43,19 @@ const DatesTimeline = ({
   const wrapperRef = useRef(null);
   const svgRef = useRef(null);
   const pathRef = useRef(null);
-  const dotRef = useRef(null);
+  const canvasRef = useRef(null);
   const itemRefs = useRef([]);
   const activeStepRef = useRef(-1);
+  const dotStateRef = useRef({
+    currentX: 0,
+    currentY: 0,
+    targetX: 0,
+    targetY: 0,
+    prevX: 0,
+    prevY: 0,
+    color: TIMELINE_STEPS[0]?.color || "#000",
+  });
+  const animationFrameRef = useRef(null);
   const [breakpoint, setBreakpoint] = useState(propBreakpoint || "desktop");
   const [dotSize, setDotSize] = useState(DOT_SIZE_DESKTOP);
 
@@ -96,13 +106,110 @@ const DatesTimeline = ({
     return () => window.removeEventListener("resize", updateDimensions);
   }, [breakpoint]);
 
+  // Drop animation loop
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Set canvas size (use device pixel ratio for crisp rendering)
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = dotSize * dpr;
+    canvas.height = dotSize * dpr;
+    canvas.style.width = `${dotSize}px`;
+    canvas.style.height = `${dotSize}px`;
+    
+    const ctx = canvas.getContext("2d");
+    ctx.scale(dpr, dpr);
+    
+    const state = dotStateRef.current;
+    const baseRadius = dotSize / 2;
+
+    const drawDrop = () => {
+      // Clear canvas
+      ctx.clearRect(0, 0, dotSize, dotSize);
+      
+      // Smooth position follow
+      const dx = state.targetX - state.currentX;
+      const dy = state.targetY - state.currentY;
+      state.currentX += dx * 0.2;
+      state.currentY += dy * 0.2;
+      
+      // Calculate velocity (speed and direction)
+      const velX = state.currentX - state.prevX;
+      const velY = state.currentY - state.prevY;
+      const velocity = Math.sqrt(velX * velX + velY * velY);
+      
+      // Store previous position
+      state.prevX = state.currentX;
+      state.prevY = state.currentY;
+      
+      // Initialize previous position if not set
+      if (state.prevX === 0 && state.prevY === 0 && state.currentX !== 0 && state.currentY !== 0) {
+        state.prevX = state.currentX;
+        state.prevY = state.currentY;
+      }
+
+      // Calculate stretch based on velocity (faster = more stretched)
+      // Max stretch is 2x the radius when moving very fast
+      const maxStretch = baseRadius * 1.5;
+      const stretchAmount = Math.min(velocity * 0.5, maxStretch);
+      
+      // Calculate angle of movement
+      const angle = Math.atan2(velY, velX);
+      
+      const centerX = dotSize / 2;
+      const centerY = dotSize / 2;
+
+      ctx.save();
+      ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+      ctx.shadowBlur = 8;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 4;
+      
+      ctx.fillStyle = state.color;
+      ctx.beginPath();
+
+      if (velocity < 0.5) {
+        // Draw circle when moving slowly or at rest
+        ctx.arc(centerX, centerY, baseRadius, 0, Math.PI * 2);
+      } else {
+        // Draw stretched ellipse (drop shape) when moving fast
+        ctx.translate(centerX, centerY);
+        ctx.rotate(angle);
+        
+        // Stretch horizontally (in direction of movement), compress slightly vertically
+        const radiusX = baseRadius + stretchAmount;
+        const radiusY = baseRadius * Math.max(0.7, 1 - stretchAmount * 0.2);
+        
+        ctx.ellipse(0, 0, radiusX, radiusY, 0, 0, Math.PI * 2);
+      }
+
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    };
+
+    const animate = () => {
+      drawDrop();
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [dotSize]);
+
   useGSAPContext(() => {
     const wrapper = wrapperRef.current;
     const svg = svgRef.current;
     const path = pathRef.current;
-    const dot = dotRef.current;
+    const canvas = canvasRef.current;
 
-    if (!wrapper || !svg || !path || !dot) return;
+    if (!wrapper || !svg || !path || !canvas) return;
 
     const pathLength = path.getTotalLength();
 
@@ -134,27 +241,25 @@ const DatesTimeline = ({
         const screenPt = sp.matrixTransform(svg.getScreenCTM());
 
         const wrapperRect = wrapper.getBoundingClientRect();
-        const targetX = screenPt.x - wrapperRect.left - dotSize / 2;
-        const targetY = screenPt.y - wrapperRect.top - dotSize / 2;
+        const targetX = screenPt.x - wrapperRect.left;
+        const targetY = screenPt.y - wrapperRect.top;
 
-        // 🎯 Fluid jelly motion: animate dot with elastic.out for squishy feel
-        gsap.to(dot, {
-          left: targetX,
-          top: targetY,
-          ease: "elastic.out(1, 0.3)", // Squishy, bouncy follow
-          duration: 1,
-          overwrite: "auto",
+        // Update dot target position
+        const state = dotStateRef.current;
+        state.targetX = targetX;
+        state.targetY = targetY;
+
+        // Update canvas position
+        gsap.set(canvas, {
+          left: targetX - dotSize / 2,
+          top: targetY - dotSize / 2,
         });
 
-        // Color change (smooth transition)
+        // Color change
         TIMELINE_STEPS.forEach((step, i) => {
           if (p >= step.progress && activeStepRef.current !== i) {
             activeStepRef.current = i;
-            gsap.to(dot, {
-              backgroundColor: step.color,
-              duration: 0.4,
-              ease: "power2.out",
-            });
+            state.color = step.color;
           }
         });
 
@@ -173,12 +278,54 @@ const DatesTimeline = ({
 
           const isLeft = i % 2 === 1;
           const isSmall = breakpoint !== "desktop";
-          const offsetX = isLeft ? (isSmall ? -80 : -140) : isSmall ? 16 : 40;
-          const offsetY = isSmall ? -8 : -10;
+          
+          // 📍 HORIZONTAL OFFSET: Adjust these values to move items left/right
+          // Negative = left side, Positive = right side
+          const offsetX = isLeft 
+            ? (isSmall ? -120 : -180)  // 🔧 Left side offset (mobile: -120, desktop: -180)
+            : (isSmall ? 20 : -100);      // 🔧 Right side offset (mobile: 20, desktop: 60)
+          
+          // 📍 VERTICAL OFFSET: Adjust these values to move items up/down
+          // Negative = up, Positive = down
+          const offsetY = isSmall ? -10 : 215;  // 🔧 Vertical offset (mobile: -10, desktop: -15)
+
+          // Calculate position relative to wrapper
+          let itemX = screen2.x - wrapperRect.left + offsetX;
+          let itemY = screen2.y - wrapperRect.top + offsetY;
+
+          // 🔧 VIEWPORT BOUNDS: Keep items within wrapper bounds
+          // Estimate item dimensions (will be refined when element is visible)
+          const estimatedWidth = isSmall ? 200 : 300;
+          const estimatedHeight = isSmall ? 80 : 60;
+          
+          // Get actual dimensions if element is visible
+          const itemRect = el.getBoundingClientRect();
+          const itemWidth = itemRect.width > 0 ? itemRect.width : estimatedWidth;
+          const itemHeight = itemRect.height > 0 ? itemRect.height : estimatedHeight;
+
+          // Keep items within horizontal bounds
+          const minLeft = 10;  // 🔧 MIN LEFT: Minimum distance from left edge
+          const minRight = 10; // 🔧 MIN RIGHT: Minimum distance from right edge
+          
+          if (itemX < minLeft) {
+            itemX = minLeft;
+          } else if (itemX + itemWidth > wrapperRect.width - minRight) {
+            itemX = wrapperRect.width - itemWidth - minRight;
+          }
+
+          // Keep items within vertical bounds
+          const minTop = 10;    // 🔧 MIN TOP: Minimum distance from top edge
+          const minBottom = 10; // 🔧 MIN BOTTOM: Minimum distance from bottom edge
+          
+          if (itemY < minTop) {
+            itemY = minTop;
+          } else if (itemY + itemHeight > wrapperRect.height - minBottom) {
+            itemY = wrapperRect.height - itemHeight - minBottom;
+          }
 
           gsap.set(el, {
-            left: screen2.x - wrapperRect.left + offsetX,
-            top: screen2.y - wrapperRect.top + offsetY,
+            left: itemX,
+            top: itemY,
           });
 
           gsap.to(el, {
@@ -227,17 +374,15 @@ const DatesTimeline = ({
         />
       </svg>
 
-      {/* 🎯 JELLY DOT - now with fluid follow effect */}
-      <div
-        ref={dotRef}
+      {/* 🎯 DROP DOT - stretches into drop shape when moving fast */}
+      <canvas
+        ref={canvasRef}
+        width={dotSize}
+        height={dotSize}
         style={{
-          width: dotSize,
-          height: dotSize,
-          borderRadius: "50%",
-          backgroundColor: "#000",
           position: "absolute",
           zIndex: 5,
-          boxShadow: "0 4px 20px rgba(0,0,0,0.3)", // optional extra jelly feel
+          pointerEvents: "none",
         }}
       />
 
@@ -254,25 +399,74 @@ const DatesTimeline = ({
             gap: "8px",
             zIndex: 4,
             pointerEvents: "none",
+            // 🔧 MAX WIDTH: Adjust to control how wide items can be
+            maxWidth: breakpoint === "mobile" ? "200px" : "400px",
           }}
         >
           {breakpoint === "mobile" ? (
-            <div className="flex flex-col items-start gap-2">
+            <div 
+              className="flex flex-col items-start gap-2"
+              style={{
+                // 🔧 GAP: Adjust gap between image and text (currently 8px = 0.5rem)
+                gap: "8px",
+                marginTop: breakpoint === "mobile" ? "100px": "20px"
+              }}
+            >
               <img
                 src={productConfig.images[step.imageKey]}
                 width={step.final ? 48 : 80}
                 alt=""
+                style={{
+                  // 🔧 IMAGE SIZE: Adjust image dimensions here
+                  width: step.final ? "48px" : "30px",
+                  height: "auto",
+                  flexShrink: 0,
+                }}
               />
-              <span>{step.label}</span>
+              <span
+                style={{
+                  // 🔧 TEXT STYLING: Adjust font size, color, etc.
+                  fontSize: "14px",
+                  lineHeight: "1.4",
+                  wordWrap: "break-word",
+                  maxWidth: "100%",
+                  color: "#000",
+                }}
+              >
+                {step.label}
+              </span>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div 
+              className="flex items-center gap-2"
+              style={{
+                // 🔧 GAP: Adjust gap between image and text (currently 8px = 0.5rem)
+                gap: "12px",
+              }}
+            >
               <img
                 src={productConfig.images[step.imageKey]}
                 width={step.final ? 48 : 80}
                 alt=""
+                style={{
+                  // 🔧 IMAGE SIZE: Adjust image dimensions here
+                  width: step.final ? "48px" : "80px",
+                  height: "auto",
+                  flexShrink: 0,
+                }}
               />
-              <span>{step.label}</span>
+              <span
+                style={{
+                  // 🔧 TEXT STYLING: Adjust font size, color, etc.
+                  fontSize: "16px",
+                  lineHeight: "1.4",
+                  wordWrap: "break-word",
+                  maxWidth: "220px",
+                  color: "#000",
+                }}
+              >
+                {step.label}
+              </span>
             </div>
           )}
         </div>
@@ -316,7 +510,7 @@ const DatesTimeline = ({
       <div
         style={{
           position: "absolute",
-          top: "50%",
+          top: breakpoint === "mobile" ? "55%" : "70%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           color: "#000",

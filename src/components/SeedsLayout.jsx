@@ -520,11 +520,11 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
       gsap.set(seedC.current, { opacity: 0 }); // Hide kaju initially
       gsap.set(seedA.current, { opacity: 1 }); // Show badham from start
 
-      // Slow fade out badham over first ~40% of scroll
-      tl.to(seedA.current, { opacity: 0, duration: 1 }, 0);
+      // Let badham (seedA) stay visible longer by delaying its fade out and making fade last a bit longer
+      tl.to(seedA.current, { opacity: 0, duration: 1.3 }, 0.9); // starts at 0.4 scroll, fades out by 1.7
 
-      // Slow fade in kaju starting a bit later, lasting longer
-      tl.to(seedC.current, { opacity: 1, duration: 1.5 }, 0.3);
+      // Fade in kaju (seedC) a bit later, more overlap, longer fade
+      tl.to(seedC.current, { opacity: 1, duration: 1.7 }, 0.8); // starts at 0.7, longer transition
 
       // Kaju stays fully visible until the end (no fade out)
     }, sectionRef);
