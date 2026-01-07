@@ -357,7 +357,7 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
         position: 'fixed',
         top: isMobile ? '100px' : '120px',
         right: isMobile ? '16px' : '32px',
-        zIndex: 1000,
+        zIndex: 100,
         display: 'flex',
         flexDirection: 'column',
         gap: isMobile ? '18px' : '26px',

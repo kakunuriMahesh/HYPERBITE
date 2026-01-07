@@ -422,12 +422,19 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
   const rightRef = useRef(null);
   const bitsRef = useRef([]);
   const vectorContainerRef = useRef(null);
+  const videoRef = useRef(null);
 
   // Only two seeds now: badham (A) and kaju (C)
   const seedA = useRef(null); // badham
   const seedC = useRef(null); // kaju
 
   useEffect(() => {
+    let videoTimeline = null;
+    let videoEl = null;
+    let metadataHandler = null;
+    let touchHandler = null;
+    let rafId = null;
+
     // Function to lock inset and positioning
     const lockInset = () => {
       if (pinRef.current) {
@@ -502,6 +509,92 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
         0
       );
 
+      /* VIDEO SCRUB - Play video frame-by-frame with scroll (smooth like dragging timeline) */
+      videoEl = videoRef.current;
+      const activateVideoScrub = () => {
+        if (!videoEl || !videoEl.duration) return;
+        if (videoTimeline) videoTimeline.kill();
+        videoEl.pause(); // ensure native playback is halted
+        videoEl.currentTime = 0;
+        
+        // Use minimal scrub value for immediate, responsive updates like dragging a timeline
+        // Direct currentTime control for frame-by-frame smoothness
+        const videoScrollTrigger = ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=300%",
+          scrub: 0.05, // Minimal lag (50ms) for immediate response - feels like timeline drag
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (videoEl && videoEl.duration && videoEl.readyState >= 2) {
+              // Cancel any pending RAF
+              if (rafId) cancelAnimationFrame(rafId);
+              
+              // Use requestAnimationFrame for smooth, frame-synced updates
+              rafId = requestAnimationFrame(() => {
+                if (videoEl && videoEl.duration) {
+                  const progress = Math.max(0, Math.min(1, self.progress));
+                  const targetTime = progress * videoEl.duration;
+                  
+                  // Update currentTime directly for smooth scrubbing
+                  videoEl.currentTime = targetTime;
+                }
+              });
+            }
+          },
+          onRefresh: () => {
+            // Clean up RAF on refresh
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+          },
+        });
+        
+        // Store reference for cleanup
+        videoTimeline = { 
+          kill: () => {
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+            videoScrollTrigger.kill();
+          }
+        };
+      };
+
+      touchHandler = () => {
+        if (!videoEl) return;
+        videoEl.play();
+        videoEl.pause(); // unlock programmatic control on iOS without continued playback
+      };
+
+      if (videoEl) {
+        document.documentElement.addEventListener("touchstart", touchHandler, { once: true });
+        
+        // Wait for video to be fully ready for smooth scrubbing (like timeline drag)
+        const setupVideo = () => {
+          // Check if video has enough data (readyState 2+ = HAVE_CURRENT_DATA minimum)
+          if (videoEl.readyState >= 2 && videoEl.duration) {
+            activateVideoScrub();
+          } else {
+            // Wait for video to load enough data for smooth frame-by-frame scrubbing
+            const readyHandler = () => {
+              if (videoEl.readyState >= 2 && videoEl.duration) {
+                activateVideoScrub();
+              }
+            };
+            // Listen for multiple events to catch video when ready
+            videoEl.addEventListener("canplaythrough", readyHandler, { once: true });
+            videoEl.addEventListener("canplay", readyHandler, { once: true });
+            videoEl.addEventListener("loadeddata", readyHandler, { once: true });
+            videoEl.addEventListener("loadedmetadata", readyHandler, { once: true });
+          }
+        };
+        
+        setupVideo();
+      }
+
       /* DOTS */
       bitsRef.current.forEach((bit) => {
         tl.to(
@@ -548,6 +641,13 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
 
     return () => {
       if (observerRef) observerRef.disconnect();
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (videoTimeline) videoTimeline.kill();
+      if (videoEl && metadataHandler) videoEl.removeEventListener("loadedmetadata", metadataHandler);
+      if (touchHandler) document.documentElement.removeEventListener("touchstart", touchHandler);
       ctx.revert();
     };
   }, [breakpoint]);
@@ -602,8 +702,7 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
           }}
         >
           {/* ===== SEEDS (CENTERED) ===== */}
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            {/* Badham (Almond) - starts visible */}
+          {/* <div className="absolute inset-0 z-10 flex items-center justify-center">
             <img
               ref={seedA}
               src={productConfig.images.badham}
@@ -614,7 +713,6 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
               alt="Badham (Almond)"
             />
 
-            {/* Kaju (Cashew) - fades in later */}
             <img
               ref={seedC}
               src={productConfig.images.kaju}
@@ -624,10 +722,10 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
               }}
               alt="Kaju (Cashew)"
             />
-          </div>
+          </div> */}
 
           {/* ===== DOTS ===== */}
-          <div
+          {/* <div
             style={{
               position: "absolute",
               inset: 0,
@@ -651,10 +749,10 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
                 }}
               />
             ))}
-          </div>
+          </div> */}
 
           {/* ===== VECTORS CONTAINER ===== */}
-          <div
+          {/* <div
             ref={vectorContainerRef}
             className="absolute inset-0 z-10 flex justify-center items-center"
             style={{ gap: 0 }}
@@ -675,28 +773,31 @@ const SeedsLayout = ({ productConfig, breakpoint, onOpenDetails }) => {
               }}
               alt=""
             />
-          </div>
+          </div> */}
 
           <video
-            src="../../public/assets/seedCream.mp4"
-            autoPlay
-            // loop
+            ref={videoRef}
+            src="/assets/ChocoSeed.mp4"
             muted
             playsInline
+            preload="auto"
             style={{
-              width: breakpoint === "mobile" ? "1200px" : "100%",
-              height: breakpoint === "mobile" ? "1200px" : "100%",
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
               objectFit: "cover",
               objectPosition: "center",
               borderRadius: "10px",
-              transform: "rotateX(180deg)",
-              marginLeft: breakpoint === "desktop" ? '20px' : '0px',
-              marginTop: breakpoint === "mobile" ? '0px' : '90px',
-              zIndex:'50',
+              zIndex: 5,
+              pointerEvents: "none",
+              willChange: "currentTime", // Optimize for currentTime updates
+              transform: "translateZ(0)", // Force hardware acceleration
+              backfaceVisibility: "hidden", // Prevent flickering
             }}
             alt=""
           >
-            <source src="../../public/assets/seedCream.mp4" type="video/mp4" />
+            <source src="/assets/ChocoSeed.mp4" type="video/mp4" />
           </video>
         </div>
       </div>

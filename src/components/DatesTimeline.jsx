@@ -161,10 +161,10 @@ const DatesTimeline = ({
       const centerY = dotSize / 2;
 
       ctx.save();
-      ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-      ctx.shadowBlur = 8;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 4;
+      // ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+      // ctx.shadowBlur = 8;
+      // ctx.shadowOffsetX = 0;
+      // ctx.shadowOffsetY = 4;
       
       ctx.fillStyle = state.color;
       ctx.beginPath();

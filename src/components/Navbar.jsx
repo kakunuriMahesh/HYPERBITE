@@ -102,12 +102,13 @@ const Navbar = () => {
     <>
       <nav
         style={{
+          // backgroundColor: "#fff",
           position: "fixed",
           top: 0,
           left: 0,
           width: "100%",
           zIndex: 1000,
-          padding: breakpoint === "mobile" ? "12px 16px" : "22px 120px",
+          padding: breakpoint === "mobile" ? "12px 16px" : "22px 12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -133,7 +134,7 @@ const Navbar = () => {
           <img
             src="/assets/Hyper_Bite_Logo.png"
             alt="Hyper bite"
-            style={{ height: breakpoint === "mobile" ? "80px" : "100px" }}
+            style={{ height: breakpoint === "mobile" ? "80px" : "150px" }}
           />
         </div>
 
