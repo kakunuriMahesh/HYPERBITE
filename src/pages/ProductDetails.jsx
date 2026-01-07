@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { productDetails } from "../config/productDetails";
 import Navbar from "../components/Navbar";
+import { useCart } from "../context/CartContext";
+import { formatProductMessage, sendWhatsAppMessage } from "../utils/whatsapp";
+import { FaWhatsapp, FaShoppingCart } from "react-icons/fa";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const [breakpoint, setBreakpoint] = useState('desktop');
+  const { addToCart } = useCart();
+  const [breakpoint, setBreakpoint] = useState("desktop");
   const [product, setProduct] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -300,29 +304,86 @@ const ProductDetails = () => {
               </span>
             </div>
 
-            <button
+            <div
               style={{
-                padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '20px' : '24px',
-                backgroundColor: '#4CAF50',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#45a049';
-                e.target.style.transform = 'scale(1.05)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = '#4CAF50';
-                e.target.style.transform = 'scale(1)';
+                display: 'flex',
+                flexDirection: breakpoint === 'mobile' ? 'column' : 'row',
+                gap: '16px',
               }}
             >
-              ORDER NOW
-            </button>
+              <button
+                onClick={() => {
+                  const message = formatProductMessage({
+                    ...product,
+                    quantity: 1,
+                  });
+                  sendWhatsAppMessage(message);
+                }}
+                style={{
+                  flex: 1,
+                  padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
+                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  backgroundColor: '#25D366',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#20BA5A';
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#25D366';
+                  e.target.style.transform = 'scale(1)';
+                }}
+              >
+                <FaWhatsapp size={24} />
+                ORDER NOW
+              </button>
+              <button
+                onClick={() => {
+                  addToCart({
+                    ...product,
+                    variation: 'default',
+                  });
+                  alert('Product added to cart!');
+                }}
+                style={{
+                  flex: 1,
+                  padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
+                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
+                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  backgroundColor: '#000',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '12px',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#333';
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = '#000';
+                  e.target.style.transform = 'scale(1)';
+                }}
+              >
+                <FaShoppingCart size={20} />
+                ADD TO CART
+              </button>
+            </div>
           </div>
         </div>
 

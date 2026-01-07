@@ -10,12 +10,33 @@ import Products from "./pages/Products";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
 import { SmoothScroll, scrollTo } from "./utils/SmoothScroll";
 import SeedsLayout from "./components/SeedsLayout";
+import { CartProvider } from "./context/CartContext";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 function HomePage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState('nuts'); // Default to nuts
+  const [breakpoint, setBreakpoint] = useState('desktop');
+
+  useEffect(() => {
+    const updateBreakpoint = () => {
+      const viewportWidth = window.innerWidth;
+      if (viewportWidth < 768) {
+        setBreakpoint('mobile');
+      } else if (viewportWidth < 1024) {
+        setBreakpoint('tablet');
+      } else {
+        setBreakpoint('desktop');
+      }
+    };
+
+    updateBreakpoint();
+    window.addEventListener('resize', updateBreakpoint);
+    return () => window.removeEventListener('resize', updateBreakpoint);
+  }, []);
 
   const handleProductSelect = (productId) => {
     setSelectedProduct(productId);
@@ -48,6 +69,7 @@ function HomePage() {
           </picture>
         </div>
       }
+      <WhatsAppFloat breakpoint={breakpoint} />
     </>
   );
 }
@@ -109,24 +131,27 @@ export default function App() {
   };
 
   return (
-    <Router>
-      {/* Initialize smooth scroll - runs once on mount */}
-      {!isLoading && <SmoothScroll />}
-      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
-      {!isLoading && (
-        <>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-          <Footer />
-        </>
-      )}
-    </Router>
+    <CartProvider>
+      <Router>
+        {/* Initialize smooth scroll - runs once on mount */}
+        {!isLoading && <SmoothScroll />}
+        {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+        {!isLoading && (
+          <>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/product/:productId" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+            <Footer />
+          </>
+        )}
+      </Router>
+    </CartProvider>
   );
 }
 
