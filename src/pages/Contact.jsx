@@ -75,21 +75,23 @@ const Contact = () => {
         <div style={{ textAlign: 'center', marginBottom: breakpoint === 'mobile' ? '40px' : '60px' }}>
           <h1
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '36px' : breakpoint === 'tablet' ? '48px' : '54px',
-              marginBottom: '16px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '28px' : breakpoint === 'tablet' ? '36px' : '44px',
+              marginBottom: '12px',
+              color: '#111',
+              fontWeight: 700,
             }}
           >
             Contact Us
           </h1>
           <p
             style={{
-              fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               color: '#666',
-              maxWidth: '600px',
+              maxWidth: '640px',
               margin: '0 auto',
+              lineHeight: 1.6,
             }}
           >
             Get in touch with us. We'd love to hear from you!
@@ -107,10 +109,11 @@ const Contact = () => {
           <div>
             <h2
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '28px' : '32px',
-                marginBottom: '24px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '20px' : '22px',
+                marginBottom: '18px',
+                color: '#111',
+                fontWeight: 600,
               }}
             >
               Get in Touch
@@ -119,18 +122,19 @@ const Contact = () => {
               <div style={{ marginBottom: '20px' }}>
                 <div
                   style={{
-                    fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                    fontFamily:"Nunito Sans",
+                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
                     marginBottom: '8px',
-                    color: '#000',
+                    color: '#111',
+                    fontWeight: 600,
                   }}
                 >
                   Email
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     color: '#666',
                   }}
                 >
@@ -140,18 +144,19 @@ const Contact = () => {
               <div style={{ marginBottom: '20px' }}>
                 <div
                   style={{
-                    fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                    fontFamily:"Nunito Sans",
+                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
                     marginBottom: '8px',
-                    color: '#000',
+                    color: '#111',
+                    fontWeight: 600,
                   }}
                 >
                   Phone
                 </div>
                 <div
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     color: '#666',
                   }}
                 >
@@ -191,10 +196,11 @@ const Contact = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Name *
@@ -210,8 +216,8 @@ const Contact = () => {
                     padding: breakpoint === 'mobile' ? '12px' : '14px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     outline: 'none',
                   }}
                 />
@@ -221,10 +227,11 @@ const Contact = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Email *
@@ -240,8 +247,8 @@ const Contact = () => {
                     padding: breakpoint === 'mobile' ? '12px' : '14px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     outline: 'none',
                   }}
                 />
@@ -280,10 +287,11 @@ const Contact = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Subject *
@@ -299,8 +307,8 @@ const Contact = () => {
                     padding: breakpoint === 'mobile' ? '12px' : '14px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     outline: 'none',
                   }}
                 />
@@ -310,10 +318,11 @@ const Contact = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Message *
@@ -329,8 +338,8 @@ const Contact = () => {
                     padding: breakpoint === 'mobile' ? '12px' : '14px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                     outline: 'none',
                     resize: 'vertical',
                   }}
@@ -345,8 +354,9 @@ const Contact = () => {
                     color: '#155724',
                     borderRadius: '8px',
                     marginBottom: '20px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                    fontWeight: 600,
                   }}
                 >
                   Thank you! Your message has been sent successfully.
@@ -359,14 +369,17 @@ const Contact = () => {
                 style={{
                   width: '100%',
                   padding: breakpoint === 'mobile' ? '14px' : '16px',
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                   backgroundColor: isSubmitting ? '#ccc' : '#000',
                   color: '#fff',
                   border: 'none',
                   borderRadius: '8px',
                   cursor: isSubmitting ? 'not-allowed' : 'pointer',
                   transition: 'all 0.3s ease',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.6px',
                 }}
                 onMouseEnter={(e) => {
                   if (!isSubmitting) {

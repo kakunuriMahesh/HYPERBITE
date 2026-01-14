@@ -93,9 +93,10 @@ const Footer = () => {
           }}
         >
           <div 
-            className="[font-family:'Permanent_Marker-Regular',Helvetica] font-normal text-black tracking-[0] leading-[normal]"
+            className="[font-family:'Playfair Display',Inter,sans-serif] font-normal text-black tracking-[0] leading-[normal]"
             style={{
-              fontSize: breakpoint === 'mobile' ? '32px' : breakpoint === 'tablet' ? '40px' : '48px',
+              fontSize: breakpoint === 'mobile' ? '24px' : breakpoint === 'tablet' ? '28px' : '34px',
+              fontWeight: 700,
             }}
           >
             Hyper bite
@@ -177,9 +178,9 @@ const Footer = () => {
         }}
       >
         <p 
-          className="[font-family:'Just_Me_Again_Down_Here-Regular',Helvetica] font-normal text-gray-600 tracking-[0] leading-[normal]"
+          className="[font-family:'Inter',sans-serif] font-normal text-gray-600 tracking-[0] leading-[normal]"
           style={{
-            fontSize: breakpoint === 'mobile' ? '14px' : breakpoint === 'tablet' ? '16px' : '18px',
+            fontSize: breakpoint === 'mobile' ? '13px' : breakpoint === 'tablet' ? '14px' : '16px',
           }}
         >
           © {currentYear} Hyper bite. All rights reserved.

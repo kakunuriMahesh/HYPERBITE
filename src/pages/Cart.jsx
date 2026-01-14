@@ -96,18 +96,19 @@ const Cart = () => {
         >
           <h1
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '36px' : '48px',
-              marginBottom: '20px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '28px' : '36px',
+              marginBottom: '18px',
+              color: '#111',
+              fontWeight: 700,
             }}
           >
             Your Cart is Empty
           </h1>
           <p
             style={{
-              fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               marginBottom: '30px',
               color: '#666',
             }}
@@ -118,10 +119,13 @@ const Cart = () => {
             onClick={() => navigate('/products')}
             style={{
               padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               backgroundColor: '#000',
               color: '#fff',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.6px',
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
@@ -155,10 +159,11 @@ const Cart = () => {
       >
         <h1
           style={{
-            fontFamily: "'Permanent_Marker-Regular', Helvetica",
-            fontSize: breakpoint === 'mobile' ? '36px' : '48px',
-            marginBottom: '30px',
-            color: '#000',
+            fontFamily:"Nunito Sans",
+            fontSize: breakpoint === 'mobile' ? '28px' : '36px',
+            marginBottom: '24px',
+            color: '#111',
+            fontWeight: 700,
           }}
         >
           Your Cart
@@ -344,10 +349,11 @@ const Cart = () => {
         >
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-              marginBottom: '20px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '20px' : '22px',
+              marginBottom: '16px',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Order Summary
@@ -365,18 +371,20 @@ const Cart = () => {
           >
             <span
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '24px' : '32px',
-                color: '#000',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                color: '#666',
+                fontWeight: 600,
               }}
             >
               Total:
             </span>
             <span
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+                color: '#111',
+                fontWeight: 700,
               }}
             >
               {getCartTotal().toFixed(2)} RS
@@ -390,11 +398,14 @@ const Cart = () => {
             onClick={() => setShowForm(true)}
             style={{
               width: '100%',
-              padding: breakpoint === 'mobile' ? '16px' : '20px',
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '22px' : '28px',
+              padding: breakpoint === 'mobile' ? '14px' : '18px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               backgroundColor: '#25D366',
               color: '#fff',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.6px',
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
@@ -440,10 +451,11 @@ const Cart = () => {
           >
             <h2
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-                marginBottom: '24px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '20px' : '22px',
+                marginBottom: '18px',
+                color: '#111',
+                fontWeight: 600,
               }}
             >
               Delivery Information
@@ -462,10 +474,11 @@ const Cart = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Name *
@@ -481,8 +494,8 @@ const Cart = () => {
                     padding: '12px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                   }}
                 />
               </div>
@@ -491,10 +504,11 @@ const Cart = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Phone *
@@ -510,8 +524,8 @@ const Cart = () => {
                     padding: '12px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                   }}
                 />
               </div>
@@ -520,10 +534,11 @@ const Cart = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Email *
@@ -539,8 +554,8 @@ const Cart = () => {
                     padding: '12px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                   }}
                 />
               </div>
@@ -549,10 +564,11 @@ const Cart = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   WhatsApp Number *
@@ -568,8 +584,8 @@ const Cart = () => {
                     padding: '12px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                   }}
                 />
               </div>
@@ -578,10 +594,11 @@ const Cart = () => {
                 <label
                   style={{
                     display: 'block',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                     marginBottom: '8px',
                     color: '#333',
+                    fontWeight: 600,
                   }}
                 >
                   Pincode *
@@ -597,8 +614,8 @@ const Cart = () => {
                     padding: '12px',
                     border: '1px solid #ddd',
                     borderRadius: '8px',
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
                   }}
                 />
               </div>
@@ -637,10 +654,11 @@ const Cart = () => {
               <label
                 style={{
                   display: 'block',
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: '18px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '14px',
                   marginBottom: '8px',
                   color: '#333',
+                  fontWeight: 600,
                 }}
               >
                 Landmark *
@@ -656,8 +674,8 @@ const Cart = () => {
                   padding: '12px',
                   border: '1px solid #ddd',
                   borderRadius: '8px',
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: '16px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '14px',
                 }}
               />
             </div>
@@ -666,9 +684,9 @@ const Cart = () => {
               type="submit"
               style={{
                 width: '100%',
-                padding: breakpoint === 'mobile' ? '16px' : '20px',
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '22px' : '28px',
+                padding: breakpoint === 'mobile' ? '14px' : '18px',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                 backgroundColor: '#25D366',
                 color: '#fff',
                 border: 'none',
@@ -679,6 +697,9 @@ const Cart = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '12px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.6px',
               }}
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = '#20BA5A';

@@ -122,9 +122,10 @@ const Navbar = () => {
           onClick={() => handleNavClick("/")}
           style={{
             cursor: "pointer",
-            fontFamily: "'Permanent_Marker-Regular', Helvetica",
-            fontSize: breakpoint === "mobile" ? "20px" : "24px",
+            fontFamily:"Nunito Sans",
+            fontSize: breakpoint === "mobile" ? "18px" : "20px",
             color: "#000",
+            fontWeight: 700,
           }}
         >
           {/* <img
@@ -222,8 +223,8 @@ const Navbar = () => {
             {/* Brand Name */}
             <div
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === "mobile" ? "28px" : "36px",
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === "mobile" ? "22px" : "26px",
                 color: "#000",
                 marginBottom: "8px",
                 paddingLeft: breakpoint === "mobile" ? "30px" : "120px",
@@ -231,6 +232,7 @@ const Navbar = () => {
                 opacity: isMenuOpen ? 1 : 0,
                 transform: isMenuOpen ? "translateY(0)" : "translateY(20px)",
                 transition: `opacity 0.4s ease 0.1s, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s`,
+                fontWeight: 700,
               }}
             >
               {/* Hyper bite */}
@@ -260,10 +262,11 @@ const Navbar = () => {
                       background: "transparent",
                       border: "none",
                       fontFamily:
-                        "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                      fontSize: breakpoint === "mobile" ? "18px" : "20px",
-                      color: isActive(item.path) ? "#000" : "#999",
+                        "'Inter', sans-serif",
+                      fontSize: breakpoint === "mobile" ? "14px" : "16px",
+                      color: isActive(item.path) ? "#000" : "#666",
                       cursor: "pointer",
+                      fontWeight: isActive(item.path) ? 700 : 500,
 
                       /* ✅ Correct alignment */
                       textAlign: "left",
@@ -323,11 +326,11 @@ const Navbar = () => {
                       background: "transparent",
                       border: "none",
                       fontFamily:
-                        "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                      fontSize: breakpoint === "mobile" ? "18px" : "20px",
-                      color: selectedLanguage === lang.code ? "#000" : "#999",
+                        "'Inter', sans-serif",
+                      fontSize: breakpoint === "mobile" ? "14px" : "16px",
+                      color: selectedLanguage === lang.code ? "#000" : "#666",
                       fontWeight:
-                        selectedLanguage === lang.code ? "600" : "400",
+                        selectedLanguage === lang.code ? 700 : 500,
                       cursor: "pointer",
 
                       /* ✅ Left alignment */

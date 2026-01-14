@@ -164,9 +164,10 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
           >
             <span
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-                color: "#000",
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+                color: "#111",
+                fontWeight: 700,
               }}
             >
               {productDetails.price}
@@ -177,10 +178,11 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
           <div style={{ marginBottom: breakpoint === 'mobile' ? '24px' : '32px' }}>
             <h3
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '24px' : '32px',
-                marginBottom: breakpoint === 'mobile' ? '12px' : '16px',
-                color: "#000",
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                marginBottom: breakpoint === 'mobile' ? '10px' : '14px',
+                color: "#111",
+                fontWeight: 600,
               }}
             >
               Ingredients
@@ -196,8 +198,8 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
                 <li
                   key={index}
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '13px' : '15px',
                     padding: breakpoint === 'mobile' ? '8px 0' : '10px 0',
                     borderBottom: index < productDetails.ingredients.length - 1 ? "1px solid #eee" : "none",
                     color: "#333",
@@ -213,10 +215,11 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
           <div style={{ marginBottom: breakpoint === 'mobile' ? '24px' : '32px' }}>
             <h3
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '24px' : '32px',
-                marginBottom: breakpoint === 'mobile' ? '12px' : '16px',
-                color: "#000",
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                marginBottom: breakpoint === 'mobile' ? '10px' : '14px',
+                color: "#111",
+                fontWeight: 600,
               }}
             >
               Benefits
@@ -232,8 +235,8 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
                 <li
                   key={index}
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '13px' : '15px',
                     padding: breakpoint === 'mobile' ? '8px 0' : '10px 0',
                     borderBottom: index < productDetails.benefits.length - 1 ? "1px solid #eee" : "none",
                     color: "#333",

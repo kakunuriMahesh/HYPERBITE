@@ -36,21 +36,23 @@ const About = () => {
         <div style={{ textAlign: 'center', marginBottom: breakpoint === 'mobile' ? '40px' : '60px' }}>
           <h1
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '36px' : breakpoint === 'tablet' ? '48px' : '54px',
-              marginBottom: '16px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '28px' : breakpoint === 'tablet' ? '36px' : '44px',
+              marginBottom: '12px',
+              color: '#111',
+              fontWeight: 700,
             }}
           >
             About Us
           </h1>
           <p
             style={{
-              fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               color: '#666',
-              maxWidth: '600px',
+              maxWidth: '640px',
               margin: '0 auto',
+              lineHeight: 1.6,
             }}
           >
             Your trusted source for premium natural products
@@ -70,19 +72,20 @@ const About = () => {
             <div>
               <h2
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-                  marginBottom: '20px',
-                  color: '#000',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  marginBottom: '16px',
+                  color: '#111',
+                  fontWeight: 600,
                 }}
               >
                 Our Story
               </h2>
               <p
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
-                  lineHeight: '1.8',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                  lineHeight: '1.75',
                   color: '#333',
                   marginBottom: '16px',
                 }}
@@ -129,11 +132,12 @@ const About = () => {
         <div style={{ marginBottom: breakpoint === 'mobile' ? '40px' : '60px' }}>
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-              marginBottom: '24px',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '20px' : '22px',
+              marginBottom: '18px',
               textAlign: 'center',
-              color: '#000',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Our Mission & Values
@@ -155,18 +159,19 @@ const About = () => {
             >
               <h3
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '22px' : '24px',
-                  marginBottom: '12px',
-                  color: '#000',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  marginBottom: '10px',
+                  color: '#111',
+                  fontWeight: 600,
                 }}
               >
                 Quality First
               </h3>
               <p
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '15px',
                   lineHeight: '1.6',
                   color: '#333',
                 }}
@@ -184,18 +189,19 @@ const About = () => {
             >
               <h3
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '22px' : '24px',
-                  marginBottom: '12px',
-                  color: '#000',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  marginBottom: '10px',
+                  color: '#111',
+                  fontWeight: 600,
                 }}
               >
                 Natural & Pure
               </h3>
               <p
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '15px',
                   lineHeight: '1.6',
                   color: '#333',
                 }}
@@ -213,18 +219,19 @@ const About = () => {
             >
               <h3
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '22px' : '24px',
-                  marginBottom: '12px',
-                  color: '#000',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  marginBottom: '10px',
+                  color: '#111',
+                  fontWeight: 600,
                 }}
               >
                 Customer Focus
               </h3>
               <p
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '15px',
                   lineHeight: '1.6',
                   color: '#333',
                 }}
@@ -239,11 +246,12 @@ const About = () => {
         <div>
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '28px' : '36px',
-              marginBottom: '24px',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '20px' : '22px',
+              marginBottom: '18px',
               textAlign: 'center',
-              color: '#000',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Our Team
@@ -282,8 +290,8 @@ const About = () => {
                 >
                   <div
                     style={{
-                      fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                      fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: breakpoint === 'mobile' ? '12px' : '14px',
                       color: '#999',
                     }}
                   >
@@ -292,18 +300,19 @@ const About = () => {
                 </div>
                 <h3
                   style={{
-                    fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                    fontFamily:"Nunito Sans",
+                    fontSize: breakpoint === 'mobile' ? '15px' : '16px',
                     marginBottom: '8px',
-                    color: '#000',
+                    color: '#111',
+                    fontWeight: 600,
                   }}
                 >
                   {member.name}
                 </h3>
                 <p
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '13px' : '14px',
                     color: '#666',
                   }}
                 >

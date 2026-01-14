@@ -71,21 +71,23 @@ const Blog = () => {
         <div style={{ textAlign: 'center', marginBottom: breakpoint === 'mobile' ? '40px' : '60px' }}>
           <h1
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '36px' : breakpoint === 'tablet' ? '48px' : '54px',
-              marginBottom: '16px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '28px' : breakpoint === 'tablet' ? '36px' : '44px',
+              marginBottom: '12px',
+              color: '#111',
+              fontWeight: 700,
             }}
           >
             Our Blog
           </h1>
           <p
             style={{
-              fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '18px' : '22px',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: breakpoint === 'mobile' ? '14px' : '16px',
               color: '#666',
-              maxWidth: '600px',
+              maxWidth: '640px',
               margin: '0 auto',
+              lineHeight: 1.6,
             }}
           >
             Discover health tips, nutrition insights, and wellness stories
@@ -122,8 +124,8 @@ const Blog = () => {
             >
               <div
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '12px' : '14px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '11px' : '13px',
                   color: '#999',
                   marginBottom: '12px',
                 }}
@@ -132,19 +134,20 @@ const Blog = () => {
               </div>
               <h2
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '24px' : '28px',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '18px' : '20px',
                   marginBottom: '12px',
-                  color: '#000',
+                  color: '#111',
                   lineHeight: '1.2',
+                  fontWeight: 600,
                 }}
               >
                 {post.title}
               </h2>
               <p
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '15px',
                   lineHeight: '1.6',
                   color: '#333',
                   marginBottom: '16px',

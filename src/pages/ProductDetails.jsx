@@ -185,7 +185,7 @@ const ProductDetails = () => {
       <div
         style={{
           maxWidth: breakpoint === 'desktop' ? '1200px' : '100%',
-          margin: '0 auto',
+          margin: breakpoint === 'mobile' ? '50px auto' : '100px auto',
           padding: breakpoint === 'mobile' ? '20px' : '40px',
         }}
       >
@@ -267,10 +267,12 @@ const ProductDetails = () => {
           <div style={{ flex: '1' }}>
             <h1
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '36px' : breakpoint === 'tablet' ? '48px' : '54px',
-                marginBottom: '16px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '28px' : breakpoint === 'tablet' ? '36px' : '44px',
+                marginBottom: '12px',
+                color: '#111',
+                fontWeight: 700,
+                letterSpacing: '-0.4px',
               }}
             >
               {product.name}
@@ -278,10 +280,10 @@ const ProductDetails = () => {
 
             <p
               style={{
-                fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '18px' : '22px',
-                lineHeight: '1.5',
-                marginBottom: '24px',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                lineHeight: '1.6',
+                marginBottom: '20px',
                 color: '#333',
               }}
             >
@@ -295,9 +297,10 @@ const ProductDetails = () => {
             >
               <span
                 style={{
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-                  color: '#000',
+                  fontFamily:"Nunito Sans",
+                  fontSize: breakpoint === 'mobile' ? '20px' : '28px',
+                  color: '#111',
+                  fontWeight: 700,
                 }}
               >
                 {product.price}
@@ -322,8 +325,11 @@ const ProductDetails = () => {
                 style={{
                   flex: 1,
                   padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
                   backgroundColor: '#25D366',
                   color: '#fff',
                   border: 'none',
@@ -358,8 +364,11 @@ const ProductDetails = () => {
                 style={{
                   flex: 1,
                   padding: breakpoint === 'mobile' ? '14px 28px' : '16px 32px',
-                  fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '20px' : '24px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
                   backgroundColor: '#000',
                   color: '#fff',
                   border: 'none',
@@ -392,24 +401,24 @@ const ProductDetails = () => {
           <div style={{ marginBottom: '60px' }}>
             <h2
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-                marginBottom: '24px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '24px' : '28px',
+                marginBottom: '18px',
+                color: '#111',
+                fontWeight: 600,
               }}
             >
               Available Variations
             </h2>
             <div
               style={{
-                display: 'grid',
-                gridTemplateColumns:
-                  breakpoint === 'mobile'
-                    ? '1fr'
-                    : breakpoint === 'tablet'
-                    ? 'repeat(2, 1fr)'
-                    : 'repeat(4, 1fr)',
+                display: breakpoint === 'mobile' ? 'flex' : 'grid',
+                flexDirection: breakpoint === 'mobile' ? 'row' : undefined,
+                overflowX: breakpoint === 'mobile' ? 'auto' : undefined,
+                WebkitOverflowScrolling: breakpoint === 'mobile' ? 'touch' : undefined,
                 gap: '20px',
+                paddingBottom: breakpoint === 'mobile' ? '8px' : undefined,
+                gridTemplateColumns: breakpoint === 'mobile' ? undefined : breakpoint === 'tablet' ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
               }}
             >
               {relatedProducts.map((variation) => (
@@ -429,6 +438,8 @@ const ProductDetails = () => {
                     textAlign: 'center',
                     position: 'relative',
                     overflow: 'hidden',
+                    minWidth: breakpoint === 'mobile' ? '240px' : undefined,
+                    flex: breakpoint === 'mobile' ? '0 0 240px' : undefined,
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = '#000';
@@ -452,9 +463,10 @@ const ProductDetails = () => {
                         color: '#fff',
                         padding: '4px 12px',
                         borderRadius: '20px',
-                        fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                        fontSize: breakpoint === 'mobile' ? '12px' : '14px',
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: breakpoint === 'mobile' ? '12px' : '13px',
                         zIndex: 10,
+                        fontWeight: 600,
                       }}
                     >
                       {variation.badge}
@@ -490,11 +502,12 @@ const ProductDetails = () => {
                   {/* Product Name */}
                   <h3
                     style={{
-                      fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                      fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                      fontFamily:"Nunito Sans",
+                      fontSize: breakpoint === 'mobile' ? '16px' : '18px',
                       marginBottom: '8px',
-                      color: '#000',
+                      color: '#111',
                       lineHeight: '1.2',
+                      fontWeight: 600,
                     }}
                   >
                     {variation.name}
@@ -503,8 +516,8 @@ const ProductDetails = () => {
                   {/* Product Description */}
                   <p
                     style={{
-                      fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                      fontSize: breakpoint === 'mobile' ? '14px' : '16px',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: breakpoint === 'mobile' ? '13px' : '15px',
                       color: '#666',
                       marginBottom: '12px',
                       lineHeight: '1.4',
@@ -517,10 +530,10 @@ const ProductDetails = () => {
                   {/* Price */}
                   <div
                     style={{
-                      fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                      fontSize: breakpoint === 'mobile' ? '20px' : '24px',
-                      color: '#000',
-                      fontWeight: 'bold',
+                      fontFamily:"Nunito Sans",
+                      fontSize: breakpoint === 'mobile' ? '16px' : '18px',
+                      color: '#111',
+                      fontWeight: 700,
                       marginTop: 'auto',
                     }}
                   >
@@ -536,10 +549,11 @@ const ProductDetails = () => {
         <div style={{ marginBottom: '60px' }}>
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-              marginBottom: '24px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '22px' : '26px',
+              marginBottom: '18px',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Ingredients
@@ -555,8 +569,8 @@ const ProductDetails = () => {
               <li
                 key={index}
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                   padding: '12px 0',
                   borderBottom: index < product.ingredients.length - 1 ? '1px solid #eee' : 'none',
                   color: '#333',
@@ -572,10 +586,11 @@ const ProductDetails = () => {
         <div style={{ marginBottom: '60px' }}>
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-              marginBottom: '24px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '22px' : '26px',
+              marginBottom: '18px',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Benefits
@@ -591,8 +606,8 @@ const ProductDetails = () => {
               <li
                 key={index}
                 style={{
-                  fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                  fontSize: breakpoint === 'mobile' ? '18px' : '20px',
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: breakpoint === 'mobile' ? '14px' : '16px',
                   padding: '12px 0',
                   borderBottom: index < product.benefits.length - 1 ? '1px solid #eee' : 'none',
                   color: '#333',
@@ -608,10 +623,11 @@ const ProductDetails = () => {
         <div style={{ marginBottom: '60px' }}>
           <h2
             style={{
-              fontFamily: "'Permanent_Marker-Regular', Helvetica",
-              fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-              marginBottom: '24px',
-              color: '#000',
+              fontFamily:"Nunito Sans",
+              fontSize: breakpoint === 'mobile' ? '22px' : '26px',
+              marginBottom: '18px',
+              color: '#111',
+              fontWeight: 600,
             }}
           >
             Nutritional Information
@@ -635,9 +651,9 @@ const ProductDetails = () => {
               >
                 <div
                   style={{
-                    fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
-                    fontSize: breakpoint === 'mobile' ? '14px' : '16px',
-                    fontWeight: 'bold',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: breakpoint === 'mobile' ? '13px' : '14px',
+                    fontWeight: '700',
                     marginBottom: '8px',
                     textTransform: 'capitalize',
                   }}
@@ -670,10 +686,11 @@ const ProductDetails = () => {
           >
             <h2
               style={{
-                fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                fontSize: breakpoint === 'mobile' ? '32px' : '40px',
-                color: '#000',
+                fontFamily:"Nunito Sans",
+                fontSize: breakpoint === 'mobile' ? '22px' : '26px',
+                color: '#111',
                 margin: 0,
+                fontWeight: 600,
               }}
             >
               Reviews
@@ -723,9 +740,10 @@ const ProductDetails = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                      fontSize: '20px',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: '18px',
                       color: '#000',
+                      fontWeight: 700,
                     }}
                   >
                     {review.name.charAt(0)}
@@ -733,10 +751,11 @@ const ProductDetails = () => {
                   <div>
                     <div
                       style={{
-                        fontFamily: "'Permanent_Marker-Regular', Helvetica",
-                        fontSize: '18px',
-                        color: '#000',
+                        fontFamily: "'Inter', sans-serif",
+                        fontSize: '16px',
+                        color: '#111',
                         marginBottom: '4px',
+                        fontWeight: 600,
                       }}
                     >
                       {review.name}
