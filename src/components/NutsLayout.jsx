@@ -255,11 +255,11 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
           className="absolute [font-family:'Permanent_Marker-Regular',Helvetica] font-normal text-black tracking-[0] leading-[normal]"
           style={{
             zIndex: 10,
-            top: breakpoint === "mobile" ? "16%" : breakpoint === "tablet" ? "16%" : "12%",
-            left: breakpoint === "mobile" ? "20px" : breakpoint === "tablet" ? "50px" : "5%",
+            top: breakpoint === "mobile" ? "17.5%" : breakpoint === "tablet" ? "16%" : "12%",
+            left: breakpoint === "mobile" ? "25px" : breakpoint === "tablet" ? "50px" : "5%",
             width:
               breakpoint === "mobile"
-                ? "calc(100% - 40px)"
+                ? "312px"
                 : breakpoint === "tablet"
                 ? "calc(100% - 100px)"
                 : "649px",
@@ -282,10 +282,10 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
                 : breakpoint === "tablet"
                 ? "calc(16% + 80px)"
                 : "calc(18% + 180px)",
-            left: breakpoint === "mobile" ? "20px" : breakpoint === "tablet" ? "50px" : "5%",
+            left: breakpoint === "mobile" ? "25px" : breakpoint === "tablet" ? "50px" : "5%",
             width:
               breakpoint === "mobile"
-                ? "calc(100% - 40px)"
+                ? "312px"
                 : breakpoint === "tablet"
                 ? "calc(100% - 100px)"
                 : "80%",
@@ -471,10 +471,10 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
           style={{
             zIndex: 10,
             bottom: breakpoint === "mobile" ? "6%" : breakpoint === "tablet" ? "6%" : "-5%",
-            right: breakpoint === "mobile" ? "16px" : breakpoint === "tablet" ? "50px" : "12%",
+            right: breakpoint === "mobile" ? "25px" : breakpoint === "tablet" ? "50px" : "12%",
             width:
               breakpoint === "mobile"
-                ? "352px"
+                ? "312px"
                 : breakpoint === "tablet"
                 ? "calc(100% - 100px)"
                 : "520px",
@@ -498,10 +498,10 @@ const NutsLayout = ({ productConfig, breakpoint: propBreakpoint, onOpenDetails }
                 : breakpoint === "tablet"
                 ? "calc(6% - 100px)"
                 : "calc(6% - 500px)",
-            right: breakpoint === "mobile" ? "16px" : breakpoint === "tablet" ? "50px" : "12%",
+            right: breakpoint === "mobile" ? "25px" : breakpoint === "tablet" ? "50px" : "12%",
             width:
               breakpoint === "mobile"
-                ? "352px"
+                ? "312px"
                 : breakpoint === "tablet"
                 ? "calc(100% - 100px)"
                 : "520px",

@@ -130,12 +130,12 @@ const Navbar = () => {
         >
           {/* <img
             src="/assets/Logo.png"
-            alt="Hyper bite"
+            alt="Hyper Bite"
             style={{ height: breakpoint === "mobile" ? "50px" : "60px" }}
           /> */}
           <img
             src="/assets/Hyper_Bite_Logo.png"
-            alt="Hyper bite"
+            alt="Hyper Bite"
             style={{ height: breakpoint === "mobile" ? "80px" : "150px" }}
           />
         </div>
@@ -235,7 +235,7 @@ const Navbar = () => {
                 fontWeight: 700,
               }}
             >
-              {/* Hyper bite */}
+              {/* Hyper Bite */}
             </div>
 
             <div

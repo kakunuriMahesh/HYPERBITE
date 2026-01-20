@@ -99,7 +99,7 @@ const Footer = () => {
               fontWeight: 700,
             }}
           >
-            Hyper bite
+            Hyper Bite
           </div>
         </div>
 
@@ -183,7 +183,7 @@ const Footer = () => {
             fontSize: breakpoint === 'mobile' ? '13px' : breakpoint === 'tablet' ? '14px' : '16px',
           }}
         >
-          © {currentYear} Hyper bite. All rights reserved.
+          © {currentYear} Hyper Bite. All rights reserved.
         </p>
       </div>
     </footer>

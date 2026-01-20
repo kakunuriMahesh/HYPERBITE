@@ -355,8 +355,8 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
     <div 
       style={{
         position: 'fixed',
-        top: isMobile ? '100px' : '120px',
-        right: isMobile ? '16px' : '32px',
+        top: isMobile ? '100px' : '140px',
+        right: isMobile ? '16px' : '42px',
         zIndex: 100,
         display: 'flex',
         flexDirection: 'column',
@@ -395,8 +395,8 @@ const ProductSelector = ({ selectedProduct, onProductSelect }) => {
           {/* Enhanced Glassmorphism Circle */}
           <div
             style={{
-              width: isMobile ? '72px' : '92px',
-              height: isMobile ? '72px' : '92px',
+              width: isMobile ? '42px' : '52px',
+              height: isMobile ? '42px' : '52px',
               borderRadius: '50%',
               overflow: 'hidden',
               background: `rgba(255, 255, 255, ${selectedProduct === product.id ? '0.25' : '0.15'})`,

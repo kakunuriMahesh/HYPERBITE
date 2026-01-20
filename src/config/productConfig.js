@@ -120,7 +120,7 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
       const section2Start = vh * 2; // 200vh
       const section2End = vh * 3; // 300vh
       
-      return {
+      return {  
         initial: {
           pumpkinseed1: { x: 0, y: 78, rotation: 25, width: 57, height: 56 },
           wallnut1: { x: 130, y: 15, rotation: -25, width: 77, height: 135 },
@@ -224,14 +224,14 @@ export const getAnimationPositions = (productType, breakpoint, viewportHeight = 
       return {
         initial: {
           pumpkinseed1: { x: 0, y: 646, rotation: 25, width: 116, height: 132 },
-          wallnut1: { x: 407, y: 660, rotation: -15, width: 109, height: 105 },
+          wallnut1: { x: 407, y: 660, rotation: -15, width: 109, height: 205 },
           sunflowerseed1: { x: 447, y: 121, rotation: 35, width: 81, height: 81 },
           dateorange1: { x: 0, y: 713, rotation: -20, width: 180, height: 273 },
           dateorange2: { x: 916, y: 660, rotation: 30, width: 116, height: 158 },
           sunflowershell: { x: 1109, y: 48, rotation: -25, width: 216, height: 276 },
-          sunflowerseed2: { x: 0, y: 330, rotation: 40, width: 115, height: 100 },
-          pumpkinseed2: { x: 1539, y: 555, rotation: -30, width: 159, height: 175 },
-          date: { x: 1549, y: 608, rotation: 20, width: 149, height: 169 },
+          sunflowerseed2: { x: 0, y: 330, rotation: 40, width: 115, height: 140 },
+          pumpkinseed2: { x: 1639, y: 555, rotation: -30, width: 159, height: 175 },
+          date: { x: 1549, y: 908, rotation: 20, width: 149, height: 169 },
           wallnutCenter: { x: 681, y: 132, rotation: -10, width: 235, height: 279 },
           vector: { x: 0, y: 0, rotation: 0, width: 1698, height: 2946 },
         },
