@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import HeroBanner from "./components/HeroBanner";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -15,27 +20,29 @@ import { SmoothScroll, scrollTo } from "./utils/SmoothScroll";
 import SeedsLayout from "./components/SeedsLayout";
 import { CartProvider } from "./context/CartContext";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function HomePage() {
   const navigate = useNavigate();
-  const [selectedProduct, setSelectedProduct] = useState('nuts'); // Default to nuts
-  const [breakpoint, setBreakpoint] = useState('desktop');
+  const [selectedProduct, setSelectedProduct] = useState("nuts"); // Default to nuts
+  const [breakpoint, setBreakpoint] = useState("desktop");
 
   useEffect(() => {
     const updateBreakpoint = () => {
       const viewportWidth = window.innerWidth;
       if (viewportWidth < 768) {
-        setBreakpoint('mobile');
+        setBreakpoint("mobile");
       } else if (viewportWidth < 1024) {
-        setBreakpoint('tablet');
+        setBreakpoint("tablet");
       } else {
-        setBreakpoint('desktop');
+        setBreakpoint("desktop");
       }
     };
 
     updateBreakpoint();
-    window.addEventListener('resize', updateBreakpoint);
-    return () => window.removeEventListener('resize', updateBreakpoint);
+    window.addEventListener("resize", updateBreakpoint);
+    return () => window.removeEventListener("resize", updateBreakpoint);
   }, []);
 
   const handleProductSelect = (productId) => {
@@ -51,24 +58,30 @@ function HomePage() {
   return (
     <>
       <Navbar />
-      <ProductSelector 
-        selectedProduct={selectedProduct} 
-        onProductSelect={handleProductSelect} 
+      <ProductSelector
+        selectedProduct={selectedProduct}
+        onProductSelect={handleProductSelect}
       />
-      <HeroBanner 
-        key={selectedProduct} 
-        productType={selectedProduct} 
+      <HeroBanner
+        key={selectedProduct}
+        productType={selectedProduct}
         onOpenDetails={handleOpenDetails}
       />
-      {selectedProduct === 'nuts' && 
+      {selectedProduct === "nuts" && (
         <div className="max-w-6xl mx-auto">
           <picture>
-            <source srcSet="/assets/Comic_nuts.png" media="(min-width: 768px)" />
-            <source srcSet="/assets/Comic_nuts_mobile.png" media="(max-width: 767px)" />
+            <source
+              srcSet="/assets/Comic_nuts.png"
+              media="(min-width: 768px)"
+            />
+            <source
+              srcSet="/assets/Comic_nuts_mobile.png"
+              media="(max-width: 767px)"
+            />
             <img src="/assets/Comic_nuts.png" alt="Comic nuts" />
           </picture>
         </div>
-      }
+      )}
       <WhatsAppFloat breakpoint={breakpoint} />
     </>
   );
@@ -82,14 +95,14 @@ export default function App() {
   useEffect(() => {
     // Preload critical images
     const imageUrls = [
-      '/assets/wallnut.webp',
-      '/assets/date.webp',
-      '/assets/sunflowerseed.webp',
-      '/assets/pumpkinseed.webp',
-      '/assets/dateorange.webp',
-      '/assets/sunflowershell.webp',
-      '/assets/dot.svg',
-      '/assets/Vector 2.png'
+      "/assets/wallnut.webp",
+      "/assets/date.webp",
+      "/assets/sunflowerseed.webp",
+      "/assets/pumpkinseed.webp",
+      "/assets/dateorange.webp",
+      "/assets/sunflowershell.webp",
+      "/assets/dot.svg",
+      "/assets/Vector 2.png",
     ];
 
     let loadedCount = 0;
@@ -151,7 +164,19 @@ export default function App() {
           </>
         )}
       </Router>
+      {/* <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light"/> */}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </CartProvider>
   );
 }
-

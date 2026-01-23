@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { useCart } from "../context/CartContext";
 import { formatProductMessage, sendWhatsAppMessage } from "../utils/whatsapp";
 import { FaWhatsapp, FaShoppingCart } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -359,7 +360,7 @@ const ProductDetails = () => {
                     ...product,
                     variation: 'default',
                   });
-                  alert('Product added to cart!');
+                  toast.success('Product added to cart!');
                 }}
                 style={{
                   flex: 1,

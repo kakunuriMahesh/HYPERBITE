@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { IoMenu } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import { scrollTo } from "../utils/SmoothScroll";
+import { BsBag } from "react-icons/bs";
+import { CartProvider, useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,6 +14,13 @@ const Navbar = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("ENG");
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const {
+    cartItems,
+    // removeFromCart,
+    // updateQuantity,
+    // getCartTotal,
+    // clearCart,
+  } = useCart();
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -122,7 +131,7 @@ const Navbar = () => {
           onClick={() => handleNavClick("/")}
           style={{
             cursor: "pointer",
-            fontFamily:"Nunito Sans",
+            fontFamily: "Nunito Sans",
             fontSize: breakpoint === "mobile" ? "18px" : "20px",
             color: "#000",
             fontWeight: 700,
@@ -139,50 +148,60 @@ const Navbar = () => {
             style={{ height: breakpoint === "mobile" ? "80px" : "150px" }}
           />
         </div>
+        <div className="flex items-center gap-6">
+          <div onClick={() => navigate("/cart")} className="relative text-2xl cursor-pointer">
+            <BsBag />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 min-w-[18px] text-center">
+                {cartItems.length}
+              </span>
+            )}
+          </div>
 
-        {/* Menu/Close Button - Always visible with animation */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          style={{
-            background: "transparent",
-            border: "none",
-            fontSize: "24px",
-            cursor: "pointer",
-            color: "#000",
-            padding: "4px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative",
-            width: "48px",
-            height: "48px",
-          }}
-        >
-          <div
+          {/* Menu/Close Button - Always visible with animation */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             style={{
-              position: "absolute",
-              transition: "opacity 0.3s ease, transform 0.3s ease",
-              opacity: isMenuOpen ? 0 : 1,
-              transform: isMenuOpen
-                ? "rotate(-90deg) scale(0.8)"
-                : "rotate(0deg) scale(1)",
+              background: "transparent",
+              border: "none",
+              fontSize: "24px",
+              cursor: "pointer",
+              color: "#000",
+              padding: "4px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+              width: "48px",
+              height: "48px",
             }}
           >
-            <IoMenu className="rotate-90 text-6xl" />
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              transition: "opacity 0.3s ease, transform 0.3s ease",
-              opacity: isMenuOpen ? 1 : 0,
-              transform: isMenuOpen
-                ? "rotate(0deg) scale(1)"
-                : "rotate(90deg) scale(0.8)",
-            }}
-          >
-            <IoClose className="text-6xl" />
-          </div>
-        </button>
+            <div
+              style={{
+                position: "absolute",
+                transition: "opacity 0.3s ease, transform 0.3s ease",
+                opacity: isMenuOpen ? 0 : 1,
+                transform: isMenuOpen
+                  ? "rotate(-90deg) scale(0.8)"
+                  : "rotate(0deg) scale(1)",
+              }}
+            >
+              <IoMenu className="rotate-90 text-6xl" />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                transition: "opacity 0.3s ease, transform 0.3s ease",
+                opacity: isMenuOpen ? 1 : 0,
+                transform: isMenuOpen
+                  ? "rotate(0deg) scale(1)"
+                  : "rotate(90deg) scale(0.8)",
+              }}
+            >
+              <IoClose className="text-6xl" />
+            </div>
+          </button>
+        </div>
       </nav>
 
       {/* Menu Content - No overlay, directly below navbar */}
@@ -223,7 +242,7 @@ const Navbar = () => {
             {/* Brand Name */}
             <div
               style={{
-                fontFamily:"Nunito Sans",
+                fontFamily: "Nunito Sans",
                 fontSize: breakpoint === "mobile" ? "22px" : "26px",
                 color: "#000",
                 marginBottom: "8px",
@@ -261,8 +280,7 @@ const Navbar = () => {
                     style={{
                       background: "transparent",
                       border: "none",
-                      fontFamily:
-                        "'Inter', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: breakpoint === "mobile" ? "14px" : "16px",
                       color: isActive(item.path) ? "#000" : "#666",
                       cursor: "pointer",
@@ -325,12 +343,10 @@ const Navbar = () => {
                     style={{
                       background: "transparent",
                       border: "none",
-                      fontFamily:
-                        "'Inter', sans-serif",
+                      fontFamily: "'Inter', sans-serif",
                       fontSize: breakpoint === "mobile" ? "14px" : "16px",
                       color: selectedLanguage === lang.code ? "#000" : "#666",
-                      fontWeight:
-                        selectedLanguage === lang.code ? 700 : 500,
+                      fontWeight: selectedLanguage === lang.code ? 700 : 500,
                       cursor: "pointer",
 
                       /* ✅ Left alignment */
