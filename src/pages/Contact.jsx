@@ -62,7 +62,7 @@ const Contact = () => {
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', paddingTop: '70px' }}>
-      <Navbar />
+      {/* <Navbar /> */}
       
       <div
         style={{

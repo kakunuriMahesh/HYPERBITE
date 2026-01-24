@@ -113,17 +113,23 @@ const Navbar = () => {
       <nav
         style={{
           // backgroundColor: "#fff",
+          backgroundColor: "rgba(255, 255, 255, 0.15)",
           position: "fixed",
           top: 0,
           left: 0,
           width: "100%",
           zIndex: 1000,
-          padding: breakpoint === "mobile" ? "12px 16px" : "22px 12px",
+          // padding: breakpoint === "mobile" ? "12px 16px" : "22px 12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           transform: isNavbarVisible ? "translateY(0)" : "translateY(-120%)",
           transition: "transform 0.4s ease",
+
+          // ✨ glassy extras (optional but recommended)
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
         }}
       >
         {/* Logo */}
@@ -145,11 +151,14 @@ const Navbar = () => {
           <img
             src="/assets/Hyper_Bite_Logo.png"
             alt="Hyper Bite"
-            style={{ height: breakpoint === "mobile" ? "80px" : "150px" }}
+            style={{ height: breakpoint === "mobile" ? "80px" : "100px" }}
           />
         </div>
         <div className="flex items-center gap-6">
-          <div onClick={() => navigate("/cart")} className="relative text-2xl cursor-pointer">
+          <div
+            onClick={() => navigate("/cart")}
+            className="relative text-2xl cursor-pointer"
+          >
             <BsBag />
             {cartItems.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 min-w-[18px] text-center">

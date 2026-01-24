@@ -180,7 +180,7 @@ const ProductDetails = () => {
 
   return (
     <div style={{ backgroundColor: '#fff', minHeight: '100vh', paddingTop: '70px' }}>
-      <Navbar />
+      {/* <Navbar /> */}
 
       {/* Main Content */}
       <div

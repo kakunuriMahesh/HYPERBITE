@@ -22,6 +22,7 @@ import { CartProvider } from "./context/CartContext";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NotFound from "./pages/NotFound";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ function HomePage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <ProductSelector
         selectedProduct={selectedProduct}
         onProductSelect={handleProductSelect}
@@ -151,6 +152,7 @@ export default function App() {
         {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
         {!isLoading && (
           <>
+            <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/products" element={<Products />} />
@@ -159,6 +161,7 @@ export default function App() {
               <Route path="/blog" element={<Blog />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />
           </>

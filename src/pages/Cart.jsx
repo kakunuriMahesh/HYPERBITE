@@ -94,7 +94,7 @@ const Cart = () => {
           paddingTop: "70px",
         }}
       >
-        <Navbar />
+        {/* <Navbar /> */}
         <div
           style={{
             maxWidth: "1200px",
@@ -169,7 +169,7 @@ const Cart = () => {
         paddingTop: "70px",
       }}
     >
-      <Navbar />
+      {/* <Navbar /> */}
       <div
         style={{
           maxWidth: "1200px",
