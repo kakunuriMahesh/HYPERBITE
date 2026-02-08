@@ -360,7 +360,7 @@ const PackCard = ({ pack, breakpoint, onClickCustomize, onClickAdd, isCustomized
       >
         {pack.image ? (
           <img
-            src={pack.image}
+            src='../../public/assets/P-blue.png'
             alt={pack.name}
             style={{
               maxWidth: '100%',

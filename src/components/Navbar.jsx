@@ -51,6 +51,8 @@ const Navbar = () => {
       if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
         // scrolling down
         setIsNavbarVisible(false);
+        setIsMenuOpen(false);
+
       } else {
         // scrolling up
         setIsNavbarVisible(true);
@@ -106,9 +108,11 @@ const Navbar = () => {
     // Use Lenis smooth scroll instead of window.scrollTo
     scrollTo(0, { duration: 0.8 });
   };
-
+  
   const handleLanguageChange = (langCode) => {
-    setSelectedLanguage(langCode);
+    // setSelectedLanguage(langCode);
+    changeLanguage(langCode);
+    setIsMenuOpen(false);
     // Add language change logic here if needed
   };
 
@@ -123,7 +127,7 @@ const Navbar = () => {
           left: 0,
           width: "100%",
           zIndex: 1000,
-          // padding: breakpoint === "mobile" ? "12px 16px" : "22px 12px",
+          padding: breakpoint === "mobile" ? "0px 6px" : "0px 9px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -351,7 +355,8 @@ const Navbar = () => {
                 {Object.entries(availableLanguages).map(([code, lang]) => (
                   <button
                     key={code}
-                    onClick={() => changeLanguage(code)}
+                    // onClick={() => changeLanguage(code)}
+                    onClick={() => handleLanguageChange(code)}
                     style={{
                       background: "transparent",
                       border: "none",
