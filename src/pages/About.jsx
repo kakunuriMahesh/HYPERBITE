@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { useLanguage } from "../context/LanguageContext";
 
 const About = () => {
+  const { t } = useLanguage();
   const [breakpoint, setBreakpoint] = useState('desktop');
 
   useEffect(() => {
@@ -45,6 +47,8 @@ const About = () => {
           >
             About Us
           </h1>
+          <h1>{t('welcome')}</h1>
+      <h1>{t('benefits')}</h1>
           <p
             style={{
               fontFamily: "'Inter', sans-serif",

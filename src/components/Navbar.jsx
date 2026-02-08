@@ -5,22 +5,26 @@ import { IoClose } from "react-icons/io5";
 import { scrollTo } from "../utils/SmoothScroll";
 import { BsBag } from "react-icons/bs";
 import { CartProvider, useCart } from "../context/CartContext";
+import { useLanguage } from "../context/LanguageContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [breakpoint, setBreakpoint] = useState("desktop");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("ENG");
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const lastScrollY = useRef(0);
+  const { currentLang, changeLanguage, languages: availableLanguages, t } = useLanguage();
   const {
     cartItems,
+    getCartItemsCount,
     // removeFromCart,
     // updateQuantity,
     // getCartTotal,
     // clearCart,
   } = useCart();
+
+  const cartCount = getCartItemsCount();
 
   useEffect(() => {
     const updateBreakpoint = () => {
@@ -160,9 +164,9 @@ const Navbar = () => {
             className="relative text-2xl cursor-pointer"
           >
             <BsBag />
-            {cartItems.length > 0 && (
+            {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-semibold rounded-full px-1.5 min-w-[18px] text-center">
-                {cartItems.length}
+                {cartCount}
               </span>
             )}
           </div>
@@ -333,7 +337,6 @@ const Navbar = () => {
 
               {/* Right Side - Language Selection */}
 
-              {/* Language Options */}
               <div
                 style={{
                   display: "flex",
@@ -345,17 +348,17 @@ const Navbar = () => {
                   zIndex: 1,
                 }}
               >
-                {languages.map((lang, index) => (
+                {Object.entries(availableLanguages).map(([code, lang]) => (
                   <button
-                    key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
+                    key={code}
+                    onClick={() => changeLanguage(code)}
                     style={{
                       background: "transparent",
                       border: "none",
                       fontFamily: "'Inter', sans-serif",
                       fontSize: breakpoint === "mobile" ? "14px" : "16px",
-                      color: selectedLanguage === lang.code ? "#000" : "#666",
-                      fontWeight: selectedLanguage === lang.code ? 700 : 500,
+                      color: currentLang === code ? "#000" : "#666",
+                      fontWeight: currentLang === code ? 700 : 500,
                       cursor: "pointer",
 
                       /* ✅ Left alignment */
@@ -373,17 +376,17 @@ const Navbar = () => {
 
                       transition: `color 0.2s ease,
           font-weight 0.2s ease,
-          opacity 0.4s ease ${isMenuOpen ? 0.2 + index * 0.05 : 0}s,
+          opacity 0.4s ease ${isMenuOpen ? 0.2 + 0.05 : 0}s,
           transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)
-          ${isMenuOpen ? 0.2 + index * 0.05 : 0}s`,
+          ${isMenuOpen ? 0.2 + 0.05 : 0}s`,
                     }}
                     onMouseEnter={(e) => {
-                      if (selectedLanguage !== lang.code) {
+                      if (currentLang !== code) {
                         e.currentTarget.style.color = "#333";
                       }
                     }}
                     onMouseLeave={(e) => {
-                      if (selectedLanguage !== lang.code) {
+                      if (currentLang !== code) {
                         e.currentTarget.style.color = "#999";
                       }
                     }}

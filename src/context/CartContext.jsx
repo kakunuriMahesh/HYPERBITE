@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { allowedPincodes } from '../config/allowedPincodes';
 
 const CartContext = createContext();
 
@@ -11,24 +13,57 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      try {
-        setCartItems(JSON.parse(savedCart));
-      } catch (error) {
-        console.error('Error loading cart from localStorage:', error);
-      }
+  // Lazy initialization of state from localStorage to avoid race conditions
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('cart');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Error loading cart from localStorage:', error);
+      return [];
     }
-  }, []);
+  });
 
-  // Save cart to localStorage whenever it changes
+  const [packItems, setPackItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('packs');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Error loading packs from localStorage:', error);
+      return [];
+    }
+  });
+
+  const [inProgressPacks, setInProgressPacks] = useState(() => {
+    try {
+      const saved = localStorage.getItem('inProgressPacks');
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      console.error('Error loading in-progress packs from localStorage:', error);
+      return [];
+    }
+  });
+
+  const [pincode, setPincode] = useState(() => {
+    return localStorage.getItem('pincode') || '';
+  });
+
+  // Save cart and packs to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    localStorage.setItem('packs', JSON.stringify(packItems));
+  }, [packItems]);
+
+  useEffect(() => {
+    localStorage.setItem('inProgressPacks', JSON.stringify(inProgressPacks));
+  }, [inProgressPacks]);
+
+  useEffect(() => {
+    if (pincode) localStorage.setItem('pincode', pincode);
+  }, [pincode]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -55,11 +90,81 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  const addPackToCart = (packData) => {
+    setPackItems((prevItems) => {
+      // Always add as a new item because each custom pack can be different
+      // Generate a unique instance ID
+      const instanceId = `pack-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      
+      return [
+        ...prevItems,
+        {
+          ...packData,
+          instanceId, // Unique ID for this specific added pack
+          quantity: 1,
+        },
+      ];
+    });
+  };
+
+  const startOrUpdateInProgressPack = (packData) => {
+    setInProgressPacks((prev) => {
+      const existing = prev.find((p) => p.packId === packData.packId);
+      if (existing) {
+        return prev.map((p) => (p.packId === packData.packId ? { ...p, ...packData } : p));
+      }
+      return [...prev, packData];
+    });
+  };
+
+  const removeInProgressPack = (packId) => {
+    setInProgressPacks((prev) => prev.filter((p) => p.packId !== packId));
+  };
+
+  const finalizeInProgressPack = (packId) => {
+    const pack = inProgressPacks.find((p) => p.packId === packId);
+    if (!pack) return;
+    addPackToCart({
+      packId: pack.packId,
+      packName: pack.packName,
+      packPrice: pack.packPrice || pack.total || 0,
+      packOffPrice: pack.packOffPrice || 0,
+      items: pack.items || [],
+      total: pack.total || 0,
+    });
+    // remove from in-progress
+    setInProgressPacks((prev) => prev.filter((p) => p.packId !== packId));
+  };
+
+  const ensurePincodeValid = () => {
+    // If pincode already set and allowed, return true
+    if (pincode && allowedPincodes.includes(pincode)) return true;
+    // Return false - let the component handle modal
+    return false;
+  };
+
+  const validateAndSetPincode = (code) => {
+    // Convert to string and trim for safety
+    const cleanCode = String(code).trim();
+    if (!allowedPincodes.includes(cleanCode)) {
+      toast.error('Currently we are not delivering in your location');
+      return false;
+    }
+    setPincode(cleanCode);
+    return true;
+  };
+
   const removeFromCart = (productId, variation = 'default') => {
     setCartItems((prevItems) =>
       prevItems.filter(
         (item) => !(item.id === productId && item.variation === variation)
       )
+    );
+  };
+
+  const removePackFromCart = (instanceId) => {
+    setPackItems((prevItems) =>
+      prevItems.filter((item) => item.instanceId !== instanceId)
     );
   };
 
@@ -78,26 +183,61 @@ export const CartProvider = ({ children }) => {
     );
   };
 
+  const updatePackQuantity = (instanceId, quantity) => {
+    if (quantity <= 0) {
+      removePackFromCart(instanceId);
+      return;
+    }
+
+    setPackItems((prevItems) =>
+      prevItems.map((item) =>
+        item.instanceId === instanceId
+          ? { ...item, quantity }
+          : item
+      )
+    );
+  };
+
   const clearCart = () => {
     setCartItems([]);
+    setPackItems([]);
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => {
+    const itemsTotal = cartItems.reduce((total, item) => {
       const price = parseFloat(item.price.replace(/[^0-9.]/g, '')) || 0;
       return total + price * item.quantity;
     }, 0);
+
+    const packsTotal = packItems.reduce((total, pack) => {
+      return total + pack.packPrice * pack.quantity;
+    }, 0);
+
+    return itemsTotal + packsTotal;
   };
 
   const getCartItemsCount = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+    const itemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+    const packsCount = packItems.reduce((total, pack) => total + pack.quantity, 0);
+    return itemsCount + packsCount;
   };
 
   const value = {
     cartItems,
+    packItems,
+    inProgressPacks,
+    pincode,
     addToCart,
+    addPackToCart,
+    startOrUpdateInProgressPack,
+    finalizeInProgressPack,
+    removeInProgressPack,
+    setPincode,
+    validateAndSetPincode,
     removeFromCart,
+    removePackFromCart,
     updateQuantity,
+    updatePackQuantity,
     clearCart,
     getCartTotal,
     getCartItemsCount,

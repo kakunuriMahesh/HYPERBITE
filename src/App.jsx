@@ -12,6 +12,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import ProductSelector from "./components/ProductSelector";
 import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
+import CustomizePackPage from "./pages/CustomizePackPage";
 import Blog from "./pages/Blog";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -19,6 +20,7 @@ import Cart from "./pages/Cart";
 import { SmoothScroll, scrollTo } from "./utils/SmoothScroll";
 import SeedsLayout from "./components/SeedsLayout";
 import { CartProvider } from "./context/CartContext";
+import { LanguageProvider } from "./context/LanguageContext";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -145,6 +147,7 @@ export default function App() {
   };
 
   return (
+    <LanguageProvider>
     <CartProvider>
       <Router>
         {/* Initialize smooth scroll - runs once on mount */}
@@ -156,6 +159,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/customize-pack/:packId" element={<CustomizePackPage />} />
               <Route path="/product/:productId" element={<ProductDetails />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/blog" element={<Blog />} />
@@ -181,5 +185,6 @@ export default function App() {
         theme="dark"
       />
     </CartProvider>
+    </LanguageProvider>
   );
 }

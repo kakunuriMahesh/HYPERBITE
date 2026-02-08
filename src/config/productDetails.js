@@ -29,7 +29,7 @@ export const productDetails = {
       carbs: '5g',
       fiber: '3g'
     },
-    price: '60 RS',
+    price: '30 RS',
     image: '/assets/wallnut.webp',
     images: [
       '/assets/wallnut.webp',
@@ -85,7 +85,7 @@ export const productDetails = {
       carbs: '75g',
       fiber: '6.7g'
     },
-    price: '60 RS',
+    price: '35 RS',
     image: '/assets/date.webp',
     images: [
       '/assets/date.webp',
@@ -143,7 +143,7 @@ export const productDetails = {
       carbs: '4g',
       fiber: '4g'
     },
-    price: '60 RS',
+    price: '40 RS',
     image: '/assets/sunflowerseed.webp',
     images: [
       '/assets/sunflowerseed.webp',

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useCart } from '../context/CartContext';
 
 const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const { pincode, validateAndSetPincode, setPincode } = useCart();
   
   if (!isOpen || !productDetails) return null;
 
@@ -159,7 +161,7 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
           <div
             style={{
               textAlign: "center",
-              marginBottom: breakpoint === 'mobile' ? '24px' : '32px',
+              marginBottom: breakpoint === 'mobile' ? '16px' : '24px',
             }}
           >
             <span
@@ -172,6 +174,58 @@ const ProductDetailsModal = ({ productDetails, isOpen, onClose, breakpoint }) =>
             >
               {productDetails.price}
             </span>
+          </div>
+
+          {/* Pincode Check */}
+          <div style={{ marginBottom: breakpoint === 'mobile' ? '24px' : '32px', textAlign: 'center' }}>
+             {pincode ? (
+                 <div style={{ display: 'inline-block', padding: '8px 16px', backgroundColor: '#e8f5e9', borderRadius: '8px' }}>
+                     <span style={{ color: '#2e7d32', fontWeight: 600, marginRight: '8px' }}>Delivery available at {pincode}</span>
+                     <button 
+                        onClick={() => setPincode('')}
+                        style={{ background: 'none', border: 'none', textDecoration: 'underline', cursor: 'pointer', color: '#666', fontSize: '12px' }}
+                     >
+                         Change
+                     </button>
+                 </div>
+             ) : (
+                 <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                     <input 
+                        type="text" 
+                        placeholder="Enter Pincode"
+                        id="modal-pincode"
+                        style={{
+                            padding: '8px',
+                            border: '1px solid #ddd',
+                            borderRadius: '4px',
+                            fontSize: '14px',
+                            width: '150px'
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                validateAndSetPincode(e.target.value);
+                            }
+                        }}
+                     />
+                     <button
+                        onClick={() => {
+                            const val = document.getElementById('modal-pincode').value;
+                            validateAndSetPincode(val);
+                        }}
+                        style={{
+                            padding: '8px 16px',
+                            backgroundColor: '#333',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '14px'
+                        }}
+                     >
+                         Check
+                     </button>
+                 </div>
+             )}
           </div>
 
           {/* Ingredients */}
