@@ -308,10 +308,11 @@ const Cart = () => {
       return;
     }
 
-    if (!allowedPincodes.includes(formData.pincode)) {
-      setPincodeError("Currently we are not delivering in your location");
-      return;
-    }
+    //FIXME: Pincode validation check - commented out to allow any pincode
+    // if (!allowedPincodes.includes(formData.pincode)) {
+    //   setPincodeError("Currently we are not delivering in your location");
+    //   return;
+    // }
 
     // Save user details to cookies (30 days)
     setCookie("userDetails", formData, 30);
@@ -319,7 +320,8 @@ const Cart = () => {
     // Format and send WhatsApp message
     const message = formatCartMessage(cartItems, packItems, formData);
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/9985875017?text=${encodedMessage}`;
+    //FIXME: Updated WhatsApp number to '+91 99859 44466'
+    const whatsappUrl = `https://wa.me/919985944466?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
 
     // Clear cart after order

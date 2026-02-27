@@ -385,7 +385,7 @@ const CustomizePackPage = () => {
                   }}
                 >
                   <img
-                    src={product.image}
+                    src={product.packImg}
                     alt={product.name}
                     style={{
                       maxWidth: '100%',

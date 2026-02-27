@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { productDetails } from "../config/productDetails";
+import { formatProductMessage } from "../utils/whatsapp";
+import { sendWhatsAppMessage } from "../utils/whatsapp";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
 export default function LandingView({ onEnterPremiumMode, onOpenDetails, breakpoint }) {
   const products = Object.values(productDetails);
+  const [quantities, setQuantities] = useState({});
+
+  const getQuantity = (productId) => quantities[productId] || 1;
+
+  const handleIncreaseQuantity = (productId) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: (prev[productId] || 1) + 1,
+    }));
+  };
+
+  const handleDecreaseQuantity = (productId) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [productId]: Math.max(1, (prev[productId] || 1) - 1),
+    }));
+  };
 
   return (
     <div
@@ -16,9 +36,9 @@ export default function LandingView({ onEnterPremiumMode, onOpenDetails, breakpo
       {/* Hero / Welcome */}
       <div className="max-w-7xl mx-auto px-5 md:px-10 pt-20 pb-16 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
-          Premium Dry Fruits & Seeds
+          Highly nutritious & Naturally energizing Snakes for your daily boost.
           <br />
-          <span className="text-emerald-700">Fresh • Natural • Delivered Today</span>
+          <span className="text-emerald-700 md:text-md text-2xl">Fresh • Natural</span>
         </h1>
 
         <p className="text-lg md:text-xl text-gray-700 max-w-4xl mx-auto mb-10">
@@ -64,7 +84,7 @@ export default function LandingView({ onEnterPremiumMode, onOpenDetails, breakpo
             >
               <div className="h-64 bg-gradient-to-br from-amber-50 to-emerald-50/30 flex items-center justify-center p-8">
                 <img
-                  src={product.image}
+                  src={product.packImg}
                   alt={product.name}
                   className="max-h-full object-contain"
                 />
@@ -80,11 +100,36 @@ export default function LandingView({ onEnterPremiumMode, onOpenDetails, breakpo
                   </span>
                 </div>
 
+                {/* Quantity Selector */}
+                <div className="flex items-center justify-start gap-4 mb-6">
+                  <button
+                    onClick={() => handleDecreaseQuantity(product.id)}
+                    className="w-10 h-10 rounded-lg bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition"
+                  >
+                    <FaMinus size={14} className="text-gray-700" />
+                  </button>
+                  <span className="text-2xl font-bold text-gray-800 w-12 text-center">
+                    {getQuantity(product.id)}
+                  </span>
+                  <button
+                    onClick={() => handleIncreaseQuantity(product.id)}
+                    className="w-10 h-10 rounded-lg bg-emerald-600 hover:bg-emerald-700 flex items-center justify-center transition"
+                  >
+                    <FaPlus size={14} className="text-white" />
+                  </button>
+                </div>
+
                 <button
-                  onClick={() => onOpenDetails(product.id)}
+                  onClick={() => {
+                    // FIXME: Changed from View & Buy to Order through WhatsApp
+                    const message = formatProductMessage({...product, quantity: getQuantity(product.id)});
+                    sendWhatsAppMessage(message);
+                    // Reset quantity after order
+                    setQuantities((prev) => ({ ...prev, [product.id]: 1 }));
+                  }}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-xl font-semibold transition"
                 >
-                  View & Buy
+                  Order Now
                 </button>
               </div>
             </div>

@@ -487,7 +487,7 @@ const Products = () => {
                   }}
                 >
                   <img
-                    src={product.image}
+                    src={product.packImg}
                     alt={product.name}
                     style={{
                       width: breakpoint === 'mobile' ? '120px' : '150px',

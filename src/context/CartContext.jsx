@@ -136,6 +136,7 @@ export const CartProvider = ({ children }) => {
     setInProgressPacks((prev) => prev.filter((p) => p.packId !== packId));
   };
 
+  //FIXME: This function checks pincode validity - ensure it's called before ANY checkout or purchase action
   const ensurePincodeValid = () => {
     // If pincode already set and allowed, return true
     if (pincode && allowedPincodes.includes(pincode)) return true;
@@ -143,13 +144,15 @@ export const CartProvider = ({ children }) => {
     return false;
   };
 
+  //FIXME: Pincode validation - MUST be called and validated before completing any order
   const validateAndSetPincode = (code) => {
     // Convert to string and trim for safety
     const cleanCode = String(code).trim();
-    if (!allowedPincodes.includes(cleanCode)) {
-      toast.error('Currently we are not delivering in your location');
-      return false;
-    }
+    //FIXME: Currently allows ANY pincode - commented out validation
+    // if (!allowedPincodes.includes(cleanCode)) {
+    //   toast.error('Currently we are not delivering in your location');
+    //   return false;
+    // }
     setPincode(cleanCode);
     return true;
   };

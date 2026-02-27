@@ -31,6 +31,7 @@ export const productDetails = {
     },
     price: '30 RS',
     image: '/assets/wallnut.webp',
+    packImg:'/assets/SeedMixPackImg.jpeg',
     images: [
       '/assets/wallnut.webp',
       '/assets/pumpkinseed.webp',
@@ -87,6 +88,7 @@ export const productDetails = {
     },
     price: '35 RS',
     image: '/assets/date.webp',
+    packImg:'/assets/DatePackImg.jpeg',
     images: [
       '/assets/date.webp',
       '/assets/dateorange.webp',
@@ -145,6 +147,7 @@ export const productDetails = {
     },
     price: '40 RS',
     image: '/assets/sunflowerseed.webp',
+    packImg:'/assets/DarkChocoPackImg.jpeg',
     images: [
       '/assets/sunflowerseed.webp',
       '/assets/pumpkinseed.webp',

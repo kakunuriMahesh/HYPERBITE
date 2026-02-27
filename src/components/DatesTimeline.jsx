@@ -10,19 +10,19 @@ const DOT_SIZE_MOBILE = 24;
 const TIMELINE_STEPS = [
   {
     progress: 0.28,
-    label: "1. In a large, chilled bowl, combine very cold heavy cream",
+    label: "Made with premium, handpicked dates that are naturally soft and sweet.",
     imageKey: "date1",
     color: "#000",
   },
   {
     progress: 0.46,
-    label: "2. In a large, chilled bowl, combine very cold heavy cream",
+    label: "Filled with creamy pista paste and finely shredded coconut for a rich, nutty flavor.",
     imageKey: "date2",
     color: "#FFD93D",
   },
   {
     progress: 0.84,
-    label: "3. In a large, chilled bowl, combine very cold heavy cream",
+    label: "A wholesome, energy-boosting treat with no refined sugar or artificial additives.",
     imageKey: "date3",
     color: "#6BCB77",
   },

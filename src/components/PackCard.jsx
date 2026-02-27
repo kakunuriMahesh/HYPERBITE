@@ -85,7 +85,7 @@ const PackCard = ({ pack, breakpoint, onClickCustomize, onClickAdd, isCustomized
           display: 'flex',
           justifyContent: 'center',
           height: '120px',
-          backgroundColor: '#fff',
+          // backgroundColor: '#fff',
           borderRadius: '8px',
           alignItems: 'center',
           overflow: 'hidden',
@@ -93,7 +93,7 @@ const PackCard = ({ pack, breakpoint, onClickCustomize, onClickAdd, isCustomized
       >
         {pack.image ? (
           <img
-            src='/assets/P-blue.png'
+            src='/assets/CustomizePack.jpeg'
             alt={pack.name}
             style={{
               maxWidth: '100%',

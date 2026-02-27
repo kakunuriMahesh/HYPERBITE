@@ -44,10 +44,10 @@ export const productConfigs = {
   dates: {
     id: 'dates',
     name: 'Dates',
-    heading1: 'Home Heading Hyper Bite',
-    paragraph1: 'involving substitution at or characterized by two opposite positions in the benzene ring that are separated by two carbon atoms paradichlorobenzene',
-    heading2: 'Home Heading Hyper Bite',
-    paragraph2: 'involving substitution at or characterized by two opposite positions in the benzene ring that are separated by two carbon atoms paradichlorobenzene',
+    heading1: 'A Perfect Blend of Sweetness and Nutty Flavor',
+    paragraph1: 'Our premium dates are carefully selected and filled with rich pista paste and finely shredded coconut, creating a delicious balance of natural sweetness and creamy nuttiness. The soft, chewy date pairs beautifully with the smooth pistachio filling and subtle coconut texture, offering a satisfying bite every time.',
+    heading2: 'A Wholesome and Energizing Treat',
+    paragraph2: 'Free from refined sugar and artificial additives, these stuffed dates are a naturally nourishing snack. Packed with fiber and energy from dates, healthy fats from coconut, and the rich goodness of pista, they are perfect for mindful indulgence, gifting, or enjoying as a healthy sweet treat anytime.',
     images: {
       dot: '/assets/dot.svg',
       date1: '/assets/date.webp',

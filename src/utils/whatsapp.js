@@ -2,7 +2,8 @@
 
 import { productDetails } from '../config/productDetails';
 
-const WHATSAPP_NUMBER = '9985875017';
+//FIXME: Updated WhatsApp number to '+91 99859 44466'
+const WHATSAPP_NUMBER = '919985944466';
 
 export const sendWhatsAppMessage = (message) => {
   const encodedMessage = encodeURIComponent(message);
