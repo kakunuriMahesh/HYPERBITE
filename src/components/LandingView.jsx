@@ -36,7 +36,7 @@ export default function LandingView({ onEnterPremiumMode, onOpenDetails, breakpo
       {/* Hero / Welcome */}
       <div className="max-w-7xl mx-auto px-5 md:px-10 pt-20 pb-16 text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
-          Highly nutritious & Naturally energizing Snakes for your daily boost.
+          Highly nutritious & Naturally energizing Snack for your daily boost.
           <br />
           <span className="text-emerald-700 md:text-md text-2xl">Fresh • Natural</span>
         </h1>

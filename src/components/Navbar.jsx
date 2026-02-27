@@ -404,7 +404,7 @@ const Navbar = () => {
 
             {/* Instagram Icon */}
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/hyperbite.in/"
               target="_blank"
               rel="noopener noreferrer"
               style={{
