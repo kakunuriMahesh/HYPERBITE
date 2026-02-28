@@ -7,221 +7,263 @@ import { getCookie, setCookie } from "../utils/cookies";
 import { FaTrash, FaPlus, FaMinus } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { allowedPincodes } from "../config/allowedPincodes";
-import { productDetails } from '../config/productDetails';
+import { productDetails } from "../config/productDetails";
 
-const PackItemCard = ({ pack, index, breakpoint, removePackFromCart, updatePackQuantity, navigate }) => {
+const PackItemCard = ({
+  pack,
+  index,
+  breakpoint,
+  removePackFromCart,
+  updatePackQuantity,
+  navigate,
+}) => {
   const [showDetails, setShowDetails] = useState(false);
   const { startOrUpdateInProgressPack } = useCart();
 
   const handleEdit = () => {
-      // Load this pack into progress
-      startOrUpdateInProgressPack({
-          packId: pack.packId,
-          packName: pack.packName,
-          packPrice: pack.packPrice,
-          packOffPrice: pack.packOffPrice,
-          items: pack.items,
-          total: pack.total || pack.packPrice // Best guess if total not saved
-      });
-      // Remove from cart (to avoid duplication when they add it back)
-      removePackFromCart(pack.instanceId);
-      // Navigate
-      navigate(`/customize-pack/${pack.packId}`);
+    // Load this pack into progress
+    startOrUpdateInProgressPack({
+      packId: pack.packId,
+      packName: pack.packName,
+      packPrice: pack.packPrice,
+      packOffPrice: pack.packOffPrice,
+      items: pack.items,
+      total: pack.total || pack.packPrice, // Best guess if total not saved
+    });
+    // Remove from cart (to avoid duplication when they add it back)
+    removePackFromCart(pack.instanceId);
+    // Navigate
+    navigate(`/customize-pack/${pack.packId}`);
   };
 
   return (
     <div
-    style={{
-      display: "flex",
-      flexDirection: breakpoint === "mobile" ? "column" : "row",
-      gap: "20px",
-      padding: "20px",
-      marginBottom: "20px",
-      backgroundColor: "#f0f8ff",
-      borderRadius: "12px",
-      border: "2px solid #4a90e2",
-    }}
-  >
-    {/* Pack Icon */}
-    <div
       style={{
-        width: breakpoint === "mobile" ? "100%" : "150px",
-        height: "150px",
-        borderRadius: "8px",
-        overflow: "hidden",
-        backgroundColor: "#fff",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: "48px",
+        flexDirection: breakpoint === "mobile" ? "column" : "row",
+        gap: "20px",
+        padding: "20px",
+        marginBottom: "20px",
+        backgroundColor: "#f0f8ff",
+        borderRadius: "12px",
+        border: "2px solid #4a90e2",
       }}
     >
-      🎁
-    </div>
+      {/* Pack Icon */}
+      <div
+        style={{
+          width: breakpoint === "mobile" ? "100%" : "150px",
+          height: "150px",
+          borderRadius: "8px",
+          overflow: "hidden",
+          backgroundColor: "#fff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "48px",
+        }}
+      >
+        <img src="/assets/CustomizePack.jpeg" alt="Customize Pack" />
+      </div>
 
-    {/* Pack Info */}
-    <div style={{ flex: 1 }}>
-      <h3
-        style={{
-          fontFamily: "'Permanent_Marker-Regular', Helvetica",
-          fontSize: breakpoint === "mobile" ? "24px" : "28px",
-          marginBottom: "8px",
-          color: "#000",
-        }}
-      >
-        {pack.packName}
-      </h3>
-      <p
-        style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: "14px",
-          color: "#666",
-          marginBottom: "8px",
-        }}
-      >
-        {pack.items?.reduce(
-          (total, item) => total + (item.quantity || 0),
-          0,
-        ) || 0}{" "}
-        items selected
-      </p>
-      <p
-        style={{
-          fontFamily: "'Permanent_Marker-Regular', Helvetica",
-          fontSize: breakpoint === "mobile" ? "20px" : "24px",
-          color: "#000",
-          marginBottom: "12px",
-        }}
-      >
-        ₹{pack.packPrice}
-        <span
+      {/* Pack Info */}
+      <div style={{ flex: 1 }}>
+        <h3
+          style={{
+            fontFamily: "'Permanent_Marker-Regular', Helvetica",
+            fontSize: breakpoint === "mobile" ? "24px" : "28px",
+            marginBottom: "8px",
+            color: "#000",
+          }}
+        >
+          {pack.packName}
+        </h3>
+        <p
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: "14px",
-            color: "#999",
-            textDecoration: "line-through",
-            marginLeft: "8px",
+            color: "#666",
+            marginBottom: "8px",
           }}
         >
-          ₹{pack.packOffPrice}
-        </span>
-      </p>
-
-      {/* Buttons Row */}
-      <div style={{display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap'}}>
-         <button 
-           onClick={() => setShowDetails(!showDetails)}
-           style={{
-               background: 'none', border: 'none', color: '#4a90e2', 
-               cursor: 'pointer', textDecoration: 'underline', fontSize: '14px'
-           }}
-         >
-             {showDetails ? 'Hide Items' : 'View Items'}
-         </button>
-         <button 
-           onClick={handleEdit}
-           style={{
-               background: '#4a90e2', border: 'none', color: '#fff', 
-               borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', fontSize: '14px'
-           }}
-         >
-             Edit Pack
-         </button>
-      </div>
-
-      {showDetails && (
-          <div style={{marginBottom: '16px', padding: '10px', background: 'rgba(255,255,255,0.5)', borderRadius: '8px'}}>
-              {pack.items && pack.items.map((item, i) => {
-                  const pDetails = productDetails[item.id];
-                  return (
-                    <div key={i} style={{fontSize: '14px', marginBottom: '4px'}}>
-                        <strong>{pDetails?.name || item.id}</strong>: {item.quantity} units
-                    </div>
-                  );
-              })}
-          </div>
-      )}
-
-      {/* Quantity Controls */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-        }}
-      >
-        <button
-          onClick={() =>
-            updatePackQuantity(pack.instanceId || pack.packId, pack.quantity - 1)
-          }
-          style={{
-            width: "36px",
-            height: "36px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-            cursor: "pointer",
-            color: "#000",
-          }}
-        >
-          <FaMinus size={14} />
-        </button>
-        <span
+          {pack.items?.reduce(
+            (total, item) => total + (item.quantity || 0),
+            0,
+          ) || 0}{" "}
+          items selected
+        </p>
+        <p
           style={{
             fontFamily: "'Permanent_Marker-Regular', Helvetica",
-            fontSize: "20px",
-            minWidth: "40px",
-            textAlign: "center",
-          }}
-        >
-          {pack.quantity}
-        </span>
-        <button
-          onClick={() =>
-            updatePackQuantity(pack.instanceId || pack.packId, pack.quantity + 1)
-          }
-          style={{
-            width: "36px",
-            height: "36px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-            cursor: "pointer",
+            fontSize: breakpoint === "mobile" ? "20px" : "24px",
             color: "#000",
+            marginBottom: "12px",
           }}
         >
-          <FaPlus size={14} />
-        </button>
-        <button
-          onClick={() => removePackFromCart(pack.instanceId || pack.packId)}
+          ₹{pack.packPrice}
+          <span
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: "14px",
+              color: "#999",
+              textDecoration: "line-through",
+              marginLeft: "8px",
+            }}
+          >
+            ₹{pack.packOffPrice}
+          </span>
+        </p>
+
+        {/* Buttons Row */}
+        {pack.packPrice !== 250 && (
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              marginBottom: "16px",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#4a90e2",
+                cursor: "pointer",
+                textDecoration: "underline",
+                fontSize: "14px",
+              }}
+            >
+              {showDetails ? "Hide Items" : "View Items"}
+            </button>
+            <button
+              onClick={handleEdit}
+              style={{
+                background: "#4a90e2",
+                border: "none",
+                color: "#fff",
+                borderRadius: "4px",
+                padding: "4px 12px",
+                cursor: "pointer",
+                fontSize: "14px",
+              }}
+            >
+              Edit Pack
+            </button>
+          </div>
+        )}
+
+        {showDetails && (
+          <div
+            style={{
+              marginBottom: "16px",
+              padding: "10px",
+              background: "rgba(255,255,255,0.5)",
+              borderRadius: "8px",
+            }}
+          >
+            {pack.items &&
+              pack.items.map((item, i) => {
+                const pDetails = productDetails[item.id];
+                return (
+                  <div
+                    key={i}
+                    style={{ fontSize: "14px", marginBottom: "4px" }}
+                  >
+                    <strong>{pDetails?.name || item.id}</strong>:{" "}
+                    {item.quantity} units
+                  </div>
+                );
+              })}
+          </div>
+        )}
+
+        {/* Quantity Controls */}
+        <div
           style={{
-            marginLeft: "auto",
-            padding: "8px 16px",
-            backgroundColor: "#ff4444",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            gap: "8px",
-            fontFamily:
-              "'Just_Me_Again_Down_Here-Regular', Helvetica",
-            fontSize: "16px",
+            gap: "12px",
           }}
         >
-          <FaTrash size={14} />
-          Remove
-        </button>
+          <button
+            onClick={() =>
+              updatePackQuantity(
+                pack.instanceId || pack.packId,
+                pack.quantity - 1,
+              )
+            }
+            style={{
+              width: "36px",
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fff",
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              cursor: "pointer",
+              color: "#000",
+            }}
+          >
+            <FaMinus size={14} />
+          </button>
+          <span
+            style={{
+              fontFamily: "'Permanent_Marker-Regular', Helvetica",
+              fontSize: "20px",
+              minWidth: "40px",
+              textAlign: "center",
+            }}
+          >
+            {pack.quantity}
+          </span>
+          <button
+            onClick={() =>
+              updatePackQuantity(
+                pack.instanceId || pack.packId,
+                pack.quantity + 1,
+              )
+            }
+            style={{
+              width: "36px",
+              height: "36px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fff",
+              border: "1px solid #ddd",
+              borderRadius: "4px",
+              cursor: "pointer",
+              color: "#000",
+            }}
+          >
+            <FaPlus size={14} />
+          </button>
+          <button
+            onClick={() => removePackFromCart(pack.instanceId || pack.packId)}
+            style={{
+              marginLeft: "auto",
+              padding: "8px 16px",
+              backgroundColor: "#ff4444",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontFamily: "'Just_Me_Again_Down_Here-Regular', Helvetica",
+              fontSize: "16px",
+            }}
+          >
+            <FaTrash size={14} />
+            Remove
+          </button>
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 
@@ -337,7 +379,11 @@ const Cart = () => {
     navigate("/");
   };
 
-  if (cartItems.length === 0 && packItems.length === 0 && inProgressPacks.length === 0) {
+  if (
+    cartItems.length === 0 &&
+    packItems.length === 0 &&
+    inProgressPacks.length === 0
+  ) {
     return (
       <div
         style={{
@@ -642,7 +688,7 @@ const Cart = () => {
                     fontSize: "48px",
                   }}
                 >
-                  🎁
+                  <img src="/assets/CustomizePack.jpeg" alt="CustomizePack" />
                 </div>
 
                 <div style={{ flex: 1 }}>
@@ -702,15 +748,16 @@ const Cart = () => {
                     {pack.total < min ? (
                       <p style={{ color: "#ff5722", fontWeight: 600 }}>
                         Add ₹{(min - (pack.total || 0)).toFixed(2)} more to
-                          &nbsp;<Link
-                            style={{
-                              color: "#ff5722",
-                              textDecoration: "underline",
-                            }}
-                            to="/customize-pack/pack500"
-                          >
-                            order this pack.
-                          </Link>
+                        &nbsp;
+                        <Link
+                          style={{
+                            color: "#ff5722",
+                            textDecoration: "underline",
+                          }}
+                          to="/customize-pack/pack500"
+                        >
+                          order this pack.
+                        </Link>
                       </p>
                     ) : (
                       <button
@@ -745,14 +792,14 @@ const Cart = () => {
             );
           })}
           {packItems.map((pack, index) => (
-            <PackItemCard 
-                key={`pack-${pack.instanceId || index}`} 
-                pack={pack} 
-                index={index}
-                breakpoint={breakpoint}
-                removePackFromCart={removePackFromCart}
-                updatePackQuantity={updatePackQuantity}
-                navigate={navigate}
+            <PackItemCard
+              key={`pack-${pack.instanceId || index}`}
+              pack={pack}
+              index={index}
+              breakpoint={breakpoint}
+              removePackFromCart={removePackFromCart}
+              updatePackQuantity={updatePackQuantity}
+              navigate={navigate}
             />
           ))}
         </div>
@@ -1049,11 +1096,19 @@ const Cart = () => {
                   style={{
                     width: "100%",
                     padding: "12px",
-                    border: pincodeError ? "2px solid #ff4444" : pincode ? "2px solid #4caf50" : "1px solid #ddd",
+                    border: pincodeError
+                      ? "2px solid #ff4444"
+                      : pincode
+                        ? "2px solid #4caf50"
+                        : "1px solid #ddd",
                     borderRadius: "8px",
                     fontFamily: "'Inter', sans-serif",
                     fontSize: "14px",
-                    backgroundColor: pincodeError ? "#fff5f5" : pincode ? "#e8f5e9" : "#fff",
+                    backgroundColor: pincodeError
+                      ? "#fff5f5"
+                      : pincode
+                        ? "#e8f5e9"
+                        : "#fff",
                   }}
                 />
                 {pincodeError && (
@@ -1173,7 +1228,6 @@ const Cart = () => {
           </form>
         )}
       </div>
-
     </div>
   );
 };
